@@ -1,0 +1,266 @@
+/* Typography Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  /* Brand Tokens */
+  --coco-brown: #4A250F;
+  --coco-brown-dark: #32190A;
+  --coco-brown-light: #6A3816;
+  --natural-green: #16833A;
+  --natural-green-light: #22A04A;
+  --deep-green: #075B2A;
+  --deep-green-dark: #043819;
+  --fibre-beige: #C9A66B;
+  --fibre-beige-light: #E0C79A;
+  --warm-offwhite: #F7F5EF;
+  --warm-offwhite-alt: #EFECE3;
+  --card-bg: #FFFFFF;
+
+  /* Neutral Spectrum */
+  --text-primary: #1C211D;
+  --text-muted: #667068;
+  --text-subtle: #8A948C;
+  --border-soft: #DDE1DB;
+  --border-strong: #BDC4BA;
+
+  /* Fonts */
+  --font-headings: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Base Resets & Global Typography */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--warm-offwhite);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: var(--warm-offwhite);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headings);
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--warm-offwhite);
+}
+::-webkit-scrollbar-thumb {
+  background: #C4C8C2;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fibre-beige);
+}
+
+/* Selection */
+::selection {
+  background: var(--natural-green);
+  color: #FFFFFF;
+}
+
+/* Reusable Architectural Utility Classes */
+.bg-warm-canvas {
+  background-color: var(--warm-offwhite);
+}
+
+.bg-coco-brown {
+  background-color: var(--coco-brown);
+}
+
+.bg-deep-green {
+  background-color: var(--deep-green);
+}
+
+.text-coco-brown {
+  color: var(--coco-brown);
+}
+
+.text-natural-green {
+  color: var(--natural-green);
+}
+
+.text-fibre-beige {
+  color: var(--fibre-beige);
+}
+
+.border-soft {
+  border-color: var(--border-soft);
+}
+
+/* Premium Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--natural-green);
+  color: #FFFFFF;
+  font-family: var(--font-headings);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background-color: #0E682C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 131, 58, 0.25);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: #FFFFFF;
+  font-family: var(--font-headings);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-headings);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-outline-dark:hover {
+  background-color: var(--text-primary);
+  color: var(--warm-offwhite);
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+/* Eyebrows */
+.eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--natural-green);
+  margin-bottom: 0.75rem;
+}
+
+/* Sticky Header Transitions */
+#main-header {
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#main-header.scrolled {
+  background-color: rgba(247, 245, 239, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: 0 4px 20px rgba(28, 33, 29, 0.05);
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+}
+#main-header.scrolled .nav-link {
+  color: var(--text-primary);
+}
+#main-header.scrolled .nav-link:hover {
+  color: var(--natural-green);
+}
+
+/* Image Hover Zoom Animation */
+.img-zoom-container {
+  overflow: hidden;
+}
+.img-zoom-target {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.img-zoom-container:hover .img-zoom-target {
+  transform: scale(1.04);
+}
+
+/* Process Timeline Step Line */
+.timeline-track {
+  position: relative;
+}
+@media (min-width: 1024px) {
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: var(--border-soft);
+    z-index: 1;
+  }
+}
+
+/* Lightbox Modal Animation */
+#lightbox-modal {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+#lightbox-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
