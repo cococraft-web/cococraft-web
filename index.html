@@ -137,11 +137,279 @@
       } 
     };
   </script>
-</head>
-<body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
-  
-  <!-- ==================== HEADER ==================== -->
-  <header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-variant">
+    <!-- ==================== PRELOADER STYLES ==================== -->
+    <style>
+      #coir-growth-preloader {
+        background-color: #133B2C;
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+
+      #coir-growth-preloader.preloader-dissolve {
+        opacity: 0;
+        transform: translateY(-8px) scale(1.01);
+        pointer-events: none;
+      }
+
+      /* Coir Fibre Particles */
+      .coir-fibre-strand {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 26px;
+        height: 6px;
+        pointer-events: none;
+        opacity: 0;
+        animation: fibreInward 0.65s cubic-bezier(0.25, 1, 0.5, 1) var(--f-delay, 0s) forwards;
+      }
+
+      @keyframes fibreInward {
+        0% {
+          opacity: 0;
+          transform: translate(var(--fx-start), var(--fy-start)) rotate(var(--f-rot)) scale(1.2);
+        }
+        25% {
+          opacity: 0.85;
+        }
+        70% {
+          opacity: 0.9;
+          transform: translate(calc(var(--fx-start) * 0.22), calc(var(--fy-start) * 0.22)) rotate(calc(var(--f-rot) + 12deg)) scale(0.95);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(0, 0) rotate(calc(var(--f-rot) + 22deg)) scale(0.65);
+        }
+      }
+
+      /* Logo Organic Reveal */
+      .preloader-logo {
+        opacity: 0;
+        transform: scale(0.95);
+        animation: logoOrganicReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      }
+
+      @keyframes logoOrganicReveal {
+        0% {
+          opacity: 0;
+          transform: scale(0.94);
+          filter: blur(1.5px);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+          filter: blur(0);
+        }
+      }
+
+      /* Organic Root Animation */
+      .root-path {
+        stroke-dasharray: 200;
+        stroke-dashoffset: 200;
+        animation: rootLineDraw 0.38s cubic-bezier(0.25, 1, 0.5, 1) 0.75s forwards;
+      }
+
+      .root-branch {
+        stroke-dasharray: 60;
+        stroke-dashoffset: 60;
+        animation: rootBranchDraw 0.32s cubic-bezier(0.25, 1, 0.5, 1) 0.88s forwards;
+      }
+
+      @keyframes rootLineDraw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes rootBranchDraw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Root Subtle Breathing Loop if delayed */
+      .root-svg-container {
+        animation: rootSubtleBreathe 2.4s ease-in-out 1.15s infinite alternate;
+      }
+
+      @keyframes rootSubtleBreathe {
+        0% {
+          opacity: 0.85;
+          transform: scaleX(1);
+        }
+        100% {
+          opacity: 1;
+          transform: scaleX(1.02);
+        }
+      }
+
+      /* Tagline Reveal */
+      .preloader-tagline {
+        opacity: 0;
+        transform: translateY(4px);
+        animation: taglineOrganicReveal 0.32s ease-out 1.0s forwards;
+      }
+
+      @keyframes taglineOrganicReveal {
+        to {
+          opacity: 0.95;
+          transform: translateY(0);
+        }
+      }
+
+      /* Accessibility: Prefers Reduced Motion */
+      @media (prefers-reduced-motion: reduce) {
+        #coir-growth-preloader .coir-fibre-strand {
+          display: none !important;
+        }
+        #coir-growth-preloader .preloader-logo {
+          opacity: 1 !important;
+          transform: none !important;
+          filter: none !important;
+          animation: none !important;
+        }
+        #coir-growth-preloader .root-path,
+        #coir-growth-preloader .root-branch {
+          stroke-dashoffset: 0 !important;
+          animation: none !important;
+        }
+        #coir-growth-preloader .root-svg-container {
+          animation: none !important;
+        }
+        #coir-growth-preloader .preloader-tagline {
+          opacity: 0.95 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+        #coir-growth-preloader.preloader-dissolve {
+          transition: opacity 0.15s ease !important;
+          transform: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
+    
+    <!-- ==================== "FROM COIR TO GROWTH" PRELOADER ==================== -->
+    <div id="coir-growth-preloader" role="status" aria-live="polite" aria-label="Loading Coco Craft Exports">
+      <!-- Subtle Coconut Coir / Fibre Texture Overlay -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-[0.045]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <defs>
+          <pattern id="coir-fibre-texture" width="220" height="220" patternUnits="userSpaceOnUse">
+            <path d="M10,20 Q80,90 140,40 T220,110 M30,160 Q90,130 180,210 M120,10 Q160,80 150,170 M70,220 Q130,190 200,230" fill="none" stroke="#E9DFC9" stroke-width="0.7" opacity="0.6"/>
+            <path d="M5,100 Q60,70 120,130 T230,80 M40,30 Q110,120 70,210 M170,10 Q210,100 190,190" fill="none" stroke="#C89D7C" stroke-width="0.5" opacity="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#coir-fibre-texture)"/>
+      </svg>
+
+      <!-- Center Brand Container -->
+      <div class="relative z-10 flex flex-col items-center justify-center px-4">
+        
+        <!-- Coir Fibre Inward Particle System -->
+        <div class="coir-particle-wrap absolute inset-0 pointer-events-none" aria-hidden="true">
+          <!-- Strand 1 -->
+          <svg class="coir-fibre-strand" style="--fx-start: -85px; --fy-start: -70px; --f-rot: 35deg; --f-delay: 0.04s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,3 Q8,1 16,4 T25,2" stroke="#C89D7C" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 2 -->
+          <svg class="coir-fibre-strand" style="--fx-start: 95px; --fy-start: -75px; --f-rot: -45deg; --f-delay: 0.10s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,2 Q9,5 18,2 T25,4" stroke="#D4A373" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 3 -->
+          <svg class="coir-fibre-strand" style="--fx-start: -110px; --fy-start: 10px; --f-rot: 18deg; --f-delay: 0.08s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,4 Q7,1 15,3 T25,1" stroke="#B38865" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 4 -->
+          <svg class="coir-fibre-strand" style="--fx-start: 115px; --fy-start: 15px; --f-rot: -22deg; --f-delay: 0.14s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,3 Q10,1 17,5 T25,3" stroke="#C89D7C" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 5 -->
+          <svg class="coir-fibre-strand" style="--fx-start: -75px; --fy-start: 80px; --f-rot: -60deg; --f-delay: 0.12s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,2 Q8,5 16,2 T25,4" stroke="#D4A373" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 6 -->
+          <svg class="coir-fibre-strand" style="--fx-start: 80px; --fy-start: 85px; --f-rot: 42deg; --f-delay: 0.16s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,4 Q9,1 16,3 T25,2" stroke="#B38865" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 7 (Top Center) -->
+          <svg class="coir-fibre-strand hidden sm:block" style="--fx-start: 0px; --fy-start: -105px; --f-rot: 85deg; --f-delay: 0.02s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,3 Q8,1 17,4 T25,2" stroke="#C89D7C" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 8 (Bottom Center) -->
+          <svg class="coir-fibre-strand hidden sm:block" style="--fx-start: 0px; --fy-start: 105px; --f-rot: -95deg; --f-delay: 0.15s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,2 Q10,5 18,3 T25,4" stroke="#D4A373" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 9 (Inner diagonal) -->
+          <svg class="coir-fibre-strand" style="--fx-start: -55px; --fy-start: -45px; --f-rot: -25deg; --f-delay: 0.18s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,3 Q8,1 15,4 T25,2" stroke="#B38865" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 10 (Inner diagonal) -->
+          <svg class="coir-fibre-strand" style="--fx-start: 55px; --fy-start: -50px; --f-rot: 65deg; --f-delay: 0.06s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,4 Q9,2 17,5 T25,3" stroke="#C89D7C" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 11 (Inner bottom) -->
+          <svg class="coir-fibre-strand hidden sm:block" style="--fx-start: -60px; --fy-start: 50px; --f-rot: 70deg; --f-delay: 0.20s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,3 Q7,1 16,4 T25,2" stroke="#D4A373" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <!-- Strand 12 (Inner bottom) -->
+          <svg class="coir-fibre-strand hidden sm:block" style="--fx-start: 65px; --fy-start: 55px; --f-rot: -50deg; --f-delay: 0.13s;" viewBox="0 0 26 6" fill="none">
+            <path d="M1,2 Q10,4 18,2 T25,3" stroke="#B38865" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Actual Uploaded Company Logo (Centered, Unaltered Proportions) -->
+        <div class="preloader-logo-wrap relative w-48 sm:w-60 md:w-64 max-w-[75vw]">
+          <img src="/assets/logo/coco-craft-exports-official.png" 
+               alt="Coco Craft Exports" 
+               class="preloader-logo w-full h-auto object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.35)]" 
+               width="256" height="64" />
+        </div>
+
+        <!-- Organic Root-Like Line Growing Outward (0.75s – 1.05s) -->
+        <div class="root-svg-container mt-2 sm:mt-3">
+          <svg class="root-svg w-56 sm:w-68 h-7 sm:h-8 overflow-visible" viewBox="0 0 260 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="root-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#E9DFC9" stop-opacity="0.15"/>
+                <stop offset="25%" stop-color="#E9DFC9" stop-opacity="0.85"/>
+                <stop offset="50%" stop-color="#93F9A1" stop-opacity="0.95"/>
+                <stop offset="75%" stop-color="#E9DFC9" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#E9DFC9" stop-opacity="0.15"/>
+              </linearGradient>
+            </defs>
+            <!-- Center Tap Root Tip -->
+            <path class="root-branch" d="M 130,2 Q 131,12 129,22" stroke="#93F9A1" stroke-width="1" stroke-linecap="round" opacity="0.85"/>
+            <!-- Left Primary Root -->
+            <path class="root-path" d="M 130,2 Q 95,2 60,4 Q 30,5 0,3" stroke="url(#root-grad)" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- Left Root Sub-branches -->
+            <path class="root-branch" d="M 85,3 Q 72,10 55,14" stroke="#E9DFC9" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/>
+            <path class="root-branch" d="M 45,4 Q 35,9 20,8" stroke="#E9DFC9" stroke-width="0.75" stroke-linecap="round" opacity="0.6"/>
+            <!-- Right Primary Root -->
+            <path class="root-path" d="M 130,2 Q 165,2 200,4 Q 230,5 260,3" stroke="url(#root-grad)" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- Right Root Sub-branches -->
+            <path class="root-branch" d="M 175,3 Q 188,10 205,14" stroke="#E9DFC9" stroke-width="0.8" stroke-linecap="round" opacity="0.75"/>
+            <path class="root-branch" d="M 215,4 Q 225,9 240,8" stroke="#E9DFC9" stroke-width="0.75" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </div>
+
+        <!-- Tagline: "Growing Better, Naturally." (1.0s – 1.25s) -->
+        <p class="preloader-tagline mt-1.5 sm:mt-2 text-center font-body-md text-xs sm:text-[13px] font-medium tracking-[0.18em]" style="color: #E9DFC9;">
+          Growing Better, Naturally.
+        </p>
+
+      </div>
+    </div>
+    
+    <!-- ==================== HEADER ==================== -->
+    <header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-variant">
     <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop h-20 flex items-center justify-between gap-space-md">
       <div class="flex items-center gap-space-sm">
         <a class="flex items-center gap-space-sm group" data-path="about" href="#" aria-label="Coco Craft Exports Home">
@@ -1256,6 +1524,48 @@
         mobileMenu.classList.toggle('hidden');
       });
     }
+
+    // ==================== PRELOADER ORCHESTRATION ====================
+    (function () {
+      const preloader = document.getElementById('coir-growth-preloader');
+      if (!preloader) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const startTime = performance.now();
+      
+      // Target animation duration: 1.35s - 1.5s (or ~180ms for reduced motion)
+      const minDisplayDuration = prefersReducedMotion ? 180 : 1350;
+      const maxSafetyTimeout = prefersReducedMotion ? 350 : 2000;
+
+      function dissolvePreloader() {
+        if (preloader.classList.contains('preloader-dissolve')) return;
+        preloader.classList.add('preloader-dissolve');
+        
+        // Remove from DOM and accessibility tree once dissolve animation completes
+        setTimeout(() => {
+          preloader.setAttribute('aria-hidden', 'true');
+          preloader.style.display = 'none';
+          if (preloader.parentNode) {
+            preloader.parentNode.removeChild(preloader);
+          }
+        }, 450);
+      }
+
+      function onPageReady() {
+        const elapsed = performance.now() - startTime;
+        const remaining = Math.max(0, minDisplayDuration - elapsed);
+        setTimeout(dissolvePreloader, remaining);
+      }
+
+      if (document.readyState === 'complete') {
+        onPageReady();
+      } else {
+        window.addEventListener('load', onPageReady, { once: true });
+      }
+
+      // Hard safety timeout fallback: never keep the user waiting past 2 seconds
+      setTimeout(dissolvePreloader, maxSafetyTimeout);
+    })();
   </script>
 </body>
 </html>
