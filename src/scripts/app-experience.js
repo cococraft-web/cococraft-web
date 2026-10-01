@@ -6,7 +6,9 @@
 
 import Lenis from 'lenis';
 
-document.addEventListener('DOMContentLoaded', () => {
+let lenisInstance = null;
+
+function bootMasterExperience() {
   initLenisSmoothScroll();
   initScrollProgressBar();
   initAmbientCursorGlow();
@@ -17,13 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initGlobalHeaderScroll();
   initMobileNavDrawer();
   initSmoothAnchorScrolling();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootMasterExperience);
+} else {
+  bootMasterExperience();
+}
 
 /* ==========================================================================
    1. LENIS MOMENTUM SMOOTH SCROLLING
    ========================================================================== */
-let lenisInstance = null;
-
 function initLenisSmoothScroll() {
   // Check if user prefers reduced motion
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -32,7 +38,7 @@ function initLenisSmoothScroll() {
   }
 
   try {
-    lenisInstance = new Lenis({
+    const instance = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential ease-out
       orientation: 'vertical',
@@ -43,11 +49,14 @@ function initLenisSmoothScroll() {
       infinite: false,
     });
 
-    window.lenis = lenisInstance;
+    lenisInstance = instance;
+    window.lenis = instance;
 
     function raf(time) {
-      lenisInstance.raf(time);
-      requestAnimationFrame(raf);
+      if (lenisInstance) {
+        lenisInstance.raf(time);
+        requestAnimationFrame(raf);
+      }
     }
     requestAnimationFrame(raf);
 
@@ -57,6 +66,11 @@ function initLenisSmoothScroll() {
     });
   } catch (err) {
     console.warn('Lenis smooth scroll fallback to native smooth:', err);
+    if (lenisInstance && typeof lenisInstance.destroy === 'function') {
+      lenisInstance.destroy();
+    }
+    lenisInstance = null;
+    window.lenis = null;
     document.documentElement.style.scrollBehavior = 'smooth';
     window.addEventListener('scroll', () => {
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -159,13 +173,13 @@ function initViewportReveals() {
   const revealObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
+        entry.target.classList.add('is-revealed', 'is-visible');
         // If it's a stagger container, stagger children
         if (entry.target.classList.contains('reveal-stagger')) {
           const children = entry.target.querySelectorAll('.stagger-item');
           children.forEach((child, index) => {
             setTimeout(() => {
-              child.classList.add('is-revealed');
+              child.classList.add('is-revealed', 'is-visible');
             }, index * 90);
           });
         }
@@ -326,35 +340,77 @@ function initGlobalHeaderScroll() {
 }
 
 /* ==========================================================================
-   9. MOBILE NAVIGATION DRAWER
+   9. MOBILE & TABLET NAVIGATION DRAWER
    ========================================================================== */
 function initMobileNavDrawer() {
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('mobile-menu-btn') || document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu') || document.getElementById('mobile-menu-drawer');
   if (!btn || !menu) return;
 
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isHidden = menu.classList.contains('hidden');
-    if (isHidden) {
-      menu.classList.remove('hidden');
-      menu.classList.add('flex', 'animate-fade-in-down');
-      const icon = btn.querySelector('.material-symbols-outlined');
-      if (icon) icon.textContent = 'close';
+  btn.setAttribute('type', 'button');
+  btn.setAttribute('aria-expanded', 'false');
+
+  let isOpen = false;
+
+  const openDrawer = () => {
+    isOpen = true;
+    menu.classList.add('is-open');
+    menu.classList.remove('hidden');
+    document.body.classList.add('mobile-drawer-open');
+    btn.setAttribute('aria-expanded', 'true');
+    if (window.lenis && typeof window.lenis.stop === 'function') {
+      window.lenis.stop();
+    }
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (icon) icon.textContent = 'close';
+  };
+
+  const closeDrawer = () => {
+    isOpen = false;
+    menu.classList.remove('is-open');
+    menu.classList.add('hidden');
+    document.body.classList.remove('mobile-drawer-open');
+    btn.setAttribute('aria-expanded', 'false');
+    if (window.lenis && typeof window.lenis.start === 'function') {
+      window.lenis.start();
+    }
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (icon) icon.textContent = 'menu';
+  };
+
+  const toggleDrawer = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (isOpen) {
+      closeDrawer();
     } else {
-      menu.classList.add('hidden');
-      menu.classList.remove('flex', 'animate-fade-in-down');
-      const icon = btn.querySelector('.material-symbols-outlined');
-      if (icon) icon.textContent = 'menu';
+      openDrawer();
+    }
+  };
+
+  // Direct onclick handler prevents duplicate event listener conflicts
+  btn.onclick = toggleDrawer;
+
+  // Close when tapping any link inside the mobile drawer
+  menu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      closeDrawer();
+    });
+  });
+
+  // Close when tapping outside the menu
+  document.addEventListener('click', (e) => {
+    if (isOpen && !menu.contains(e.target) && !btn.contains(e.target)) {
+      closeDrawer();
     }
   });
 
-  document.addEventListener('click', (e) => {
-    if (!menu.contains(e.target) && !btn.contains(e.target) && !menu.classList.contains('hidden')) {
-      menu.classList.add('hidden');
-      menu.classList.remove('flex');
-      const icon = btn.querySelector('.material-symbols-outlined');
-      if (icon) icon.textContent = 'menu';
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      closeDrawer();
     }
   });
 }

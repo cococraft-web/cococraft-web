@@ -30,9 +30,13 @@
   --font-headings: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* Cute Coconut Custom Cursor Tokens */
+  --cursor-default: url('/assets/cursor/cute-coconut-cursor-32.png') 3 0, auto;
+  --cursor-pointer: url('/assets/cursor/cute-coconut-pointer-32.png') 10 0, pointer;
 }
 
-/* Base Resets & Global Typography */
+/* Base Resets & Global Typography with Custom Cute Coconut Cursor */
 html {
   scroll-behavior: smooth;
   background-color: var(--warm-offwhite);
@@ -41,6 +45,7 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: var(--cursor-default);
 }
 
 body {
@@ -50,6 +55,66 @@ body {
   min-height: 100vh;
   background-color: var(--warm-offwhite);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  cursor: var(--cursor-default);
+}
+
+/* Cute Coconut Pointer Cursor on all interactive and clickable elements */
+a,
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+summary,
+label[for],
+[data-action],
+[data-msg],
+[onclick],
+.cursor-pointer,
+.btn-primary,
+.btn-secondary,
+.btn-outline-dark,
+#cc-launcher,
+.cc-btn,
+.cc-quick,
+.cc-x-btn,
+.cc-send,
+.cc-inline,
+.cc-li {
+  cursor: var(--cursor-pointer);
+}
+
+/* Disabled elements retain not-allowed cursor */
+:disabled,
+[disabled],
+[aria-disabled="true"],
+.disabled,
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+/* Respect system cursor on prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html, body {
+    cursor: auto !important;
+  }
+  a, button, [role="button"], select, summary, label[for], .cursor-pointer {
+    cursor: pointer !important;
+  }
+}
+
+/* Text Inputs retain text cursor for typing */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+textarea {
+  cursor: text;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -316,6 +381,54 @@ body.page-loaded .hero-delay-media { transition-delay: 0.9s; }
               border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Nav Link Item Professional Animation & Typography */
+.nav-link-item {
+  position: relative;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  letter-spacing: 0.02em;
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.5rem;
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease, background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #16833A, #93F9A1);
+  border-radius: 9999px;
+  transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), left 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.nav-link-item:hover::after,
+.nav-link-item.active::after {
+  width: 65%;
+}
+
+.nav-link-item:hover {
+  transform: translateY(-1px);
+}
+
+.topbar-cta {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0.04em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.topbar-cta:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 14px rgba(22, 131, 58, 0.25);
+}
+
 /* Default Topbar on standard pages */
 .site-header.header-default {
   background-color: rgba(246, 251, 244, 0.94);
@@ -332,10 +445,14 @@ body.page-loaded .hero-delay-media { transition-delay: 0.9s; }
   box-shadow: none !important;
 }
 .site-header.hero-transparent .nav-link-item {
-  color: rgba(246, 251, 244, 0.88);
+  color: rgba(246, 251, 244, 0.90);
 }
 .site-header.hero-transparent .nav-link-item:hover {
   color: #93F9A1;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+.site-header.hero-transparent .nav-link-item::after {
+  background: linear-gradient(90deg, #93F9A1, #FFFFFF);
 }
 .site-header.hero-transparent .topbar-cta {
   background-color: rgba(255, 255, 255, 0.12);
@@ -353,6 +470,86 @@ body.page-loaded .hero-delay-media { transition-delay: 0.9s; }
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+/* ==========================================================================
+   MOBILE & TABLET NAVIGATION DRAWER
+   ========================================================================== */
+#mobile-menu {
+  display: none;
+  background-color: #ffffff !important;
+  border-bottom: 2px solid #dfe4dd !important;
+  box-shadow: 0 20px 40px -4px rgba(0, 0, 0, 0.18) !important;
+  padding: 1.25rem 1.5rem !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  z-index: 9999 !important;
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#mobile-menu.is-open {
+  display: flex !important;
+  animation: mobileMenuFade 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mobileMenuFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#mobile-menu a {
+  color: #181d19 !important;
+  font-weight: 600 !important;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+}
+
+#mobile-menu a:hover {
+  background-color: #f0fdf4 !important;
+  color: #16833a !important;
+}
+
+#mobile-menu a.mobile-cta,
+#mobile-menu a[href*="quote"] {
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, #16833a, #0c5c28) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  justify-content: center;
+  padding: 0.75rem 1rem !important;
+}
+
+#mobile-menu-btn {
+  cursor: pointer;
+  position: relative;
+  z-index: 100;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+@media (min-width: 1280px) {
+  #mobile-menu,
+  #mobile-menu-btn {
+    display: none !important;
+  }
+}
+
+/* Mobile Menu Drawer Open Scroll Lock */
+body.mobile-drawer-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
 /* Scrolled Header State on index.html (Fades into view on scroll) */
 .site-header.hero-scrolled {
   background-color: rgba(246, 251, 244, 0.95) !important;
@@ -366,6 +563,7 @@ body.page-loaded .hero-delay-media { transition-delay: 0.9s; }
 }
 .site-header.hero-scrolled .nav-link-item:hover {
   color: #301101;
+  background-color: rgba(0, 110, 44, 0.06);
 }
 .site-header.hero-scrolled .topbar-cta {
   background-color: #301101;
