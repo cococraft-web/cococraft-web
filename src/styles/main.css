@@ -429,3 +429,48 @@ body.page-loaded .hero-delay-media { transition-delay: 0.9s; }
     scroll-behavior: auto !important;
   }
 }
+
+/* ==================== COMPLETE CROP SOLUTIONS SECTION ==================== */
+.crop-tab-btn {
+  background-color: #ebefe8;
+  color: #181d19;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.crop-tab-btn:hover {
+  background-color: #dfe4dd;
+  color: #301101;
+}
+.crop-tab-btn.active {
+  background-color: #006e2c !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 110, 44, 0.28);
+}
+
+.crop-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, background-color 0.25s ease;
+}
+.crop-card:hover {
+  transform: translateY(-8px);
+}
+.crop-card:hover img {
+  transform: scale(1.08);
+}
+.crop-card img {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.crop-panel-transition {
+  animation: cropFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cropFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
