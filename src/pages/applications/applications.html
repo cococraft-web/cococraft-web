@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Applications | Coco Craft Exports — Horticultural &amp; Industrial Solutions</title>
+  <meta name="description" content="Discover commercial applications of Coco Craft Exports substrates: Greenhouse vegetables, berry tabletop systems, nurseries, orchids, hydroponics, and erosion control." />
+  
+  <link rel="icon" type="image/svg+xml" href="/assets/logo/coco-craft-logo.svg" />
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <style>
+    @layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = { 
+      darkMode: "class", 
+      theme: { 
+        extend: { 
+          colors: { 
+            "surface": "#f6fbf4", "surface-dim": "#d7dbd5", "surface-container-lowest": "#ffffff", "surface-container-low": "#f0f5ee", "surface-container": "#ebefe8", "surface-container-high": "#e5e9e3", "surface-container-highest": "#dfe4dd", "on-surface": "#181d19", "on-surface-variant": "#51443e", "primary": "#301101", "primary-container": "#4a250f", "on-primary": "#ffffff", "secondary": "#006e2c", "on-secondary": "#ffffff", "secondary-container": "#93f9a1", "on-secondary-container": "#00742f", "secondary-fixed": "#93f9a1", "outline": "#84746d", "outline-variant": "#d6c3ba", "background": "#f6fbf4", "surface-variant": "#dfe4dd" 
+          }, 
+          borderRadius: { "sm": "0.25rem", "DEFAULT": "0.5rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "gutter": "1.5rem", "gutter-desktop": "2rem", "space-xs": "0.5rem", "space-sm": "0.75rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem", "space-2xl": "4rem", "space-3xl": "6rem" },
+          fontFamily: { "display-xl": ["Manrope", "sans-serif"], "headline-lg": ["Manrope", "sans-serif"], "headline-md": ["Manrope", "sans-serif"], "title-lg": ["Manrope", "sans-serif"], "body-lg": ["Inter", "sans-serif"], "body-md": ["Inter", "sans-serif"], "body-sm": ["Inter", "sans-serif"], "technical-code": ["Inter", "monospace"] }
+        } 
+      } 
+    };
+  </script>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
+
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-variant">
+    <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop h-20 flex items-center justify-between gap-space-md">
+      <div class="flex items-center gap-space-sm">
+        <a class="flex items-center gap-space-sm group" href="/" aria-label="Coco Craft Exports Home">
+          <img alt="Coco Craft Exports Official Logo" class="h-12 sm:h-14 lg:h-16 w-auto object-contain transition-transform group-hover:scale-105" src="/assets/logo/coco-craft-exports-official.png"/>
+        </a>
+      </div>
+      <nav class="hidden xl:flex items-center gap-space-lg">
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/about/about.html">About</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/products/products.html">Products</a>
+        <a class="font-label-md text-label-md text-primary font-bold border-b-2 border-secondary py-2" href="/applications/applications.html">Applications</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/manufacturing.html">Manufacturing</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/sustainability.html">Sustainability</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/global-reach.html">Global Reach</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/gallery.html">Gallery</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/contact/contact.html">Contact</a>
+      </nav>
+      <div class="flex items-center gap-space-md">
+        <a class="hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact/contact.html">
+          <span class="font-technical-code text-technical-code uppercase tracking-wider">REQUEST A QUOTE</span>
+          <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+        </a>
+        <button id="mobile-menu-btn" class="xl:hidden p-2 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors" aria-label="Toggle menu">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile dropdown menu -->
+    <div id="mobile-menu" class="hidden xl:hidden bg-surface border-b border-surface-variant px-gutter py-4 flex flex-col gap-3">
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/about/about.html">About</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/products/products.html">Products</a>
+      <a class="font-label-md text-primary font-bold py-2" href="/applications/applications.html">Applications</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/company/manufacturing.html">Manufacturing</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/company/sustainability.html">Sustainability</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/company/global-reach.html">Global Reach</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/company/gallery.html">Gallery</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/contact/contact.html">Contact</a>
+      <a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase" href="/contact/contact.html">
+        REQUEST A QUOTE
+      </a>
+    </div>
+  </header>
+
+  <main class="w-full pt-20 bg-background">
+    <!-- Page Hero Banner -->
+    <section class="relative w-full bg-primary text-on-primary py-16 lg:py-24 px-gutter lg:px-gutter-desktop overflow-hidden">
+      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-secondary/15 blur-3xl pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto flex flex-col gap-4 relative z-10">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary-container text-secondary-fixed font-technical-code text-technical-code tracking-wider uppercase w-fit">
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+          COMMERCIAL SOLUTIONS
+        </span>
+        <h1 class="font-display-xl text-display-xl font-extrabold text-surface tracking-tight">
+          PROVEN SUBSTRATE PERFORMANCE FOR GLOBAL CROPS
+        </h1>
+        <p class="font-body-lg text-body-lg text-surface/80 max-w-3xl">
+          Engineered root zone dynamics for professional growers. Whether controlling root zone temperature in European glasshouses or accelerating vegetative growth in Asian tabletop orchards, our tailored coir blends deliver predictable agronomic outcomes.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Applications Grid -->
+    <section class="w-full py-space-3xl px-gutter lg:px-gutter-desktop bg-surface">
+      <div class="max-w-7xl mx-auto flex flex-col gap-space-2xl">
+        
+        <!-- App 1: Commercial Greenhouse Vine Crops -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center border-b border-surface-variant pb-space-2xl">
+          <div class="lg:col-span-5 rounded-xl overflow-hidden shadow-md border border-surface-variant h-80 lg:h-[380px]">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTHiPqhhR5qiba43VKDsh37Jm6Tu6yWvouwZO2UERu8UlT0HfJ9wnPSTHmjL1r0YxbUzPcNE8uwsBG9zCvcWHFKaQJ5u2Nl1vwSexWD4WMOfEmmnOPTrcVSxXimA71TxJxTt2mJYSJOpgBFQrMjqNxuAiV05XgHcRXGqRvUYnERxUJ8RC6wncTQM-2KVFYz7Yb6ocCDMWr6xKQaMyZNZQdPuFJ8xe-9PDoxQNaRtDqbBf2xxhhRtOF" alt="High-Tech Greenhouse Vine Crops" />
+          </div>
+          <div class="lg:col-span-7 flex flex-col gap-space-md">
+            <span class="font-technical-code text-technical-code uppercase text-secondary font-bold tracking-widest">01 / COMMERCIAL GREENHOUSES</span>
+            <h2 class="font-headline-lg text-headline-lg text-primary font-bold">Tomatoes, Cucumbers &amp; Bell Peppers</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Commercial vine crops demand high aeration around roots, fast drainage between automated irrigation pulses, and stable physical structure that resists breakdown over a full 10-12 month harvest cycle.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-surface-container p-4 rounded-xl font-technical-code text-technical-code">
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Recommended Substrate</span>
+                <span class="text-primary font-bold">Hydroponic Grow Slabs (70/30 Blend)</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Target EC</span>
+                <span class="text-primary font-bold">&lt; 0.5 mS/cm Washed</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Key Agronomic Advantage</span>
+                <span class="text-primary font-bold">Prevent Blossom End Rot</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 2: Soft Fruits & Berries -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center border-b border-surface-variant pb-space-2xl">
+          <div class="lg:col-span-5 rounded-xl overflow-hidden shadow-md border border-surface-variant h-80 lg:h-[380px] lg:order-2">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3KPM7HlSSZO7-bbs8-bWmhE51Wq0r1a5iccfDfTj8Ps50wlszvSZvjIMbYZYtrsriE5dTUXy_-tby67ozTv4VaQAqhv1f5YCWg5qaZmm4v4I8el5Z_pPQGd19GeB0KRF9yPCa8JmvbCuzTCD-LLXlKnnwfVqRJJYaxV-3ajUSHrLvebBFBgzbn37TWN2GJYfPGvga_Q8ak_AESItvLyEfOCx8dOndFiXpI4t2imJTcfaSM5dThM1U" alt="Soft Fruits and Berries Cultivation" />
+          </div>
+          <div class="lg:col-span-7 flex flex-col gap-space-md lg:order-1">
+            <span class="font-technical-code text-technical-code uppercase text-secondary font-bold tracking-widest">02 / SOFT FRUIT SYSTEMS</span>
+            <h2 class="font-headline-lg text-headline-lg text-primary font-bold">Strawberries, Blueberries &amp; Raspberries</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Tabletop raised gutters and berry pots require rapid drainage and protection against root suffocation. Our buffered coir mixtures displace excess sodium and potassium with calcium and magnesium, creating ideal electrical equilibrium for sensitive berry root hairs.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-surface-container p-4 rounded-xl font-technical-code text-technical-code">
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Recommended Substrate</span>
+                <span class="text-primary font-bold">Easy-Fill Grow Bags / 60:40 Blend</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Buffering Status</span>
+                <span class="text-primary font-bold">Super Buffered (Ca(NO3)2 Treated)</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Key Agronomic Advantage</span>
+                <span class="text-primary font-bold">Active White Root Proliferation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 3: Commercial Wholesale Nurseries -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center border-b border-surface-variant pb-space-2xl">
+          <div class="lg:col-span-5 rounded-xl overflow-hidden shadow-md border border-surface-variant h-80 lg:h-[380px]">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXOemXu8yhx7Ju2AQGx3vv4xRK5QJqMe1KWMNOYOoEGOP-Wu30X__6lahuU2ZkcTzdGKspxs4oQ7qdtc8ecAHQ7mEgiVzYP1ZUJUZYTC1Rs2rxneWS06EOI-HdtkB21slrJBt-vhIwj4EmSjRqMkEfxbMBtN_NXhEMXNUGiGX3YgtVHPd6-TMAfcwdGfxBjI9iIuXF6MFEMasfhkGz03iWLRwfZwvjdIxFqxLh1OzB2Bsn0_0HQVKX" alt="Commercial Wholesale Nurseries" />
+          </div>
+          <div class="lg:col-span-7 flex flex-col gap-space-md">
+            <span class="font-technical-code text-technical-code uppercase text-secondary font-bold tracking-widest">03 / SEEDLING PROPAGATION &amp; NURSERIES</span>
+            <h2 class="font-headline-lg text-headline-lg text-primary font-bold">Wholesale Propagation &amp; Ornamental Potted Plants</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Coir pith’s high cation exchange capacity (CEC) and sponge-like moisture capillary action ensure seeds and saplings never dry out during shipping or bench holding, cutting irrigation frequency by up to 35% compared to peat moss.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-surface-container p-4 rounded-xl font-technical-code text-technical-code">
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Recommended Substrate</span>
+                <span class="text-primary font-bold">5KG Blocks / 650g Briquettes</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">pH Stability</span>
+                <span class="text-primary font-bold">5.8 – 6.5 Constant Buffer</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Key Agronomic Advantage</span>
+                <span class="text-primary font-bold">35% Water Conservation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- App 4: Orchids & Floriculture -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+          <div class="lg:col-span-5 rounded-xl overflow-hidden shadow-md border border-surface-variant h-80 lg:h-[380px] lg:order-2">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Ezih5PPnIGegk3M1KZedrSrQgQAJBYRlU-Ct17oux0DTauDNrju8bAEgIuWMwMjpPSi4KKfZejFSHOkP79MSXte7XPXgOcQPspHR2dsIB_KE-LJYbdRH61mMTOKUHiqNjwFHSBdr5CP7BWaM2-BUuE8yvDrjxyV2uCQ41PaHqwWei8hJrobqTQ8Cu-RsAHXJ83t4R5LP07M8RNSxkahkQes1MdQ_2PrWywySWGHYcZIIb1cAqPwr" alt="Orchids and Floriculture Substrates" />
+          </div>
+          <div class="lg:col-span-7 flex flex-col gap-space-md lg:order-1">
+            <span class="font-technical-code text-technical-code uppercase text-secondary font-bold tracking-widest">04 / FLORICULTURE &amp; EPIPHYTES</span>
+            <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight">Orchids, Anthuriums &amp; Epiphytic Plants</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Epiphytic and delicate flowering varieties perish in compacted or waterlogged media. Our uniformly graded coconut husk chips (Medium and Large) replicate natural tree-bark aeration, allowing roots to grip securely while draining excess moisture instantaneously.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-surface-container p-4 rounded-xl font-technical-code text-technical-code">
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Recommended Substrate</span>
+                <span class="text-primary font-bold">Washed Coir Husk Chips (10-18mm)</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Air-Filled Porosity</span>
+                <span class="text-primary font-bold">40% – 50%</span>
+              </div>
+              <div>
+                <span class="text-outline uppercase text-[11px] block">Key Agronomic Advantage</span>
+                <span class="text-primary font-bold">Zero Root Rot / Long Lifespan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Bottom Requisition Banner -->
+    <section class="w-full py-16 px-gutter lg:px-gutter-desktop bg-primary text-on-primary text-center">
+      <div class="max-w-4xl mx-auto flex flex-col items-center gap-6">
+        <h2 class="font-headline-lg text-headline-lg text-surface font-extrabold tracking-tight">NEED AN AGRONOMIC BLEND FOR YOUR SPECIFIC CROP?</h2>
+        <p class="font-body-lg text-body-lg text-surface/80 max-w-2xl">We formulate custom air-filled porosity levels, tailored slab lengths, and customized buffering for enterprise grower networks.</p>
+        <a class="px-8 py-3.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-bold uppercase tracking-wider shadow-lg hover:bg-on-secondary-container transition-all" href="/contact/contact.html">
+          CONSULT WITH OUR EXPORT DESK →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-surface-container-low border-t border-surface-variant">
+    <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop py-space-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-xl border-b border-surface-variant">
+        <div class="lg:col-span-2 flex flex-col gap-space-md">
+          <div class="flex items-center gap-space-sm">
+            <img alt="Coco Craft Exports Official Logo" class="h-10 w-auto object-contain" src="/assets/logo/coco-craft-exports-official.png"/>
+            <span class="font-technical-code text-technical-code px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant">IND-EX-9482</span>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface-variant max-w-md">Precision-engineered coir peat, husk chips, and sustainable horticultural substrates processed in Pollachi, Tamil Nadu, adhering strictly to global phytosanitary standards.</p>
+        </div>
+        <div class="flex flex-col gap-space-sm">
+          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Navigation</h3>
+          <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
+            <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Products Catalogue</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/applications/applications.html">Applications</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">Manufacturing</a></li>
+          </ul>
+        </div>
+        <div class="flex flex-col gap-space-sm">
+          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Operations</h3>
+          <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
+            <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/global-reach.html">Global Logistics</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Visual Archive</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/contact/contact.html">Request a Quote</a></li>
+          </ul>
+        </div>
+        <div class="flex flex-col gap-space-sm">
+          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Export Desk</h3>
+          <div class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
+            <p class="text-on-surface font-semibold">Global Procurement Desk</p>
+            <p>export@cococraftexports.com</p>
+            <p>+91 (4259) 298-410</p>
+            <p>Tamil Nadu, India</p>
+          </div>
+        </div>
+      </div>
+      <div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm font-body-sm text-body-sm text-on-surface-variant">
+        <p>© 2026 Coco Craft Exports Pvt Ltd. All rights reserved.</p>
+        <div class="flex items-center gap-space-md font-technical-code text-technical-code">
+          <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+          <span>•</span>
+          <a class="hover:text-primary transition-colors" href="#">Terms of Trade</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  </script>
+</body>
+</html>

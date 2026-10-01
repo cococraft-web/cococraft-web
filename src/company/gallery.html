@@ -9,8 +9,9 @@
   <link rel="icon" type="image/svg+xml" href="/assets/logo/coco-craft-logo.svg" />
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles/main.css"/>
 
   <style>
     @layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } }
@@ -48,7 +49,7 @@
           }, 
           borderRadius: { "sm": "0.25rem", "DEFAULT": "0.5rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
           spacing: { "gutter": "1.5rem", "gutter-desktop": "2rem", "space-xs": "0.5rem", "space-sm": "0.75rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem", "space-2xl": "4rem", "space-3xl": "6rem" },
-          fontFamily: { "display-xl": ["Manrope", "sans-serif"], "headline-lg": ["Manrope", "sans-serif"], "headline-md": ["Manrope", "sans-serif"], "title-lg": ["Manrope", "sans-serif"], "body-lg": ["Inter", "sans-serif"], "body-md": ["Inter", "sans-serif"], "body-sm": ["Inter", "sans-serif"], "technical-code": ["Inter", "monospace"] }
+          fontFamily: { "display-xl": ["Outfit", "Plus Jakarta Sans", "sans-serif"], "headline-lg": ["Plus Jakarta Sans", "sans-serif"], "headline-md": ["Plus Jakarta Sans", "sans-serif"], "title-lg": ["Plus Jakarta Sans", "sans-serif"], "body-lg": ["Inter", "sans-serif"], "body-md": ["Inter", "sans-serif"], "body-sm": ["Inter", "sans-serif"], "technical-code": ["JetBrains Mono", "monospace"], "label-md": ["Plus Jakarta Sans", "sans-serif"] }
         } 
       } 
     };
@@ -57,25 +58,25 @@
 <body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
 
   <!-- Header -->
-  <header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-variant">
+  <header class="site-header header-default fixed top-0 inset-x-0 z-50">
     <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop h-20 flex items-center justify-between gap-space-md">
       <div class="flex items-center gap-space-sm">
-        <a class="flex items-center gap-space-sm group" href="/index.html" aria-label="Coco Craft Exports Home">
-          <img alt="Coco Craft Exports Official Logo" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" src="/assets/logo/coco-craft-exports-official.png"/>
+        <a class="flex items-center gap-space-sm group" href="/" aria-label="Coco Craft Exports Home">
+          <img alt="Coco Craft Exports Official Logo" class="h-12 sm:h-14 lg:h-16 w-auto object-contain transition-transform group-hover:scale-105" src="/assets/logo/coco-craft-exports-official.png"/>
         </a>
       </div>
       <nav class="hidden xl:flex items-center gap-space-lg">
-        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/about.html">About</a>
-        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/products.html">Products</a>
-        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/applications.html">Applications</a>
-        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/manufacturing.html">Manufacturing</a>
-        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/sustainability.html">Sustainability</a>
-        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/global-reach.html">Global Reach</a>
-        <a class="font-label-md text-label-md text-primary font-bold border-b-2 border-secondary py-2" href="/gallery.html">Gallery</a>
-        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/contact.html">Contact</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/about/about.html">About</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/products/products.html">Products</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/applications/applications.html">Applications</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/manufacturing.html">Manufacturing</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/sustainability.html">Sustainability</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/global-reach.html">Global Reach</a>
+        <a class="font-label-md text-label-md text-primary font-bold border-b-2 border-secondary py-2" href="/company/gallery.html">Gallery</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/contact/contact.html">Contact</a>
       </nav>
       <div class="flex items-center gap-space-md">
-        <a class="hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact.html">
+        <a class="hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact/contact.html">
           <span class="font-technical-code text-technical-code uppercase tracking-wider">REQUEST A QUOTE</span>
           <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
         </a>
@@ -86,15 +87,15 @@
     </div>
     <!-- Mobile dropdown menu -->
     <div id="mobile-menu" class="hidden xl:hidden bg-surface border-b border-surface-variant px-gutter py-4 flex flex-col gap-3">
-      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/about.html">About</a>
-      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/products.html">Products</a>
-      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/applications.html">Applications</a>
-      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/manufacturing.html">Manufacturing</a>
-      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/sustainability.html">Sustainability</a>
-      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/global-reach.html">Global Reach</a>
-      <a class="font-label-md text-primary font-bold py-2" href="/gallery.html">Gallery</a>
-      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/contact.html">Contact</a>
-      <a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase" href="/contact.html">
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/about/about.html">About</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/products/products.html">Products</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/applications/applications.html">Applications</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/company/manufacturing.html">Manufacturing</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/company/sustainability.html">Sustainability</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/company/global-reach.html">Global Reach</a>
+      <a class="font-label-md text-primary font-bold py-2" href="/company/gallery.html">Gallery</a>
+      <a class="font-label-md text-on-surface hover:text-primary py-2" href="/contact/contact.html">Contact</a>
+      <a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase" href="/contact/contact.html">
         REQUEST A QUOTE
       </a>
     </div>
@@ -278,10 +279,10 @@
         <h2 class="font-headline-lg text-headline-lg text-surface font-extrabold tracking-tight">EXPERIENCE OUR PRODUCTION STANDARDS FIRST-HAND</h2>
         <p class="font-body-lg text-body-lg text-surface/80 max-w-2xl">We welcome physical facility visits and provide pre-shipment video verification for international buyers.</p>
         <div class="flex flex-wrap items-center justify-center gap-4">
-          <a class="px-8 py-3.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-bold uppercase tracking-wider shadow-lg hover:bg-on-secondary-container transition-all" href="/contact.html">
+          <a class="px-8 py-3.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-bold uppercase tracking-wider shadow-lg hover:bg-on-secondary-container transition-all" href="/contact/contact.html">
             REQUEST FACTORY VISIT OR SAMPLES →
           </a>
-          <a class="px-8 py-3.5 rounded-lg bg-surface/10 text-surface font-label-md text-label-md font-bold uppercase tracking-wider hover:bg-surface/20 transition-all border border-surface/20" href="/manufacturing.html">
+          <a class="px-8 py-3.5 rounded-lg bg-surface/10 text-surface font-label-md text-label-md font-bold uppercase tracking-wider hover:bg-surface/20 transition-all border border-surface/20" href="/company/manufacturing.html">
             VIEW 6-STAGE PROCESS
           </a>
         </div>
@@ -303,19 +304,19 @@
         <div class="flex flex-col gap-space-sm">
           <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Navigation</h3>
           <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
-            <li><a class="hover:text-primary transition-colors" href="/about.html">About Us</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/products.html">Products Catalogue</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/applications.html">Applications</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/manufacturing.html">Manufacturing</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Products Catalogue</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/applications/applications.html">Applications</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">Manufacturing</a></li>
           </ul>
         </div>
         <div class="flex flex-col gap-space-sm">
           <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Operations</h3>
           <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
-            <li><a class="hover:text-primary transition-colors" href="/sustainability.html">Sustainability</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/global-reach.html">Global Logistics</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/gallery.html">Visual Archive</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/contact.html">Request a Quote</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/global-reach.html">Global Logistics</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Visual Archive</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/contact/contact.html">Request a Quote</a></li>
           </ul>
         </div>
         <div class="flex flex-col gap-space-sm">
