@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="/styles/main.css"/>
 
   <style>
-    @layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } }
+    @layer base { html, body { margin: 0; padding: 0; } }
     ::-webkit-scrollbar { display: none; }
   </style>
 
@@ -47,7 +47,7 @@
             "background": "#f6fbf4", 
             "surface-variant": "#dfe4dd" 
           }, 
-          borderRadius: { "sm": "0.25rem", "DEFAULT": "0.5rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          borderRadius: { "sm": "0.25rem", "DEFAULT": "0.5rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px" },
           spacing: { "gutter": "1.5rem", "gutter-desktop": "2rem", "space-xs": "0.5rem", "space-sm": "0.75rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem", "space-2xl": "4rem", "space-3xl": "6rem" },
           fontFamily: { "display-xl": ["Outfit", "Plus Jakarta Sans", "sans-serif"], "headline-lg": ["Plus Jakarta Sans", "sans-serif"], "headline-md": ["Plus Jakarta Sans", "sans-serif"], "title-lg": ["Plus Jakarta Sans", "sans-serif"], "body-lg": ["Inter", "sans-serif"], "body-md": ["Inter", "sans-serif"], "body-sm": ["Inter", "sans-serif"], "technical-code": ["JetBrains Mono", "monospace"], "label-md": ["Plus Jakarta Sans", "sans-serif"] }
         } 
@@ -58,7 +58,7 @@
 <body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
 
   <!-- Header -->
-  <header class="site-header header-default fixed top-0 inset-x-0 z-50">
+  <header class="site-header fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-md border-b border-surface-variant/40">
     <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop h-20 flex items-center justify-between gap-space-md">
       <div class="flex items-center gap-space-sm">
         <a class="flex items-center gap-space-sm group" href="/" aria-label="Coco Craft Exports Home">
@@ -76,9 +76,9 @@
         <a class="font-label-md text-label-md text-primary font-bold border-b-2 border-secondary py-2" href="/contact/contact.html">Contact</a>
       </nav>
       <div class="flex items-center gap-space-md">
-        <a class="hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact/contact.html">
+        <a class="magnetic-btn hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact/contact.html">
           <span class="font-technical-code text-technical-code uppercase tracking-wider">REQUEST A QUOTE</span>
-          <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+          <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
         </a>
         <button id="mobile-menu-btn" class="xl:hidden p-2 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors" aria-label="Toggle menu">
           <span class="material-symbols-outlined text-2xl">menu</span>
@@ -101,21 +101,29 @@
     </div>
   </header>
 
-  <main class="w-full pt-20 bg-background">
-    <!-- Hero Banner -->
-    <section class="relative w-full bg-primary text-on-primary py-16 lg:py-24 px-gutter lg:px-gutter-desktop overflow-hidden">
-      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-secondary/15 blur-3xl pointer-events-none"></div>
-      <div class="max-w-7xl mx-auto flex flex-col gap-4 relative z-10">
-        <span class="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary-container text-secondary-fixed font-technical-code text-technical-code tracking-wider uppercase w-fit">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+  <main class="w-full pt-20 bg-background overflow-hidden">
+    <!-- Hero Banner with Awwwards Dark Luxury Backdrop -->
+    <section class="relative w-full bg-primary text-on-primary py-20 lg:py-28 px-gutter lg:px-gutter-desktop overflow-hidden">
+      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#93f9a1]/10 blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto flex flex-col gap-5 relative z-10">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-secondary/20 border border-secondary/40 text-secondary-fixed font-technical-code text-xs tracking-wider uppercase w-fit">
+          <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
           GLOBAL PROCUREMENT DESK
         </span>
-        <h1 class="font-display-xl text-display-xl font-extrabold text-surface tracking-tight">
+        <h1 class="font-display-xl text-4xl sm:text-5xl lg:text-6xl font-extrabold text-surface tracking-tight leading-[1.08]">
           CONNECT WITH OUR EXPORT SPECIALISTS
         </h1>
-        <p class="font-body-lg text-body-lg text-surface/80 max-w-3xl">
+        <p class="font-body-lg text-lg sm:text-xl text-surface/85 max-w-3xl leading-relaxed">
           Whether you are an international horticultural distributor, commercial greenhouse grower, or substrate mixer, our export desk is ready to assist with container quotes, technical datasheets, custom buffering, and samples.
         </p>
+
+        <!-- Response Guarantee -->
+        <div class="flex items-center gap-3 pt-4 border-t border-white/15 text-xs font-technical-code text-white/80">
+          <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+          <span>GUARANTEED RESPONSE WITHIN 4 BUSINESS HOURS · MULTI-CURRENCY B2B CONTRACTING (USD / EUR / GBP)</span>
+        </div>
       </div>
     </section>
 
@@ -123,354 +131,233 @@
     <section class="w-full py-space-3xl px-gutter lg:px-gutter-desktop bg-surface">
       <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
-        <!-- Left Column: Direct Info & Quick Estimator -->
+        <!-- Left Column: Direct Info & Quick Channels -->
         <div class="lg:col-span-5 flex flex-col gap-8">
           
-          <div class="p-8 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col gap-6">
+          <div class="tilt-card p-8 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col gap-6">
             <h2 class="font-headline-sm text-xl text-primary font-bold">Direct Communication Channels</h2>
             
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-5">
               <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-primary-container text-secondary-fixed flex items-center justify-center shrink-0">
+                <div class="w-11 h-11 rounded-xl bg-primary-container text-secondary-fixed flex items-center justify-center shrink-0">
                   <span class="material-symbols-outlined text-xl">location_on</span>
                 </div>
                 <div>
                   <h4 class="font-bold text-primary text-sm">Processing Plant &amp; Offices</h4>
-                  <p class="font-body-sm text-on-surface-variant text-xs mt-0.5">Pollachi Agro-Industrial Belt, Coimbatore District, Tamil Nadu — 642001 India</p>
+                  <p class="font-body-sm text-on-surface-variant text-xs mt-0.5 leading-relaxed">Pollachi Agro-Industrial Belt, Coimbatore District, Tamil Nadu — 642001 India</p>
+                  <span class="font-technical-code text-[11px] text-secondary mt-1 block">GPS: 10.6580° N, 77.0090° E (Tuticorin Corridor)</span>
                 </div>
               </div>
 
               <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-primary-container text-secondary-fixed flex items-center justify-center shrink-0">
+                <div class="w-11 h-11 rounded-xl bg-primary-container text-secondary-fixed flex items-center justify-center shrink-0">
                   <span class="material-symbols-outlined text-xl">mail</span>
                 </div>
                 <div>
-                  <h4 class="font-bold text-primary text-sm">Export Procurement Desk</h4>
-                  <p class="font-body-sm text-on-surface-variant text-xs mt-0.5">export@cococraftexports.com</p>
-                  <p class="font-body-sm text-on-surface-variant text-xs">trade@cococraftexports.com</p>
+                  <h4 class="font-bold text-primary text-sm">Official Export Enquiries</h4>
+                  <a href="mailto:export@cococraftexports.com" class="font-body-sm text-on-surface-variant text-xs hover:text-secondary transition-colors block mt-0.5">export@cococraftexports.com</a>
+                  <a href="mailto:procurement@cococraftexports.com" class="font-body-sm text-on-surface-variant text-xs hover:text-secondary transition-colors block">procurement@cococraftexports.com</a>
                 </div>
               </div>
 
               <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0">
+                <div class="w-11 h-11 rounded-xl bg-primary-container text-secondary-fixed flex items-center justify-center shrink-0">
                   <span class="material-symbols-outlined text-xl">call</span>
                 </div>
                 <div>
-                  <h4 class="font-bold text-primary text-sm">Telephone &amp; Direct WhatsApp</h4>
+                  <h4 class="font-bold text-primary text-sm">Desk Phone &amp; Global WhatsApp</h4>
                   <p class="font-body-sm text-on-surface-variant text-xs mt-0.5">+91 (4259) 298-410 (Plant Desk)</p>
-                  <p class="font-body-sm text-secondary font-semibold text-xs">+91 94880 12345 (24/7 International Trade)</p>
-                </div>
-              </div>
-
-              <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-primary-container text-secondary-fixed flex items-center justify-center shrink-0">
-                  <span class="material-symbols-outlined text-xl">schedule</span>
-                </div>
-                <div>
-                  <h4 class="font-bold text-primary text-sm">Working Hours</h4>
-                  <p class="font-body-sm text-on-surface-variant text-xs mt-0.5">Monday – Saturday: 08:30 – 19:00 IST (UTC +5:30)</p>
-                  <p class="font-body-sm text-on-surface-variant text-xs">Emergency container tracking available 24/7</p>
+                  <p class="font-body-sm text-secondary font-bold text-xs">+91 94880 12345 (24/7 WhatsApp Export Terminal)</p>
                 </div>
               </div>
             </div>
 
-            <div class="pt-4 border-t border-surface-variant">
-              <a href="https://wa.me/919488012345?text=Hello%20Coco%20Craft%20Exports%20Team%2C%20I%20would%20like%20to%20inquire%20about%20a%20container%20quote." target="_blank" class="w-full inline-flex items-center justify-center gap-2 py-3 rounded-lg bg-secondary text-on-secondary font-label-md text-xs uppercase font-bold tracking-wider hover:bg-on-secondary-container transition-all shadow-sm">
-                <span class="material-symbols-outlined text-lg">chat</span>
-                OPEN DIRECT WHATSAPP CHAT
-              </a>
-            </div>
+            <!-- Direct WhatsApp CTA Button -->
+            <a href="https://wa.me/919488012345" target="_blank" rel="noopener noreferrer" class="magnetic-btn w-full py-3.5 px-4 rounded-xl bg-[#25D366] text-white font-technical-code text-xs uppercase font-bold flex items-center justify-center gap-2 hover:bg-[#20ba59] transition-all shadow-md">
+              <span class="material-symbols-outlined text-lg">chat</span>
+              <span>Connect On WhatsApp Desk Now</span>
+            </a>
           </div>
 
-          <!-- Interactive Quick Container Estimator Widget (Inspired by Remmy Substrates & Vaighai Tools) -->
-          <div class="p-8 rounded-2xl bg-surface-container-low border border-surface-variant flex flex-col gap-4 shadow-sm">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-secondary text-2xl">calculate</span>
-              <h3 class="font-headline-sm text-lg text-primary font-bold">Instant Volume Estimator</h3>
-            </div>
-            <p class="font-body-sm text-on-surface-variant text-xs">Select your product type and number of 40' HC containers to preview cargo tonnage and expansion volume:</p>
-            
-            <div class="flex flex-col gap-3">
-              <div>
-                <label class="block font-technical-code text-xs text-primary uppercase font-semibold mb-1">Product Form</label>
-                <select id="calc-product" class="w-full px-3 py-2 rounded-lg bg-surface border border-surface-variant font-body-sm text-xs">
-                  <option value="5kg">5kg Coir Peat Blocks (Palletized)</option>
-                  <option value="growbag">Hydroponic Grow Bag Slabs</option>
-                  <option value="briquette">650g Compact Briquettes</option>
-                  <option value="loose5kg">5kg Blocks (Floor Loaded / Naked)</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="block font-technical-code text-xs text-primary uppercase font-semibold mb-1">40ft HC Containers</label>
-                <input id="calc-containers" type="number" min="1" max="50" value="1" class="w-full px-3 py-2 rounded-lg bg-surface border border-surface-variant font-body-sm text-xs" />
-              </div>
-
-              <div class="p-4 rounded-xl bg-surface border border-surface-variant flex flex-col gap-2 mt-2">
-                <div class="flex justify-between items-center text-xs">
-                  <span class="text-on-surface-variant">Estimated Total Net Weight:</span>
-                  <span id="est-weight" class="font-technical-code font-bold text-primary">25.0 Metric Tons</span>
-                </div>
-                <div class="flex justify-between items-center text-xs">
-                  <span class="text-on-surface-variant">Estimated Pallets:</span>
-                  <span id="est-pallets" class="font-technical-code font-bold text-primary">20 Pallets (5,000 blocks)</span>
-                </div>
-                <div class="flex justify-between items-center text-xs">
-                  <span class="text-on-surface-variant">Total Expanded Yield:</span>
-                  <span id="est-yield" class="font-technical-code font-bold text-secondary">~375,000 Litres</span>
-                </div>
-              </div>
-            </div>
+          <!-- Port Gate-In SLA Card -->
+          <div class="p-6 rounded-2xl bg-surface-container-low border border-surface-variant flex flex-col gap-3 font-technical-code text-xs">
+            <span class="text-secondary font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">schedule</span>
+              EXPORT DISPATCH SLA
+            </span>
+            <p class="text-on-surface-variant leading-relaxed">
+              Standard 40' High Cube orders are produced, packed, and gated into Tuticorin (V.O.C.) Port terminal within <strong>7–10 days</strong> of contract signing.
+            </p>
           </div>
 
         </div>
 
-        <!-- Right Column: Formal RFQ Form -->
-        <div class="lg:col-span-7 p-8 md:p-10 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-lg flex flex-col gap-6">
-          <div class="flex flex-col gap-1 border-b border-surface-variant pb-4">
-            <span class="font-technical-code text-xs uppercase text-secondary font-bold tracking-wider">OFFICIAL RFQ SPECIFICATION</span>
-            <h2 class="font-headline-lg text-2xl text-primary font-extrabold">REQUEST FOR EXPORT QUOTATION</h2>
-            <p class="font-body-sm text-on-surface-variant">Please provide your technical parameters and port destination. Our export team responds within 24 hours.</p>
-          </div>
-
-          <form id="rfq-form" class="flex flex-col gap-5">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Company / Organization *</label>
-                <input required type="text" placeholder="e.g. AgriSubstrates B.V." class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors" />
-              </div>
-              <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Contact Person *</label>
-                <input required type="text" placeholder="e.g. John Doe" class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors" />
-              </div>
+        <!-- Right Column: Interactive RFQ Form -->
+        <div class="lg:col-span-7">
+          <div class="tilt-card glass-panel p-8 sm:p-10 rounded-2xl border border-surface-variant shadow-md flex flex-col gap-6" id="rfq-container">
+            <div class="flex flex-col gap-1 border-b border-surface-variant pb-4">
+              <span class="font-technical-code text-xs uppercase text-secondary font-bold tracking-wider">CONTAINER QUOTATION REQUEST</span>
+              <h2 class="font-headline-sm text-2xl font-bold text-primary">Request Formal Pro-Forma Invoice</h2>
+              <p class="font-body-sm text-xs text-on-surface-variant">Fill in your target specifications below for immediate ocean freight and product pricing:</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form id="contact-rfq-form" class="flex flex-col gap-4 font-body-sm">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Full Name *</label>
+                  <input type="text" required placeholder="e.g. Willem Van Dijk" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Corporate Email *</label>
+                  <input type="email" required placeholder="willem@growers-bv.nl" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Company / Greenhouse Name</label>
+                  <input type="text" placeholder="e.g. Agri-Tech Horticulture BV" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Destination Seaport *</label>
+                  <input type="text" required placeholder="e.g. Rotterdam / Long Beach" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Required Substrate *</label>
+                  <select class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none font-semibold text-primary">
+                    <option value="5kg-washed">5KG Blocks (Washed Low EC &lt; 0.5 mS/cm)</option>
+                    <option value="5kg-unwashed">5KG Blocks (Unwashed High EC)</option>
+                    <option value="5kg-buffered">5KG Blocks (Calcium-Buffered)</option>
+                    <option value="growbags">Hydroponic Grow Bags (70/30 Blend)</option>
+                    <option value="chips">Coconut Husk Chips 5kg</option>
+                    <option value="briquettes">650g Briquettes</option>
+                    <option value="fibre">Coir Fibre Bales</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Volume Required *</label>
+                  <select class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none font-semibold text-primary">
+                    <option value="sample">Sample Box / LCL Trial</option>
+                    <option value="1x40hc" selected>1 x 40' HC Container (~24–26 MT)</option>
+                    <option value="2-5x40hc">2 – 5 x 40' HC Containers</option>
+                    <option value="contract">10+ Containers Annual Contract</option>
+                  </select>
+                </div>
+              </div>
+
               <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Corporate Email Address *</label>
-                <input required type="email" placeholder="procurement@company.com" class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors" />
+                <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Preferred Incoterms *</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <label class="flex items-center gap-2 p-2.5 rounded-lg border border-surface-variant bg-surface cursor-pointer text-xs font-technical-code">
+                    <input type="radio" name="incoterm" value="FOB" checked class="accent-secondary" />
+                    <span>FOB India</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2.5 rounded-lg border border-surface-variant bg-surface cursor-pointer text-xs font-technical-code">
+                    <input type="radio" name="incoterm" value="CIF" class="accent-secondary" />
+                    <span>CIF Port</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2.5 rounded-lg border border-surface-variant bg-surface cursor-pointer text-xs font-technical-code">
+                    <input type="radio" name="incoterm" value="CFR" class="accent-secondary" />
+                    <span>CFR Ocean</span>
+                  </label>
+                </div>
               </div>
+
               <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Phone / WhatsApp *</label>
-                <input required type="tel" placeholder="+31 6 12345678" class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors" />
+                <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Additional Requirements or Sieve Specs</label>
+                <textarea rows="3" placeholder="Specify any custom EC parameters, pH requirements, chip mix percentage, or pallet sizing needs..." class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
               </div>
-            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Destination Seaport / Country *</label>
-                <input required type="text" placeholder="e.g. Port of Rotterdam, Netherlands" class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors" />
-              </div>
-              <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Incoterms 2020 Preference</label>
-                <select class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors">
-                  <option value="CIF">CIF (Cost, Insurance &amp; Freight to Destination Port)</option>
-                  <option value="FOB">FOB (Free On Board - Tuticorin / Chennai)</option>
-                  <option value="CFR">CFR (Cost &amp; Freight)</option>
-                  <option value="DAP">DAP (Delivered at Place)</option>
-                </select>
-              </div>
-            </div>
+              <button type="submit" class="magnetic-btn mt-2 w-full py-4 px-6 rounded-xl bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-lg flex items-center justify-center gap-2">
+                <span>SUBMIT CONTAINER INQUIRY</span>
+                <span class="material-symbols-outlined text-sm">send</span>
+              </button>
+            </form>
 
-            <!-- Products Multi-Select -->
-            <div>
-              <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-2">Products of Interest (Select All Applicable)</label>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                <label class="flex items-center gap-2 p-2 rounded bg-surface border border-surface-variant cursor-pointer hover:border-secondary transition-colors">
-                  <input type="checkbox" checked class="accent-secondary" />
-                  <span>5kg Coir Peat Blocks (Washed Low EC)</span>
-                </label>
-                <label class="flex items-center gap-2 p-2 rounded bg-surface border border-surface-variant cursor-pointer hover:border-secondary transition-colors">
-                  <input type="checkbox" class="accent-secondary" />
-                  <span>5kg Blocks (Unwashed High EC)</span>
-                </label>
-                <label class="flex items-center gap-2 p-2 rounded bg-surface border border-surface-variant cursor-pointer hover:border-secondary transition-colors">
-                  <input type="checkbox" class="accent-secondary" />
-                  <span>Hydroponic Grow Bag Slabs</span>
-                </label>
-                <label class="flex items-center gap-2 p-2 rounded bg-surface border border-surface-variant cursor-pointer hover:border-secondary transition-colors">
-                  <input type="checkbox" class="accent-secondary" />
-                  <span>650g Compact Briquettes</span>
-                </label>
-                <label class="flex items-center gap-2 p-2 rounded bg-surface border border-surface-variant cursor-pointer hover:border-secondary transition-colors">
-                  <input type="checkbox" class="accent-secondary" />
-                  <span>Coconut Husk Chips (10-15mm / 15-20mm)</span>
-                </label>
-                <label class="flex items-center gap-2 p-2 rounded bg-surface border border-surface-variant cursor-pointer hover:border-secondary transition-colors">
-                  <input type="checkbox" class="accent-secondary" />
-                  <span>Coir Fibre Bales / Geotextile Netting</span>
-                </label>
-              </div>
+            <div id="form-success-banner" class="hidden p-6 rounded-xl bg-secondary/10 border border-secondary text-center flex-col items-center gap-2">
+              <span class="w-12 h-12 rounded-full bg-secondary text-white flex items-center justify-center font-bold text-xl">✓</span>
+              <h3 class="font-headline-sm font-bold text-primary text-lg">Inquiry Successfully Transmitted!</h3>
+              <p class="font-body-sm text-xs text-on-surface-variant max-w-md">Our global export desk has logged your request. A formal specification sheet and pro-forma invoice will be delivered to your email within 4 hours.</p>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Expected Container Volume</label>
-                <select class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors">
-                  <option value="1">1 x 40ft High Cube Container (Trial Order)</option>
-                  <option value="2-5">2 to 5 Containers (Quarterly Program)</option>
-                  <option value="6-15">6 to 15 Containers (Seasonal Contract)</option>
-                  <option value="16+">16+ Containers (Annual Direct Distributor)</option>
-                </select>
-              </div>
-              <div>
-                <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Buffering &amp; Pre-Treatment</label>
-                <select class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors">
-                  <option value="washed">Washed Only (EC &lt; 0.5 mS/cm)</option>
-                  <option value="buffered">Buffered with Calcium Nitrate (Displaced Na &amp; K)</option>
-                  <option value="unwashed">Unwashed (EC &gt; 1.5 mS/cm - Industrial)</option>
-                  <option value="custom">Custom Blend (Specify in Message)</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="block font-technical-code text-xs uppercase font-semibold text-primary mb-1">Technical Notes / Custom Sizing &amp; Perforations</label>
-              <textarea rows="3" placeholder="Please specify special sieve requirements, mix ratio (e.g., 70% peat / 30% chips), pallet shrink-wrap style, private label branding, or target delivery timeframe." class="w-full px-4 py-2.5 rounded-lg bg-surface border border-surface-variant text-sm focus:outline-none focus:border-secondary transition-colors"></textarea>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <input id="sample-req" type="checkbox" class="accent-secondary" />
-              <label for="sample-req" class="text-xs text-on-surface-variant">Request complimentary 1kg laboratory sample dispatched via air courier (DHL/FedEx).</label>
-            </div>
-
-            <button type="submit" class="w-full py-4 rounded-lg bg-primary text-on-primary font-label-md text-sm uppercase font-bold tracking-wider hover:bg-primary-container transition-all shadow-md flex items-center justify-center gap-2">
-              <span>SUBMIT OFFICIAL RFQ SPECIFICATION</span>
-              <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
-            </button>
-            <p class="font-body-sm text-xs text-center text-on-surface-variant">We treat all inquiries under strict commercial confidentiality. Non-Disclosure Agreements (NDA) honored upon request.</p>
-          </form>
-
-          <!-- Success Notification (Hidden by default) -->
-          <div id="rfq-success" class="hidden p-6 rounded-xl bg-secondary-container text-on-secondary-container border border-secondary flex flex-col gap-2">
-            <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-2xl font-bold">check_circle</span>
-              <h4 class="font-headline-sm text-lg font-bold">RFQ Transmitted Successfully!</h4>
-            </div>
-            <p class="font-body-sm text-xs">Your inquiry reference is <strong class="font-technical-code">CCE-RFQ-2026-8942</strong>. Our global export desk in Tamil Nadu has logged your container parameters and will revert with an official proforma quote within 24 hours.</p>
           </div>
         </div>
 
       </div>
     </section>
+
   </main>
 
   <!-- Footer -->
-  <footer class="w-full bg-surface-container-low border-t border-surface-variant">
-    <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop py-space-2xl">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-xl border-b border-surface-variant">
-        <div class="lg:col-span-2 flex flex-col gap-space-md">
+  <footer class="w-full bg-surface-container-lowest border-t border-surface-variant pt-space-3xl pb-space-xl px-gutter lg:px-gutter-desktop">
+    <div class="max-w-7xl mx-auto flex flex-col gap-space-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-space-xl">
+        <div class="lg:col-span-4 flex flex-col gap-space-md">
           <div class="flex items-center gap-space-sm">
-            <img alt="Coco Craft Exports Official Logo" class="h-10 w-auto object-contain" src="/assets/logo/coco-craft-exports-official.png"/>
-            <span class="font-technical-code text-technical-code px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant">IND-EX-9482</span>
+            <img alt="Coco Craft Exports Logo" class="h-14 w-auto object-contain" src="/assets/logo/coco-craft-exports-official.png"/>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-md">Precision-engineered coir peat, husk chips, and sustainable horticultural substrates processed in Pollachi, Tamil Nadu, adhering strictly to global phytosanitary standards.</p>
+          <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">
+            Coco Craft Exports is an international producer and exporter of premium coconut coir substrates, operating with direct agricultural integration across Tamil Nadu, India.
+          </p>
         </div>
-        <div class="flex flex-col gap-space-sm">
-          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Navigation</h3>
+        <div class="lg:col-span-2 flex flex-col gap-space-sm">
+          <span class="font-label-md text-label-md font-bold text-primary uppercase tracking-wider">Solutions</span>
           <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
-            <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Products Catalogue</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/applications/applications.html">Applications</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">Manufacturing</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">5kg Coir Pith Blocks</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Hydroponic Grow Bags</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Coconut Husk Chips</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">650g Briquettes</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Raw Coir Fibre Bales</a></li>
           </ul>
         </div>
-        <div class="flex flex-col gap-space-sm">
-          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Operations</h3>
+        <div class="lg:col-span-3 flex flex-col gap-space-sm">
+          <span class="font-label-md text-label-md font-bold text-primary uppercase tracking-wider">Company</span>
           <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
-            <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us &amp; Heritage</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">6-Stage Manufacturing</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability &amp; ESG</a></li>
             <li><a class="hover:text-primary transition-colors" href="/company/global-reach.html">Global Logistics</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Visual Archive</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/contact/contact.html">Request a Quote</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Facility Gallery</a></li>
           </ul>
         </div>
-        <div class="flex flex-col gap-space-sm">
-          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Export Desk</h3>
+        <div class="lg:col-span-3 flex flex-col gap-space-sm">
+          <span class="font-label-md text-label-md font-bold text-primary uppercase tracking-wider">Export Desk</span>
           <div class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
             <p class="text-on-surface font-semibold">Global Procurement Desk</p>
             <p>export@cococraftexports.com</p>
-            <p>+91 (4259) 298-410</p>
-            <p>Tamil Nadu, India</p>
+            <p>+91 (4259) 298-410 / +91 94880 12345</p>
+            <p>Pollachi, Tamil Nadu, 642001 India</p>
+            <a class="font-technical-code text-technical-code text-secondary hover:underline pt-1 inline-flex items-center gap-1" href="/contact/contact.html">Direct WhatsApp Terminal →</a>
           </div>
         </div>
       </div>
-      <div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm font-body-sm text-body-sm text-on-surface-variant">
-        <p>© 2026 Coco Craft Exports Pvt Ltd. All rights reserved.</p>
+      <div class="pt-space-md border-t border-surface-variant flex flex-col sm:flex-row items-center justify-between gap-space-sm font-body-sm text-body-sm text-on-surface-variant">
+        <p>© Coco Craft Exports Pvt Ltd. All rights reserved.</p>
         <div class="flex items-center gap-space-md font-technical-code text-technical-code">
-          <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+          <a class="hover:text-primary transition-colors" href="/contact/contact.html">Privacy Policy</a>
           <span>•</span>
-          <a class="hover:text-primary transition-colors" href="#">Terms of Trade</a>
+          <a class="hover:text-primary transition-colors" href="/contact/contact.html">Incoterms 2020 Specs</a>
         </div>
       </div>
     </div>
   </footer>
 
+  <!-- RFQ Form Handling -->
   <script>
-    // Mobile Drawer Toggle
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (menuBtn && mobileMenu) {
-      menuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
-
-    // Volume Estimator Calculator
-    const productSelect = document.getElementById('calc-product');
-    const containersInput = document.getElementById('calc-containers');
-    const weightDisplay = document.getElementById('est-weight');
-    const palletsDisplay = document.getElementById('est-pallets');
-    const yieldDisplay = document.getElementById('est-yield');
-
-    function updateEstimator() {
-      const product = productSelect.value;
-      const count = Math.max(1, parseInt(containersInput.value) || 1);
-
-      let weightPerCont = 25.0;
-      let palletsPerCont = 20;
-      let pieceDescription = "";
-      let yieldLiters = 0;
-
-      if (product === '5kg') {
-        weightPerCont = 25.0;
-        palletsPerCont = 20;
-        pieceDescription = `${palletsPerCont * count} Pallets (${5000 * count} blocks)`;
-        yieldLiters = 5000 * count * 75;
-      } else if (product === 'growbag') {
-        weightPerCont = 21.0;
-        palletsPerCont = 22;
-        pieceDescription = `${palletsPerCont * count} Pallets (${7000 * count} slabs)`;
-        yieldLiters = 7000 * count * 28;
-      } else if (product === 'briquette') {
-        weightPerCont = 24.0;
-        palletsPerCont = 20;
-        pieceDescription = `${palletsPerCont * count} Pallets (${36000 * count} briquettes)`;
-        yieldLiters = 36000 * count * 9;
-      } else if (product === 'loose5kg') {
-        weightPerCont = 26.5;
-        pieceDescription = `Floor Loaded (${5300 * count} naked blocks)`;
-        yieldLiters = 5300 * count * 75;
-      }
-
-      const totalWeight = (weightPerCont * count).toFixed(1);
-      weightDisplay.textContent = `${totalWeight} Metric Tons`;
-      palletsDisplay.textContent = pieceDescription;
-      yieldDisplay.textContent = `~${yieldLiters.toLocaleString()} Litres`;
-    }
-
-    productSelect.addEventListener('change', updateEstimator);
-    containersInput.addEventListener('input', updateEstimator);
-    updateEstimator();
-
-    // RFQ Form Submission Simulation
-    const form = document.getElementById('rfq-form');
-    const successBox = document.getElementById('rfq-success');
+    const form = document.getElementById('contact-rfq-form');
+    const successBanner = document.getElementById('form-success-banner');
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       form.style.display = 'none';
-      successBox.classList.remove('hidden');
+      successBanner.classList.remove('hidden');
+      successBanner.classList.add('flex');
     });
   </script>
+
+  <!-- Master Experience Engine Script (Lenis, Reveals, Ambient Glow) -->
+  <script type="module" src="/scripts/app-experience.js"></script>
 </body>
 </html>

@@ -589,3 +589,196 @@ body.page-loaded .hero-delay-media { transition-delay: 0.9s; }
   color: #ffffff !important;
   box-shadow: 0 4px 12px rgba(0, 110, 44, 0.3);
 }
+
+/* ==========================================================================
+   LENIS SMOOTH SCROLL INTEGRATION
+   ========================================================================== */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   SCROLL PROGRESS BAR
+   ========================================================================== */
+#scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #006e2c 0%, #22a04a 50%, #93f9a1 100%);
+  z-index: 10000;
+  width: 0%;
+  pointer-events: none;
+  box-shadow: 0 0 12px rgba(147, 249, 161, 0.7);
+  transition: width 0.08s ease-out;
+}
+
+/* ==========================================================================
+   AWWWARDS AMBIENT CURSOR GLOW
+   ========================================================================== */
+.ambient-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 440px;
+  height: 440px;
+  margin-top: -220px;
+  margin-left: -220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(147, 249, 161, 0.16) 0%, rgba(0, 110, 44, 0.05) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0;
+  transition: opacity 0.4s ease, width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+  mix-blend-mode: multiply;
+  will-change: transform;
+}
+
+.ambient-cursor-glow.cursor-expanded {
+  width: 580px;
+  height: 580px;
+  margin-top: -290px;
+  margin-left: -290px;
+  background: radial-gradient(circle, rgba(147, 249, 161, 0.22) 0%, rgba(0, 110, 44, 0.08) 50%, transparent 70%);
+}
+
+/* ==========================================================================
+   VIEWPORT REVEAL ANIMATIONS
+   ========================================================================== */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-fade.is-revealed {
+  opacity: 1;
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delay classes */
+.delay-100 { transition-delay: 0.1s !important; }
+.delay-200 { transition-delay: 0.2s !important; }
+.delay-300 { transition-delay: 0.3s !important; }
+.delay-400 { transition-delay: 0.4s !important; }
+.delay-500 { transition-delay: 0.5s !important; }
+
+/* ==========================================================================
+   3D TILT & SPECULAR GLARE
+   ========================================================================== */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  position: relative;
+}
+.tilt-card:hover {
+  box-shadow: 0 24px 48px -12px rgba(48, 17, 1, 0.12), 0 0 0 1px rgba(0, 110, 44, 0.15);
+}
+
+/* ==========================================================================
+   GLASSMORPHISM & LUXURY CARDS
+   ========================================================================== */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(223, 228, 221, 0.75);
+}
+.glass-panel-dark {
+  background: rgba(24, 29, 25, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ==========================================================================
+   ACTIVE NAVIGATION & HEADER BLUR
+   ========================================================================== */
+.site-header {
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.35s ease;
+}
+.site-header.is-scrolled {
+  background-color: rgba(246, 251, 244, 0.94) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 8px 32px -4px rgba(48, 17, 1, 0.08), 0 1px 0 rgba(223, 228, 221, 0.8) !important;
+}
+
+header nav a.nav-active {
+  color: #301101 !important;
+  font-weight: 700 !important;
+  position: relative;
+}
+header nav a.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  border-radius: 9999px;
+  background: #006e2c;
+  animation: navPulse 2s ease-in-out infinite;
+}
+@keyframes navPulse {
+  0%, 100% { opacity: 0.85; transform: scaleX(1); }
+  50% { opacity: 1; transform: scaleX(1.08); }
+}
+
+/* Magnetic Button Hover */
+.magnetic-btn {
+  will-change: transform;
+}
+

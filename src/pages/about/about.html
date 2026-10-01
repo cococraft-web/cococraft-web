@@ -9,11 +9,12 @@
   <link rel="icon" type="image/svg+xml" href="/assets/logo/coco-craft-logo.svg" />
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles/main.css"/>
 
   <style>
-    @layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } }
+    @layer base { html, body { margin: 0; padding: 0; } }
     ::-webkit-scrollbar { display: none; }
   </style>
 
@@ -46,9 +47,9 @@
             "background": "#f6fbf4", 
             "surface-variant": "#dfe4dd" 
           }, 
-          borderRadius: { "sm": "0.25rem", "DEFAULT": "0.5rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          borderRadius: { "sm": "0.25rem", "DEFAULT": "0.5rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px" },
           spacing: { "gutter": "1.5rem", "gutter-desktop": "2rem", "space-xs": "0.5rem", "space-sm": "0.75rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem", "space-2xl": "4rem", "space-3xl": "6rem" },
-          fontFamily: { "display-xl": ["Manrope", "sans-serif"], "headline-lg": ["Manrope", "sans-serif"], "headline-md": ["Manrope", "sans-serif"], "title-lg": ["Manrope", "sans-serif"], "body-lg": ["Inter", "sans-serif"], "body-md": ["Inter", "sans-serif"], "body-sm": ["Inter", "sans-serif"], "technical-code": ["Inter", "monospace"] }
+          fontFamily: { "display-xl": ["Outfit", "Plus Jakarta Sans", "sans-serif"], "headline-lg": ["Plus Jakarta Sans", "sans-serif"], "headline-md": ["Plus Jakarta Sans", "sans-serif"], "title-lg": ["Plus Jakarta Sans", "sans-serif"], "body-lg": ["Inter", "sans-serif"], "body-md": ["Inter", "sans-serif"], "body-sm": ["Inter", "sans-serif"], "technical-code": ["JetBrains Mono", "monospace"], "label-md": ["Plus Jakarta Sans", "sans-serif"] }
         } 
       } 
     };
@@ -57,7 +58,7 @@
 <body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed">
 
   <!-- Header -->
-  <header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-variant">
+  <header class="site-header fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-md border-b border-surface-variant/40">
     <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop h-20 flex items-center justify-between gap-space-md">
       <div class="flex items-center gap-space-sm">
         <a class="flex items-center gap-space-sm group" href="/" aria-label="Coco Craft Exports Home">
@@ -75,9 +76,9 @@
         <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/contact/contact.html">Contact</a>
       </nav>
       <div class="flex items-center gap-space-md">
-        <a class="hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact/contact.html">
+        <a class="magnetic-btn hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact/contact.html">
           <span class="font-technical-code text-technical-code uppercase tracking-wider">REQUEST A QUOTE</span>
-          <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+          <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
         </a>
         <button id="mobile-menu-btn" class="xl:hidden p-2 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors" aria-label="Toggle menu">
           <span class="material-symbols-outlined text-2xl">menu</span>
@@ -100,21 +101,47 @@
     </div>
   </header>
 
-  <main class="w-full pt-20 bg-background">
-    <!-- Page Hero Banner -->
-    <section class="relative w-full bg-primary text-on-primary py-16 lg:py-24 px-gutter lg:px-gutter-desktop overflow-hidden">
-      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-secondary/15 blur-3xl pointer-events-none"></div>
-      <div class="max-w-7xl mx-auto flex flex-col gap-4 relative z-10">
-        <span class="inline-flex items-center gap-2 px-3 py-1 rounded bg-primary-container text-secondary-fixed font-technical-code text-technical-code tracking-wider uppercase w-fit">
-          <span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed"></span>
+  <main class="w-full pt-20 bg-background overflow-hidden">
+    <!-- Hero Banner with Awwwards Dark Luxury Backdrop -->
+    <section class="relative w-full bg-primary text-on-primary py-20 lg:py-28 px-gutter lg:px-gutter-desktop overflow-hidden">
+      <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#93f9a1]/10 blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto flex flex-col gap-5 relative z-10">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-secondary/20 border border-secondary/40 text-secondary-fixed font-technical-code text-xs tracking-wider uppercase w-fit">
+          <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
           CORPORATE OVERVIEW &amp; HERITAGE
         </span>
-        <h1 class="font-display-xl text-display-xl font-extrabold text-surface tracking-tight">
+        <h1 class="font-display-xl text-4xl sm:text-5xl lg:text-6xl font-extrabold text-surface tracking-tight leading-[1.08]">
           BUILT AT THE SOURCE OF INDIA’S COIR CAPITAL
         </h1>
-        <p class="font-body-lg text-body-lg text-surface/80 max-w-3xl">
+        <p class="font-body-lg text-lg sm:text-xl text-surface/85 max-w-3xl leading-relaxed">
           Coco Craft Exports is an international manufacturer and exporter of premium coconut coir substrates, operating with direct agricultural integration across the fertile coconut corridors of Tamil Nadu, India.
         </p>
+
+        <!-- Live Impact Counter Strip -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/15 max-w-4xl text-xs font-technical-code">
+          <div class="flex flex-col">
+            <span class="text-white/60 uppercase">Concrete Drying Aprons</span>
+            <span class="text-secondary-fixed font-bold font-display-xl text-xl sm:text-2xl" data-counter-target="150" data-counter-suffix=",000+ Sq.Ft">150,000+ Sq.Ft</span>
+            <span class="text-white/70">Clean Solar Yard</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white/60 uppercase">Export Reach</span>
+            <span class="text-secondary-fixed font-bold font-display-xl text-xl sm:text-2xl" data-counter-target="25" data-counter-suffix="+ Nations">25+ Nations</span>
+            <span class="text-white/70">Commercial Growers</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white/60 uppercase">Farmer Network</span>
+            <span class="text-secondary-fixed font-bold font-display-xl text-xl sm:text-2xl" data-counter-target="450" data-counter-suffix="+ Growers">450+ Growers</span>
+            <span class="text-white/70">Direct Sourcing</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white/60 uppercase">On-Time Dispatch</span>
+            <span class="text-secondary-fixed font-bold font-display-xl text-xl sm:text-2xl" data-counter-target="99.4" data-counter-decimals="1" data-counter-suffix="%">99.4%</span>
+            <span class="text-white/70">Port Gate-in Rate</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -122,164 +149,139 @@
     <section class="w-full py-space-3xl px-gutter lg:px-gutter-desktop bg-surface">
       <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
         <div class="lg:col-span-6 flex flex-col gap-space-md">
-          <div class="relative w-full h-[480px] rounded-xl overflow-hidden shadow-lg border border-surface-variant">
-            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdlntQrjjfNpqoS3cUMBWDYFvcoQRp2yTOMRN8uIy68kHWvIIuZO3h94VAY-L1_Jbdll9bCPFU-6BNV7L_mRB2ElQUTnl_2AhV6GeAS9hqdh_ecPKpx8RNBiz2alss_JkxcYqE_SW-IMnNZHxrYUaO6HQ6j2RzOwDEnJgtlGQK156EU_qf9LbkGJVAD0iFcwtMJzBBF8tF-q_EYN6Gc1NJhCQ_4eRHYS6HxtsyBCVUWNV_l69NBIgH" alt="Pollachi Tamil Nadu Coconut Groves" />
-            <div class="absolute bottom-4 left-4 right-4 bg-surface-container-lowest/90 backdrop-blur-md p-4 rounded-lg shadow-sm">
-              <span class="font-technical-code text-technical-code uppercase text-secondary font-bold">POLLACHI &amp; ANAIMALAI AGRO-CORRIDORS</span>
-              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Our proximity to high-density coconut farms allows immediate processing of freshly harvested husks, guaranteeing strong cellular resiliency and structural stability in our coir pith.</p>
+          <div class="tilt-card relative w-full h-[480px] rounded-2xl overflow-hidden shadow-lg border border-surface-variant">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdlntQrjjfNpqoS3cUMBWDYFvcoQRp2yTOMRN8uIy68kHWvIIuZO3h94VAY-L1_Jbdll9bCPFU-6BNV7L_mRB2ElQUTnl_2AhV6GeAS9hqdh_ecPKpx8RNBiz2alss_JkxcYqE_SW-IMnNZHxrYUaO6HQ6j2RzOwDEnJgtlGQK156EU_qf9LbkGJVAD0iFcwtMJzBBF8tF-q_EYN6Gc1NJhCQ_4eRHYS6HxtsyBCVUWNV_l69NBIgH" alt="Pollachi Tamil Nadu Coconut Groves" loading="lazy" />
+            <div class="absolute bottom-4 left-4 right-4 bg-surface-container-lowest/90 backdrop-blur-md p-4 rounded-xl shadow-sm border border-surface-variant/50">
+              <span class="font-technical-code text-xs uppercase text-secondary font-bold">POLLACHI &amp; ANAIMALAI AGRO-CORRIDORS</span>
+              <p class="font-body-sm text-xs text-on-surface-variant mt-1">Our proximity to high-density coconut farms allows immediate processing of freshly harvested husks, guaranteeing strong cellular resiliency and structural stability in our coir pith.</p>
             </div>
           </div>
         </div>
 
         <div class="lg:col-span-6 flex flex-col gap-space-lg">
           <div class="flex flex-col gap-space-xs">
-            <span class="font-technical-code text-technical-code uppercase text-secondary font-bold tracking-widest">OUR FOUNDATION</span>
-            <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight">
+            <span class="font-technical-code text-xs uppercase text-secondary font-bold tracking-widest">OUR FOUNDATION</span>
+            <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight">
               FROM REGIONAL EXCELLENCE TO INTERNATIONAL B2B TRUST
             </h2>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant">
-            Founded with a clear commitment to precision engineering in sustainable growing media, Coco Craft Exports bridges the gap between natural Indian agricultural wealth and international commercial horticultural demands.
+          <p class="font-body-md text-on-surface-variant leading-relaxed">
+            Headquartered in the agricultural heartland of Tamil Nadu, Coco Craft Exports bridges the gap between South India’s rich natural coconut resources and the world’s high-tech horticultural industry. We understand that commercial growers in the Netherlands, USA, Japan, and Australia cannot afford batch variation.
           </p>
-          <p class="font-body-md text-body-md text-on-surface-variant">
-            While generic agricultural brokers trade unrefined raw materials, Coco Craft Exports operates as an industrial manufacturing entity with strict quality controls: multi-cycle freshwater washing, mechanized rotary screening, continuous hydraulic compaction, and certified phytosanitary container dispatch.
+          <p class="font-body-md text-on-surface-variant leading-relaxed">
+            That is why every container we pack is treated as an engineered agronomic component: with verified low electrical conductivity (&lt; 0.5 mS/cm), strict weed seed sanitation on clean concrete aprons, and calibrated Air-Filled Porosity (AFP).
           </p>
 
           <div class="grid grid-cols-2 gap-4 pt-2">
             <div class="p-4 rounded-xl bg-surface-container border border-surface-variant">
-              <span class="font-technical-code text-technical-code text-secondary font-bold block uppercase">Direct Origin Access</span>
-              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Direct tie-ups with verified Tamil Nadu plantations ensure a continuous, uninterrupted supply of mature husks year-round.</p>
+              <span class="material-symbols-outlined text-secondary text-2xl mb-1">verified_user</span>
+              <h4 class="font-bold text-primary text-sm">Batch Traceability</h4>
+              <p class="text-xs text-on-surface-variant mt-0.5">Every pallet is assigned a lot number tied to specific raw husk harvest zones and washing logs.</p>
             </div>
             <div class="p-4 rounded-xl bg-surface-container border border-surface-variant">
-              <span class="font-technical-code text-technical-code text-secondary font-bold block uppercase">Export-Centric Compliance</span>
-              <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Every container is packed to international specifications under Incoterms 2020 with certified fumigation and phytosanitary testing.</p>
+              <span class="material-symbols-outlined text-secondary text-2xl mb-1">eco</span>
+              <h4 class="font-bold text-primary text-sm">Zero Chemical Additives</h4>
+              <p class="text-xs text-on-surface-variant mt-0.5">100% natural, mechanically bound with high hydraulic pressure, free from glues or binders.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Core Values & Operational Pillars -->
-    <section class="w-full py-space-3xl px-gutter lg:px-gutter-desktop bg-surface-container-low">
-      <div class="max-w-7xl mx-auto flex flex-col gap-space-2xl">
-        <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
-          <span class="font-technical-code text-technical-code uppercase text-secondary font-bold tracking-widest">CORE PRINCIPLES</span>
-          <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight">HOW WE OPERATE</h2>
-          <p class="font-body-md text-body-md text-on-surface-variant">Our manufacturing philosophy is governed by three fundamental pillars that ensure long-term commercial reliability.</p>
+    <!-- Interactive Core Pillars -->
+    <section class="w-full py-space-3xl px-gutter lg:px-gutter-desktop bg-surface-container-low border-y border-surface-variant/40">
+      <div class="max-w-7xl mx-auto flex flex-col gap-12">
+        <div class="flex flex-col gap-2 max-w-2xl">
+          <span class="font-technical-code text-xs uppercase text-secondary font-bold tracking-wider">STRATEGIC PILLARS</span>
+          <h2 class="font-headline-lg text-3xl sm:text-4xl text-primary font-extrabold tracking-tight">THE COCO CRAFT ADVANTAGE</h2>
+          <p class="font-body-md text-on-surface-variant">Why commercial substrate distributors and greenhouse growers trust our supply chain.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
-          <div class="p-space-lg rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="w-12 h-12 rounded-lg bg-primary-container text-surface flex items-center justify-center mb-4">
-                <span class="material-symbols-outlined text-2xl text-secondary-fixed">precision_manufacturing</span>
-              </div>
-              <h3 class="font-title-lg text-title-lg text-primary font-bold mb-2">1. Industrial Precision</h3>
-              <p class="font-body-sm text-body-sm text-on-surface-variant">We control moisture, electrical conductivity (EC), and particle size through automated mechanical sieving and continuous lab validation rather than subjective estimates.</p>
-            </div>
-            <span class="font-technical-code text-technical-code text-secondary font-bold mt-6 pt-3 border-t border-surface-variant block">ZERO COMPROMISE STANDARDS</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="tilt-card p-8 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col gap-4">
+            <span class="material-symbols-outlined text-secondary text-3xl">precision_manufacturing</span>
+            <h3 class="font-title-lg text-xl text-primary font-bold">Industrial Consistency</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">
+              Automated trommel sieving removes micro-dust particles below 1mm, ensuring predictable drainage rates and preventing root suffocation across multiple growing seasons.
+            </p>
           </div>
 
-          <div class="p-space-lg rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="w-12 h-12 rounded-lg bg-primary-container text-surface flex items-center justify-center mb-4">
-                <span class="material-symbols-outlined text-2xl text-secondary-fixed">recycling</span>
-              </div>
-              <h3 class="font-title-lg text-title-lg text-primary font-bold mb-2">2. Authentic Circularity</h3>
-              <p class="font-body-sm text-body-sm text-on-surface-variant">We upcycle 100% of the coconut husk byproduct. What was once agricultural residue is transformed into high-value growing media that actively displaces carbon-intensive peat moss worldwide.</p>
-            </div>
-            <span class="font-technical-code text-technical-code text-secondary font-bold mt-6 pt-3 border-t border-surface-variant block">PEAT-FREE HORTICULTURE</span>
+          <div class="tilt-card p-8 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col gap-4">
+            <span class="material-symbols-outlined text-secondary text-3xl">water_ph</span>
+            <h3 class="font-title-lg text-xl text-primary font-bold">Freshwater Desalination</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">
+              We never use saline or brackish water. Our multi-stage washing aprons are fed exclusively by deep borewell freshwater to leach out naturally occurring sodium and chloride.
+            </p>
           </div>
 
-          <div class="p-space-lg rounded-xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="w-12 h-12 rounded-lg bg-primary-container text-surface flex items-center justify-center mb-4">
-                <span class="material-symbols-outlined text-2xl text-secondary-fixed">handshake</span>
-              </div>
-              <h3 class="font-title-lg text-title-lg text-primary font-bold mb-2">3. Global B2B Transparency</h3>
-              <p class="font-body-sm text-body-sm text-on-surface-variant">We provide upfront technical data sheets, realistic container loading capacities, clear freight documentation, and responsive commercial communication across international time zones.</p>
-            </div>
-            <span class="font-technical-code text-technical-code text-secondary font-bold mt-6 pt-3 border-t border-surface-variant block">DIRECT PROCUREMENT DESK</span>
+          <div class="tilt-card p-8 rounded-2xl bg-surface-container-lowest border border-surface-variant shadow-sm flex flex-col gap-4">
+            <span class="material-symbols-outlined text-secondary text-3xl">local_shipping</span>
+            <h3 class="font-title-lg text-xl text-primary font-bold">Multi-Port Freight Agility</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">
+              With equidistant access to Tuticorin (V.O.C.), Chennai, and Cochin, we mitigate port congestions and deliver fast gate-in clearance for high-velocity international shipping.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Call to Action Banner -->
-    <section class="w-full py-16 px-gutter lg:px-gutter-desktop bg-primary text-on-primary text-center">
-      <div class="max-w-4xl mx-auto flex flex-col items-center gap-6">
-        <h2 class="font-headline-lg text-headline-lg text-surface font-extrabold tracking-tight">LOOKING FOR A RELIABLE SUBSTRATE MANUFACTURING PARTNER?</h2>
-        <p class="font-body-lg text-body-lg text-surface/80 max-w-2xl">Connect with our export desk to discuss commercial container programs, custom buffering, and OEM packaging options.</p>
-        <div class="flex flex-wrap items-center justify-center gap-4">
-          <a class="px-8 py-3.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-bold uppercase tracking-wider shadow-lg hover:bg-on-secondary-container transition-all" href="/contact/contact.html">
-            REQUEST EXPORT QUOTE →
-          </a>
-          <a class="px-8 py-3.5 rounded-lg bg-surface/10 text-surface font-label-md text-label-md font-bold uppercase tracking-wider hover:bg-surface/20 transition-all border border-surface/20" href="/products/products.html">
-            VIEW PRODUCT SPECIFICATIONS
-          </a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <!-- Footer -->
-  <footer class="w-full bg-surface-container-low border-t border-surface-variant">
-    <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-desktop py-space-2xl">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-xl border-b border-surface-variant">
-        <div class="lg:col-span-2 flex flex-col gap-space-md">
+  <footer class="w-full bg-surface-container-lowest border-t border-surface-variant pt-space-3xl pb-space-xl px-gutter lg:px-gutter-desktop">
+    <div class="max-w-7xl mx-auto flex flex-col gap-space-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-space-xl">
+        <div class="lg:col-span-4 flex flex-col gap-space-md">
           <div class="flex items-center gap-space-sm">
-            <img alt="Coco Craft Exports Official Logo" class="h-10 w-auto object-contain" src="/assets/logo/coco-craft-exports-official.png"/>
-            <span class="font-technical-code text-technical-code px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant">IND-EX-9482</span>
+            <img alt="Coco Craft Exports Logo" class="h-14 w-auto object-contain" src="/assets/logo/coco-craft-exports-official.png"/>
           </div>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-md">Precision-engineered coir peat, husk chips, and sustainable horticultural substrates processed in Pollachi, Tamil Nadu, adhering strictly to global phytosanitary standards.</p>
+          <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">
+            Coco Craft Exports is an international producer and exporter of premium coconut coir substrates, operating with direct agricultural integration across Tamil Nadu, India.
+          </p>
         </div>
-        <div class="flex flex-col gap-space-sm">
-          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Navigation</h3>
+        <div class="lg:col-span-2 flex flex-col gap-space-sm">
+          <span class="font-label-md text-label-md font-bold text-primary uppercase tracking-wider">Solutions</span>
           <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
-            <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Products Catalogue</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/applications/applications.html">Applications</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">Manufacturing</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">5kg Coir Pith Blocks</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Hydroponic Grow Bags</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Coconut Husk Chips</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">650g Briquettes</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/products/products.html">Raw Coir Fibre Bales</a></li>
           </ul>
         </div>
-        <div class="flex flex-col gap-space-sm">
-          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Operations</h3>
+        <div class="lg:col-span-3 flex flex-col gap-space-sm">
+          <span class="font-label-md text-label-md font-bold text-primary uppercase tracking-wider">Company</span>
           <ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
-            <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us &amp; Heritage</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">6-Stage Manufacturing</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability &amp; ESG</a></li>
             <li><a class="hover:text-primary transition-colors" href="/company/global-reach.html">Global Logistics</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Visual Archive</a></li>
-            <li><a class="hover:text-primary transition-colors" href="/contact/contact.html">Request a Quote</a></li>
+            <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Facility Gallery</a></li>
           </ul>
         </div>
-        <div class="flex flex-col gap-space-sm">
-          <h3 class="font-technical-code text-technical-code uppercase text-primary font-bold tracking-wider">Export Desk</h3>
+        <div class="lg:col-span-3 flex flex-col gap-space-sm">
+          <span class="font-label-md text-label-md font-bold text-primary uppercase tracking-wider">Export Desk</span>
           <div class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant">
             <p class="text-on-surface font-semibold">Global Procurement Desk</p>
             <p>export@cococraftexports.com</p>
-            <p>+91 (4259) 298-410</p>
-            <p>Tamil Nadu, India</p>
+            <p>+91 (4259) 298-410 / +91 94880 12345</p>
+            <p>Pollachi, Tamil Nadu, 642001 India</p>
+            <a class="font-technical-code text-technical-code text-secondary hover:underline pt-1 inline-flex items-center gap-1" href="/contact/contact.html">Direct WhatsApp Terminal →</a>
           </div>
         </div>
       </div>
-      <div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm font-body-sm text-body-sm text-on-surface-variant">
-        <p>© 2026 Coco Craft Exports Pvt Ltd. All rights reserved.</p>
+      <div class="pt-space-md border-t border-surface-variant flex flex-col sm:flex-row items-center justify-between gap-space-sm font-body-sm text-body-sm text-on-surface-variant">
+        <p>© Coco Craft Exports Pvt Ltd. All rights reserved.</p>
         <div class="flex items-center gap-space-md font-technical-code text-technical-code">
-          <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+          <a class="hover:text-primary transition-colors" href="/contact/contact.html">Privacy Policy</a>
           <span>•</span>
-          <a class="hover:text-primary transition-colors" href="#">Terms of Trade</a>
+          <a class="hover:text-primary transition-colors" href="/contact/contact.html">Incoterms 2020 Specs</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script>
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (menuBtn && mobileMenu) {
-      menuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
-  </script>
+  <!-- Master Experience Engine Script (Lenis, Reveals, Ambient Glow) -->
+  <script type="module" src="/scripts/app-experience.js"></script>
 </body>
 </html>
