@@ -474,3 +474,118 @@ body.page-loaded .hero-delay-media { transition-delay: 0.9s; }
     transform: translateY(0);
   }
 }
+
+/* ==================== 6-STAGE HORIZONTAL ACCORDION / EXPANDING CARDS ==================== */
+.stage-accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .stage-accordion-container {
+    flex-direction: row;
+    height: 520px;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+}
+
+.stage-accordion-card {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #181d19;
+  transition: flex 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              min-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: flex, min-height;
+}
+
+/* Desktop flex ratios */
+@media (min-width: 1024px) {
+  .stage-accordion-card {
+    flex: 1;
+    min-width: 82px;
+  }
+  
+  .stage-accordion-card.active {
+    flex: 4;
+    cursor: default;
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.45), 0 0 0 2px rgba(147, 249, 161, 0.35);
+  }
+
+  .stage-accordion-card:not(.active):hover {
+    flex: 1.35;
+    box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Vertical writing mode for collapsed label */
+  .stage-accordion-card:not(.active) .stage-collapsed-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+}
+
+/* Mobile responsive handling */
+@media (max-width: 1023px) {
+  .stage-accordion-card {
+    min-height: 84px;
+  }
+  .stage-accordion-card.active {
+    min-height: 480px;
+    box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(147, 249, 161, 0.3);
+  }
+}
+
+/* Background image handling with smooth zoom */
+.stage-accordion-card img.stage-bg {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+.stage-accordion-card.active img.stage-bg {
+  transform: scale(1.06);
+  filter: brightness(0.85);
+}
+.stage-accordion-card:not(.active) img.stage-bg {
+  filter: brightness(0.38);
+}
+.stage-accordion-card:not(.active):hover img.stage-bg {
+  filter: brightness(0.55);
+}
+
+/* Expanded & Collapsed content visibility transitions */
+.stage-expanded-content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, visibility 0.4s ease;
+}
+.stage-accordion-card.active .stage-expanded-content {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.stage-collapsed-content {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
+}
+.stage-accordion-card.active .stage-collapsed-content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Step navigation button styles */
+.stage-step-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stage-step-btn.active {
+  background-color: #006e2c !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 110, 44, 0.3);
+}
