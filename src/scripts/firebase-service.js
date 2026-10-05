@@ -31,7 +31,7 @@ import {
 
 // Dynamic Firebase Configuration via Secure Environment Variables
 export const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCa4GbZR2J2iHLfjN_Hwyi1kVc23YurCf0",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "coco-craft-exports.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "coco-craft-exports",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "coco-craft-exports.firebasestorage.app",
