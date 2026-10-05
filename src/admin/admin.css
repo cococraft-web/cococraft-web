@@ -1,4 +1,7 @@
 /* COCO CRAFT EXPORTS — ADMIN CMS STYLES */
+html:has(body.admin-body) {
+  cursor: auto !important;
+}
 
 :root {
   --admin-sidebar-width: 260px;
@@ -18,12 +21,62 @@
 }
 
 body.admin-body {
+  --cursor-default: auto !important;
+  --cursor-pointer: pointer !important;
+  cursor: default !important;
   background-color: var(--admin-bg);
   color: var(--admin-text-main);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+}
+
+/* System Cursors for Admin CMS Terminal */
+body.admin-body,
+body.admin-body * {
+  cursor: auto;
+}
+
+body.admin-body a,
+body.admin-body button,
+body.admin-body [role="button"],
+body.admin-body select,
+body.admin-body summary,
+body.admin-body label[for],
+body.admin-body .cursor-pointer,
+body.admin-body input[type="button"],
+body.admin-body input[type="submit"],
+body.admin-body input[type="reset"],
+body.admin-body input[type="checkbox"],
+body.admin-body input[type="radio"],
+body.admin-body [data-action],
+body.admin-body [onclick],
+body.admin-body [data-media-tab],
+body.admin-body .sidebar-item {
+  cursor: pointer !important;
+}
+
+body.admin-body input[type="text"],
+body.admin-body input[type="email"],
+body.admin-body input[type="tel"],
+body.admin-body input[type="number"],
+body.admin-body input[type="search"],
+body.admin-body input[type="password"],
+body.admin-body input[type="url"],
+body.admin-body textarea {
+  cursor: text !important;
+}
+
+body.admin-body :disabled,
+body.admin-body [disabled],
+body.admin-body [aria-disabled="true"],
+body.admin-body .cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+body.admin-body .ambient-cursor-glow {
+  display: none !important;
 }
 
 /* Sidebar transition */
