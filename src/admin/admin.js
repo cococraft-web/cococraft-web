@@ -103,7 +103,7 @@ export function showConfirmModal(title, description, onConfirm) {
 /* ==========================================================================
    INITIALIZATION & AUTHENTICATION LIFECYCLE
    ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
+function bootstrapAdmin() {
   initAuth();
   initNavigation();
   initSidebarDrawer();
@@ -113,7 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initEnquiriesController();
   initSeoController();
   initSettingsController();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootstrapAdmin);
+} else {
+  bootstrapAdmin();
+}
 
 function initAuth() {
   const authView = document.getElementById('auth-view');

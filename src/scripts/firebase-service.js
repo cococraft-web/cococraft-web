@@ -29,15 +29,15 @@ import {
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-// Official Production Firebase Configuration
+// Dynamic Firebase Configuration via Secure Environment Variables
 export const firebaseConfig = {
-  apiKey: "AIzaSyCa4GbZR2J2iHLfjN_Hwyi1kVc23YurCf0",
-  authDomain: "coco-craft-exports.firebaseapp.com",
-  projectId: "coco-craft-exports",
-  storageBucket: "coco-craft-exports.firebasestorage.app",
-  messagingSenderId: "728707884391",
-  appId: "1:728707884391:web:e14fe05f6473002f6abbc2",
-  measurementId: "G-GW0HML83XS"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "coco-craft-exports.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "coco-craft-exports",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "coco-craft-exports.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "728707884391",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:728707884391:web:e14fe05f6473002f6abbc2",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-GW0HML83XS"
 };
 
 // Singleton App & Services
@@ -56,14 +56,12 @@ try {
    AUTHENTICATION API
    ========================================================================== */
 
-/**
- * Sign in admin user with email and password
- */
 export async function adminLogin(email, password, remember = true) {
   try {
     const persistenceMode = remember ? browserLocalPersistence : browserSessionPersistence;
     await setPersistence(auth, persistenceMode);
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
     await logAuditEvent({
       action: 'LOGIN',
       entity: 'AUTH',

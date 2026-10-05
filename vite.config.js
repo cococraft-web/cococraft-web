@@ -5,6 +5,7 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [tailwindcss()],
   root: 'src',
+  envDir: import.meta.dirname,
   server: {
     port: 3000,
     open: false,

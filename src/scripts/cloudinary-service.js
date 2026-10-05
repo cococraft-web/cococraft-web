@@ -5,11 +5,13 @@
 
 import { saveDocument, deleteDocument, getCloudinarySettings } from './firebase-service.js';
 
-// Default / production Cloudinary credentials
+// Production Cloudinary credentials via environment variables
+const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : {};
+
 export const DEFAULT_CLOUDINARY_CONFIG = {
-  cloudName: 'xbs3vpz1',
-  uploadPreset: 'Cococrafts',
-  folder: 'Coco/Images'
+  cloudName: env.VITE_CLOUDINARY_CLOUD_NAME || 'xbs3vpz1',
+  uploadPreset: env.VITE_CLOUDINARY_UPLOAD_PRESET || 'Cococrafts',
+  folder: env.VITE_CLOUDINARY_FOLDER || 'Coco/Images'
 };
 
 /**
