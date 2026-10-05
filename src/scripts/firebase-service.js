@@ -80,13 +80,29 @@ export async function adminLogin(email, password, remember = true) {
   } catch (error) {
     console.error('Authentication Error:', error);
     let message = 'Invalid email or password. Please verify your credentials.';
-    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-      message = 'Invalid email or password.';
+    const host = (typeof window !== 'undefined' && window.location) ? window.location.hostname : 'this domain';
+    const origin = (typeof window !== 'undefined' && window.location) ? window.location.origin : 'this site';
+
+    if (error.code === 'auth/unauthorized-domain') {
+      message = `Domain "${host}" is not authorized. Add it in Firebase Console > Authentication > Settings > Authorized domains.`;
+    } else if (error.code === 'auth/requests-from-referer-blocked' || error.message?.includes('requests-from-referer-blocked')) {
+      message = `API Key Referrer Blocked: Add "${origin}/*" to Google Cloud Console > Credentials > Application restrictions.`;
+    } else if (error.code === 'auth/user-not-found') {
+      message = `Admin user "${email}" not found. Please create this user in Firebase Console > Authentication > Users.`;
+    } else if (error.code === 'auth/wrong-password') {
+      message = 'Incorrect password. Please verify your password.';
+    } else if (error.code === 'auth/invalid-credential') {
+      message = 'Invalid email or password. If you haven\'t created the user yet, add it in Firebase Console > Authentication.';
     } else if (error.code === 'auth/too-many-requests') {
       message = 'Too many failed login attempts. Please wait a few moments.';
     } else if (error.code === 'auth/invalid-email') {
       message = 'Please provide a valid administrative email.';
+    } else if (error.code === 'auth/network-request-failed') {
+      message = 'Network error. Please check your internet connection.';
+    } else if (error.message) {
+      message = `${error.message} (${error.code || 'AUTH_ERR'})`;
     }
+
     return { success: false, error: message, code: error.code };
   }
 }
