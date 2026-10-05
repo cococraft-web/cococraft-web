@@ -5,11 +5,11 @@
 
 import { saveDocument, deleteDocument, getCloudinarySettings } from './firebase-service.js';
 
-// Default / fallback Cloudinary credentials
+// Default / production Cloudinary credentials
 export const DEFAULT_CLOUDINARY_CONFIG = {
-  cloudName: 'cococraft',
-  uploadPreset: 'cococraft_unsigned',
-  folder: 'coco-craft-exports'
+  cloudName: 'xbs3vpz1',
+  uploadPreset: 'Cococrafts',
+  folder: 'Coco/Images'
 };
 
 /**

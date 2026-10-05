@@ -1224,8 +1224,9 @@ function initSettingsController() {
       };
 
       const cloudPayload = {
-        cloudName: document.getElementById('setting-cloud-name').value.trim(),
-        uploadPreset: document.getElementById('setting-upload-preset').value.trim()
+        cloudName: document.getElementById('setting-cloud-name')?.value.trim() || 'xbs3vpz1',
+        uploadPreset: document.getElementById('setting-upload-preset')?.value.trim() || 'Cococrafts',
+        folder: document.getElementById('setting-cloud-folder')?.value.trim() || 'Coco/Images'
       };
 
       await saveCompanySettings(companyPayload);
@@ -1266,9 +1267,14 @@ export async function loadSettingsData() {
   }
 
   const c = await getCloudinarySettings();
-  if (c) {
-    if (document.getElementById('setting-cloud-name')) document.getElementById('setting-cloud-name').value = c.cloudName || 'cococraft';
-    if (document.getElementById('setting-upload-preset')) document.getElementById('setting-upload-preset').value = c.uploadPreset || 'cococraft_unsigned';
+  if (document.getElementById('setting-cloud-name')) {
+    document.getElementById('setting-cloud-name').value = (c && c.cloudName) ? c.cloudName : 'xbs3vpz1';
+  }
+  if (document.getElementById('setting-upload-preset')) {
+    document.getElementById('setting-upload-preset').value = (c && c.uploadPreset) ? c.uploadPreset : 'Cococrafts';
+  }
+  if (document.getElementById('setting-cloud-folder')) {
+    document.getElementById('setting-cloud-folder').value = (c && c.folder) ? c.folder : 'Coco/Images';
   }
 }
 
