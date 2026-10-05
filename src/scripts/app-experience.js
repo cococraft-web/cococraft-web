@@ -8,26 +8,56 @@ import Lenis from 'lenis';
 
 let lenisInstance = null;
 
+function safeInit(fnName, fn) {
+  try {
+    if (typeof fn === 'function') fn();
+  } catch (err) {
+    console.warn(`[AppExperience] ${fnName} non-fatal warning:`, err);
+  }
+}
+
 function bootMasterExperience() {
-  initLenisSmoothScroll();
-  initScrollProgressBar();
-  initAmbientCursorGlow();
-  initViewportReveals();
-  initMetricCounters();
-  init3DTiltCards();
-  initMagneticButtons();
-  initGlobalHeaderScroll();
-  initMobileNavDrawer();
-  initSmoothAnchorScrolling();
-  initProductFilterAndSearch();
-  initRFQForms();
-  initWalkthroughVideoModal();
+  safeInit('LenisSmoothScroll', initLenisSmoothScroll);
+  safeInit('ScrollProgressBar', initScrollProgressBar);
+  safeInit('AmbientCursorGlow', initAmbientCursorGlow);
+  safeInit('ViewportReveals', initViewportReveals);
+  safeInit('MetricCounters', initMetricCounters);
+  safeInit('3DTiltCards', init3DTiltCards);
+  safeInit('MagneticButtons', initMagneticButtons);
+  safeInit('GlobalHeaderScroll', initGlobalHeaderScroll);
+  safeInit('MobileNavDrawer', initMobileNavDrawer);
+  safeInit('SmoothAnchorScrolling', initSmoothAnchorScrolling);
+  safeInit('ProductFilterAndSearch', initProductFilterAndSearch);
+  safeInit('RFQForms', initRFQForms);
+  safeInit('WalkthroughVideoModal', initWalkthroughVideoModal);
 }
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', bootMasterExperience);
 } else {
   bootMasterExperience();
+}
+
+function initSmoothAnchorScrolling() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#') return;
+      try {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+            window.lenis.scrollTo(target, { offset: -80 });
+          } else {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      } catch (err) {
+        // Ignore invalid CSS selector
+      }
+    });
+  });
 }
 
 /* ==========================================================================
@@ -428,6 +458,7 @@ function initProductFilterAndSearch() {
   const cards = document.querySelectorAll('.product-card-item');
   const emptyState = document.getElementById('product-empty-state');
   const resetBtn = document.getElementById('product-reset-filter-btn');
+  const resultsCount = document.getElementById('product-results-count');
 
   if (!filterBtns.length && !cards.length) return;
 
@@ -440,10 +471,11 @@ function initProductFilterAndSearch() {
     cards.forEach((card) => {
       const cardCategory = card.getAttribute('data-category') || '';
       const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
+      const cardSpecs = (card.getAttribute('data-specs') || '').toLowerCase();
       const cardText = card.textContent.toLowerCase();
 
-      const categoryMatch = activeCategory === 'all' || cardCategory.toLowerCase() === activeCategory.toLowerCase();
-      const searchMatch = !searchQuery || cardTitle.includes(searchQuery) || cardText.includes(searchQuery);
+      const categoryMatch = activeCategory === 'all' || cardCategory.toLowerCase().includes(activeCategory.toLowerCase());
+      const searchMatch = !searchQuery || cardTitle.includes(searchQuery) || cardSpecs.includes(searchQuery) || cardText.includes(searchQuery);
 
       if (categoryMatch && searchMatch) {
         card.classList.remove('is-hidden');
@@ -456,6 +488,10 @@ function initProductFilterAndSearch() {
         card.style.transform = 'translateY(6px)';
       }
     });
+
+    if (resultsCount) {
+      resultsCount.textContent = `Showing ${visibleCount} Product${visibleCount === 1 ? '' : 's'}`;
+    }
 
     if (emptyState) {
       if (visibleCount === 0) {
@@ -471,10 +507,12 @@ function initProductFilterAndSearch() {
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterBtns.forEach((b) => {
-        b.classList.remove('active');
+        b.classList.remove('active', 'bg-primary', 'text-on-primary', 'font-bold');
+        b.classList.add('bg-surface', 'text-on-surface-variant', 'font-medium');
         b.setAttribute('aria-selected', 'false');
       });
-      btn.classList.add('active');
+      btn.classList.add('active', 'bg-primary', 'text-on-primary', 'font-bold');
+      btn.classList.remove('bg-surface', 'text-on-surface-variant', 'font-medium');
       btn.setAttribute('aria-selected', 'true');
       activeCategory = btn.getAttribute('data-category') || 'all';
       applyFilters();
@@ -518,10 +556,12 @@ function initProductFilterAndSearch() {
       filterBtns.forEach((b) => {
         const cat = b.getAttribute('data-category');
         if (cat === 'all') {
-          b.classList.add('active');
+          b.classList.add('active', 'bg-primary', 'text-on-primary', 'font-bold');
+          b.classList.remove('bg-surface', 'text-on-surface-variant', 'font-medium');
           b.setAttribute('aria-selected', 'true');
         } else {
-          b.classList.remove('active');
+          b.classList.remove('active', 'bg-primary', 'text-on-primary', 'font-bold');
+          b.classList.add('bg-surface', 'text-on-surface-variant', 'font-medium');
           b.setAttribute('aria-selected', 'false');
         }
       });
@@ -532,6 +572,8 @@ function initProductFilterAndSearch() {
 
 /* ==========================================================================
    12. RFQ / B2B QUOTE FORM ORCHESTRATION & VALIDATION
+   (Actual submission lifecycle, Firestore syncing, and Confirmation Modal 
+   are handled reliably by /scripts/cms-bridge.js)
    ========================================================================== */
 function initRFQForms() {
   const forms = [
@@ -549,50 +591,6 @@ function initRFQForms() {
 
   forms.forEach(({ form, successBanner, resetBtn }) => {
     if (!form) return;
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // Check form validity
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn ? submitBtn.innerHTML : '';
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-          <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          PROCESSING REQUISITION...
-        `;
-      }
-
-      // Simulate realistic network dispatch to Tamil Nadu export desk
-      setTimeout(() => {
-        form.style.display = 'none';
-        const randomCode = `CCE-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-        const refElem = (successBanner && successBanner.querySelector('#quote-ref-id, #contact-ref-id')) || document.getElementById('contact-ref-id') || document.getElementById('quote-ref-id');
-        if (refElem) {
-          refElem.textContent = randomCode;
-        }
-        if (successBanner) {
-          successBanner.classList.remove('hidden');
-          successBanner.classList.add('flex');
-          // Scroll into view gently
-          successBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-        }
-      }, 550);
-    });
 
     if (resetBtn && successBanner) {
       resetBtn.addEventListener('click', () => {

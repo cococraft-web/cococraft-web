@@ -571,6 +571,9 @@ function handleUserInput(text) {
 
 /* ── DOM BUILDER ────────────────────────────────────────── */
 function buildWidget() {
+  if (document.getElementById('cc-host')) return;
+  if (window.location.pathname.includes('/admin/')) return;
+
   const host = document.createElement('div');
   host.id = 'cc-host';
   host.setAttribute('data-lenis-prevent', 'true');
@@ -602,43 +605,55 @@ function buildWidget() {
 
 /* ── CONTROLLER ─────────────────────────────────────────── */
 function initCocoChat() {
-  buildWidget();
-  const launcher = document.getElementById('cc-launcher');
-  const win = document.getElementById('cc-win');
-  const closeBtn = document.getElementById('cc-close');
-  const inp = document.getElementById('cc-inp');
-  const sendBtn = document.getElementById('cc-send');
-  messagesEl = document.getElementById('cc-msgs');
-  let isOpen = false;
+  try {
+    buildWidget();
+    const launcher = document.getElementById('cc-launcher');
+    const win = document.getElementById('cc-win');
+    const closeBtn = document.getElementById('cc-close');
+    const inp = document.getElementById('cc-inp');
+    const sendBtn = document.getElementById('cc-send');
+    messagesEl = document.getElementById('cc-msgs');
+    if (!launcher || !win || !messagesEl) return;
 
-  function openChat() {
-    isOpen = true;
-    win.classList.add('cc-win--open'); launcher.classList.add('cc-launch--open');
-    win.setAttribute('aria-hidden', 'false'); inp.focus();
-    if (!win._greeted) { win._greeted = true; setTimeout(() => addBotMessages(handleGreeting()), 300); }
-    document.querySelector('.cc-dot')?.classList.remove('cc-dot--on');
+    let isOpen = false;
+
+    function openChat() {
+      isOpen = true;
+      win.classList.add('cc-win--open'); launcher.classList.add('cc-launch--open');
+      win.setAttribute('aria-hidden', 'false'); if (inp) inp.focus();
+      if (!win._greeted) { win._greeted = true; setTimeout(() => addBotMessages(handleGreeting()), 300); }
+      document.querySelector('.cc-dot')?.classList.remove('cc-dot--on');
+    }
+    function closeChat() {
+      isOpen = false;
+      win.classList.remove('cc-win--open'); launcher.classList.remove('cc-launch--open');
+      win.setAttribute('aria-hidden', 'true');
+    }
+    launcher.addEventListener('click', () => isOpen ? closeChat() : openChat());
+    if (closeBtn) closeBtn.addEventListener('click', closeChat);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) closeChat(); });
+
+    // Isolate chat scrolling from background smooth scrolling (Lenis/native)
+    win.addEventListener('wheel', (e) => {
+      e.stopPropagation();
+    }, { passive: true });
+    win.addEventListener('touchmove', (e) => {
+      e.stopPropagation();
+    }, { passive: true });
+
+    const send = () => { 
+      if (!inp) return;
+      const v = inp.value.trim(); 
+      if (!v) return; 
+      inp.value = ''; 
+      handleUserInput(v); 
+    };
+    if (sendBtn) sendBtn.addEventListener('click', send);
+    if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+    setTimeout(() => { if (!isOpen) { const d = document.querySelector('.cc-dot'); if(d) d.classList.add('cc-dot--on'); } }, 4000);
+  } catch (err) {
+    console.error('Coco Chat Init Error:', err);
   }
-  function closeChat() {
-    isOpen = false;
-    win.classList.remove('cc-win--open'); launcher.classList.remove('cc-launch--open');
-    win.setAttribute('aria-hidden', 'true');
-  }
-  launcher.addEventListener('click', () => isOpen ? closeChat() : openChat());
-  closeBtn.addEventListener('click', closeChat);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) closeChat(); });
-
-  // Isolate chat scrolling from background smooth scrolling (Lenis/native)
-  win.addEventListener('wheel', (e) => {
-    e.stopPropagation();
-  }, { passive: true });
-  win.addEventListener('touchmove', (e) => {
-    e.stopPropagation();
-  }, { passive: true });
-
-  const send = () => { const v = inp.value.trim(); if (!v) return; inp.value = ''; handleUserInput(v); };
-  sendBtn.addEventListener('click', send);
-  inp.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
-  setTimeout(() => { if (!isOpen) { const d = document.querySelector('.cc-dot'); if(d) d.classList.add('cc-dot--on'); } }, 4000);
 }
 
 /* ── INIT ───────────────────────────────────────────────── */

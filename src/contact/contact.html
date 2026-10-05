@@ -292,6 +292,75 @@
       </div>
     </section>
 
+    <!-- RFQ Submission Confirmation Modal Popup -->
+    <div id="rfq-confirmation-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md transition-all duration-300" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="relative w-full max-w-xl rounded-3xl bg-white border border-surface-variant/80 p-6 sm:p-8 shadow-2xl flex flex-col gap-5 transform transition-all">
+        <!-- Close Button -->
+        <button type="button" id="close-confirmation-modal-btn" class="absolute top-5 right-5 p-2 rounded-xl text-outline hover:text-primary hover:bg-surface-container transition-colors cursor-pointer" aria-label="Close modal">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+
+        <!-- Top Verified Badge -->
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-secondary/10 border border-secondary/30 flex items-center justify-center text-secondary">
+            <span class="material-symbols-outlined text-2xl font-bold">verified</span>
+          </div>
+          <div>
+            <span class="text-xs font-technical-code font-bold uppercase text-secondary tracking-wider block">PRO-FORMA INQUIRY CONFIRMED</span>
+            <h3 id="modal-title" class="font-headline-sm text-xl sm:text-2xl font-bold text-primary">Inquiry Successfully Transmitted!</h3>
+          </div>
+        </div>
+
+        <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+          Your export container requisition has been registered in the Coco Craft Exports administrative terminal. Our international procurement desk at Tuticorin Port will prepare your official Pro-Forma Invoice and shipping schedule within 4 hours.
+        </p>
+
+        <!-- Requisition Reference Ticket -->
+        <div class="p-4 rounded-2xl bg-surface-container-low border border-surface-variant flex flex-col gap-3 font-technical-code text-xs">
+          <div class="flex items-center justify-between border-b border-surface-variant/60 pb-2">
+            <span class="text-outline uppercase text-[11px]">Requisition Reference:</span>
+            <div class="flex items-center gap-2">
+              <span id="modal-ref-id" class="text-primary font-bold text-sm bg-white px-2.5 py-1 rounded-lg border border-surface-variant">CCE-REQ-2026-XXXX</span>
+              <button type="button" id="copy-ref-btn" class="p-1 rounded text-secondary hover:bg-secondary/10 transition-colors cursor-pointer" title="Copy Reference ID">
+                <span class="material-symbols-outlined text-base">content_copy</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Summary Grid -->
+          <div class="grid grid-cols-2 gap-2 text-[11px]">
+            <div>
+              <span class="text-outline block uppercase">Requester:</span>
+              <span id="modal-summary-name" class="text-primary font-semibold truncate block">—</span>
+            </div>
+            <div>
+              <span class="text-outline block uppercase">Organization:</span>
+              <span id="modal-summary-company" class="text-primary font-semibold truncate block">—</span>
+            </div>
+            <div>
+              <span class="text-outline block uppercase">Substrate & Volume:</span>
+              <span id="modal-summary-substrate" class="text-secondary font-bold truncate block">—</span>
+            </div>
+            <div>
+              <span class="text-outline block uppercase">Port & Incoterm:</span>
+              <span id="modal-summary-port" class="text-primary font-semibold truncate block">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fast-Track Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
+          <a id="modal-whatsapp-link" href="https://wa.me/919488012345" target="_blank" rel="noopener noreferrer" class="w-full sm:flex-1 py-3 px-4 rounded-xl bg-[#25D366] text-white font-technical-code text-xs font-bold uppercase hover:bg-[#1EBE5D] transition-all shadow-sm flex items-center justify-center gap-2 text-center">
+            <span class="material-symbols-outlined text-base">chat</span>
+            <span>Fast-Track on WhatsApp</span>
+          </a>
+          <button type="button" id="modal-done-btn" class="w-full sm:w-auto py-3 px-6 rounded-xl bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all cursor-pointer">
+            Done / Close
+          </button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Footer -->
