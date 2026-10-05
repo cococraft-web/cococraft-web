@@ -6,17 +6,17 @@
 
 export const siteConfig = {
   name: "COCO CRAFT EXPORTS",
-  origin: "Tamil Nadu, India",
+  origin: "India",
   tagline: "FROM COCONUT TO GLOBAL GROWTH.",
-  description: "Coconut-based manufacturing and export solutions crafted with precision for global markets.",
-  seoTitle: "COCO CRAFT EXPORTS | Coconut-Based Manufacturing & Export",
-  seoDescription: "COCO CRAFT EXPORTS is a coconut-based manufacturing and export company from Tamil Nadu, India. Explore our products, manufacturing capabilities and global business enquiries.",
+  description: "Worldwide coconut coir manufacturing and export solutions engineered for commercial horticulture and industrial applications.",
+  seoTitle: "Coconut Coir Manufacturer & Exporter | COCO CRAFT EXPORTS",
+  seoDescription: "COCO CRAFT EXPORTS is a worldwide B2B coconut coir manufacturer and exporter. Supplying premium cocopeat blocks, hydroponic grow bags, and growing media to commercial growers and distributors globally.",
   contactPlaceholder: {
-    location: "Tamil Nadu, India",
+    location: "Global Trade Desk",
     email: "enquiry@cococraftexports.com",
     phone: "+91 [CONTACT NUMBER]",
     whatsapp: "+91 [WHATSAPP NUMBER]",
-    exportDesk: "International Trade Desk — Tamil Nadu, India"
+    exportDesk: "International B2B Trade Desk"
   }
 };
 

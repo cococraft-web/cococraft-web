@@ -1,0 +1,18 @@
+# ==============================================================================
+# COCO CRAFT EXPORTS — INTERNATIONAL ROBOTS DIRECTIVE
+# High-Performance B2B Search Crawler Guidance
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+Disallow: /*?*fbclid=
+Disallow: /*?*utm_
+
+# Crawl delay optimization
+Crawl-delay: 1
+
+# Host Declaration & Canonical XML Sitemap
+Host: https://cococraftexports.com
+Sitemap: https://cococraftexports.com/sitemap.xml

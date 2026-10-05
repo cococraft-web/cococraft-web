@@ -22,9 +22,12 @@ export default defineConfig({
         applications: resolve(import.meta.dirname, 'src/applications/applications.html'),
         manufacturing: resolve(import.meta.dirname, 'src/company/manufacturing.html'),
         sustainability: resolve(import.meta.dirname, 'src/company/sustainability.html'),
+        globalReach: resolve(import.meta.dirname, 'src/company/global-reach.html'),
         gallery: resolve(import.meta.dirname, 'src/company/gallery.html'),
+        resources: resolve(import.meta.dirname, 'src/resources/index.html'),
         contact: resolve(import.meta.dirname, 'src/contact/contact.html'),
         admin: resolve(import.meta.dirname, 'src/admin/index.html'),
+        notFound: resolve(import.meta.dirname, 'src/404.html'),
       }
     }
   }

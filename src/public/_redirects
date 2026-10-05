@@ -1,0 +1,26 @@
+# ==============================================================================
+# COCO CRAFT EXPORTS — 301 REDIRECTS FOR CLEAN B2B URLS
+# Compatible with Cloudflare Pages, Workers, and CDN edge rules
+# ==============================================================================
+
+# Clean Route Aliases
+/about              /about/about.html               301
+/products           /products/products.html         301
+/applications       /applications/applications.html 301
+/manufacturing      /company/manufacturing.html     301
+/sustainability     /company/sustainability.html    301
+/global-reach       /company/global-reach.html      301
+/gallery            /company/gallery.html           301
+/resources          /resources/index.html           301
+/contact            /contact/contact.html           301
+/quote              /contact/contact.html           301
+/rfq                /contact/contact.html           301
+/export-inquiry     /contact/contact.html           301
+/admin              /admin/index.html               301
+
+# Product Anchor Shortcuts
+/cocopeat-blocks    /products/products.html#blocks  301
+/grow-bags          /products/products.html#grow-bags 301
+/husk-chips         /products/products.html#chips   301
+/briquettes         /products/products.html#briquettes 301
+/coir-fiber         /products/products.html#coir-fiber 301

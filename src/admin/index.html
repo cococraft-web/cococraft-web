@@ -748,66 +748,600 @@
         </section>
 
         <!-- ==========================================
-             SECTION 15: SEO METADATA MANAGEMENT
+             SECTION 15: GLOBAL B2B SEO MANAGEMENT SUITE
              ========================================== -->
         <section id="section-seo" class="cms-section hidden flex flex-col gap-6">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          
+          <!-- Section Header & Master Actions -->
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#E2E6E0] pb-5">
             <div>
-              <h2 class="text-2xl font-bold font-headings text-primary">Search Engine Optimization (SEO)</h2>
-              <p class="text-xs text-on-surface-variant">Configure per-page title tags, meta descriptions, and OpenGraph social preview images.</p>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#00742F]/10 border border-[#00742F]/20 text-[#00742F] font-mono text-[10px] font-bold uppercase tracking-wider">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#00742F]"></span>
+                  INTERNATIONAL B2B INDEXING
+                </span>
+                <span class="font-mono text-xs text-on-surface-variant">ENGINE V2.4</span>
+              </div>
+              <h2 class="text-2xl font-bold font-headings text-primary mt-1">Global SEO Management System</h2>
+              <p class="text-xs text-on-surface-variant">Configure worldwide search indexing, multi-page metadata, product rich snippets, social cards, sitemaps, robots.txt, and 301 redirects.</p>
             </div>
-            <button id="save-seo-btn" class="px-5 py-2.5 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-2 shadow-sm">
-              <span class="material-symbols-outlined text-base">save</span>
-              <span>SAVE SEO CONFIGURATION</span>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button type="button" id="run-seo-audit-btn" class="px-4 py-2.5 rounded-xl bg-white border border-[#E2E6E0] text-primary font-mono text-xs uppercase font-bold hover:border-[#00742F] hover:text-[#00742F] transition-all flex items-center gap-2 shadow-2xs">
+                <span class="material-symbols-outlined text-base text-[#00742F]">troubleshoot</span>
+                <span>RUN SEO AUDIT</span>
+              </button>
+              <button type="button" id="save-seo-btn" class="px-5 py-2.5 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-base">save</span>
+                <span>SAVE ALL SEO</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- SEO Health & Safety Status Checklist Card -->
+          <div class="admin-card p-5 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-[#00742F]/10 flex items-center justify-center text-[#00742F]">
+                  <span class="material-symbols-outlined text-xl">health_and_safety</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm text-primary font-headings">SEO Health &amp; Safety Audit</span>
+                    <span id="seo-health-badge" class="px-2 py-0.5 rounded-full bg-[#00742F] text-white font-mono text-[10px] font-bold">100% HEALTHY</span>
+                  </div>
+                  <p class="text-[11px] text-on-surface-variant">Live validation against duplicate titles, missing descriptions, broken canonicals, and accidental noindex rules.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 text-xs font-mono">
+                <div class="flex items-center gap-1.5 text-[#00742F]">
+                  <span class="font-bold text-sm" id="audit-complete-count">10</span>
+                  <span class="text-[11px]">✓ Complete</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-[#B39158]">
+                  <span class="font-bold text-sm" id="audit-warning-count">0</span>
+                  <span class="text-[11px]">⚠ Missing</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-red-600">
+                  <span class="font-bold text-sm" id="audit-error-count">0</span>
+                  <span class="text-[11px]">✕ Error</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Page Status Checklist Grid -->
+            <div id="seo-status-checklist" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-xs">
+              <!-- Dynamically populated via admin.js -->
+            </div>
+          </div>
+
+          <!-- SEO Sub-Section Navigation Tabs -->
+          <div class="flex items-center gap-1.5 overflow-x-auto border-b border-[#E2E6E0] pb-2 admin-custom-scroll text-xs font-mono uppercase font-bold">
+            <button type="button" data-seo-tab="global" class="seo-tab-btn active px-3.5 py-2 rounded-xl bg-[#00742F] text-white transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">settings</span>
+              <span>1. Global Settings</span>
+            </button>
+            <button type="button" data-seo-tab="pages" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">article</span>
+              <span>2. Page SEO</span>
+            </button>
+            <button type="button" data-seo-tab="products" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">inventory_2</span>
+              <span>3. Product SEO</span>
+            </button>
+            <button type="button" data-seo-tab="og" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">share</span>
+              <span>4. Open Graph</span>
+            </button>
+            <button type="button" data-seo-tab="sitemap" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">account_tree</span>
+              <span>5. Sitemap</span>
+            </button>
+            <button type="button" data-seo-tab="robots" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">smart_toy</span>
+              <span>6. Robots.txt</span>
+            </button>
+            <button type="button" data-seo-tab="redirects" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">alt_route</span>
+              <span>7. Redirects (301)</span>
+            </button>
+            <button type="button" data-seo-tab="schema" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">data_object</span>
+              <span>8. Schema Settings</span>
             </button>
           </div>
 
-          <div class="admin-card p-6 flex flex-col gap-6">
-            <div class="flex items-center gap-3 border-b border-[#E2E6E0] pb-4">
-              <label for="seo-page-selector" class="font-mono text-xs uppercase text-on-surface-variant">Select Page to Edit:</label>
-              <select id="seo-page-selector" class="px-3.5 py-2 rounded-xl bg-surface border border-surface-variant text-xs font-bold text-primary focus:border-secondary focus:outline-none">
-                <option value="home">Homepage (index.html)</option>
-                <option value="about">About Us (about.html)</option>
-                <option value="products">Products Catalogue (products.html)</option>
-                <option value="applications">Applications (applications.html)</option>
-                <option value="manufacturing">Manufacturing (manufacturing.html)</option>
-                <option value="sustainability">Sustainability (sustainability.html)</option>
-                <option value="gallery">Facility Gallery (gallery.html)</option>
-                <option value="contact">Contact &amp; Desk (contact.html)</option>
-              </select>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
-              <div class="sm:col-span-2">
-                <label for="seo-title" class="block font-mono uppercase text-on-surface-variant mb-1.5">Meta Page Title *</label>
-                <input type="text" id="seo-title" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+          <!-- =========================================================
+               TAB 1: GLOBAL SEO SETTINGS
+               ========================================================= -->
+          <div id="seo-tab-content-global" class="seo-tab-content flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="border-b border-[#E2E6E0] pb-3">
+                <h3 class="font-bold text-base text-primary font-headings">Global Brand &amp; International Search Directives</h3>
+                <p class="text-on-surface-variant text-xs mt-0.5">Universal defaults applied across all international B2B public endpoints.</p>
               </div>
 
-              <div class="sm:col-span-2">
-                <label for="seo-description" class="block font-mono uppercase text-on-surface-variant mb-1.5">Meta Description *</label>
-                <textarea id="seo-description" rows="3" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
-              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label for="seo-global-brand" class="block font-mono uppercase text-on-surface-variant mb-1">Company Legal Brand Name *</label>
+                  <input type="text" id="seo-global-brand" value="COCO CRAFT EXPORTS" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
 
-              <div>
-                <label for="seo-canonical" class="block font-mono uppercase text-on-surface-variant mb-1.5">Canonical URL</label>
-                <input type="text" id="seo-canonical" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
-              </div>
+                <div>
+                  <label for="seo-global-suffix" class="block font-mono uppercase text-on-surface-variant mb-1">Global Title Suffix / Separator</label>
+                  <input type="text" id="seo-global-suffix" value="| COCO CRAFT EXPORTS" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
 
-              <div>
-                <label for="seo-robots" class="block font-mono uppercase text-on-surface-variant mb-1.5">Robots Directive</label>
-                <select id="seo-robots" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
-                  <option value="index, follow">index, follow (Standard)</option>
-                  <option value="noindex, follow">noindex, follow</option>
-                  <option value="noindex, nofollow">noindex, nofollow</option>
-                </select>
-              </div>
+                <div class="md:col-span-2">
+                  <label for="seo-global-baseurl" class="block font-mono uppercase text-on-surface-variant mb-1">Canonical Production Base URL *</label>
+                  <input type="url" id="seo-global-baseurl" value="https://cococraftexports.com" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
 
-              <div class="sm:col-span-2">
-                <label for="seo-og-image" class="block font-mono uppercase text-on-surface-variant mb-1.5">Social Share Image (OG:Image URL)</label>
-                <input type="text" id="seo-og-image" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                <div class="md:col-span-2">
+                  <label for="seo-global-desc" class="block font-mono uppercase text-on-surface-variant mb-1">Fallback Meta Description (Max 160 Chars)</label>
+                  <textarea id="seo-global-desc" rows="3" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">Worldwide B2B coconut coir manufacturer and exporter. Supplying premium 5kg cocopeat blocks, hydroponic grow bags, and growing media to commercial growers and distributors globally.</textarea>
+                </div>
+
+                <div>
+                  <label for="seo-global-default-image" class="block font-mono uppercase text-on-surface-variant mb-1">Default OpenGraph / Social Image URL</label>
+                  <input type="text" id="seo-global-default-image" value="/assets/products/5kg-block.jpg" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-global-robots" class="block font-mono uppercase text-on-surface-variant mb-1">Default Site-Wide Robots Directive</label>
+                  <select id="seo-global-robots" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
+                    <option value="index, follow">index, follow (Standard Production)</option>
+                    <option value="noindex, follow">noindex, follow (Staging / Audit)</option>
+                    <option value="noindex, nofollow">noindex, nofollow (Private)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="seo-google-verification" class="block font-mono uppercase text-on-surface-variant mb-1">Google Search Console Verification Code</label>
+                  <input type="text" id="seo-google-verification" placeholder="google-site-verification token" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-bing-verification" class="block font-mono uppercase text-on-surface-variant mb-1">Bing Webmaster Tools Verification Code</label>
+                  <input type="text" id="seo-bing-verification" placeholder="msvalidate.01 token" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- =========================================================
+               TAB 2: PAGE SEO (Per-Page Title, Meta, Focus Keywords)
+               ========================================================= -->
+          <div id="seo-tab-content-pages" class="seo-tab-content hidden flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              
+              <!-- Page Selector & Live Action Bar -->
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-4">
+                <div class="flex items-center gap-3">
+                  <label for="seo-page-selector" class="font-mono text-xs uppercase font-bold text-primary">SELECT PUBLIC PAGE:</label>
+                  <select id="seo-page-selector" class="px-3.5 py-2 rounded-xl bg-surface border border-surface-variant text-xs font-bold text-[#00742F] focus:border-secondary focus:outline-none cursor-pointer">
+                    <option value="home">Homepage (/index.html)</option>
+                    <option value="about">About Us (/about/about.html)</option>
+                    <option value="products">Products Catalogue (/products/products.html)</option>
+                    <option value="applications">Applications (/applications/applications.html)</option>
+                    <option value="manufacturing">Manufacturing (/company/manufacturing.html)</option>
+                    <option value="sustainability">Sustainability (/company/sustainability.html)</option>
+                    <option value="global-reach">Global Reach &amp; Export (/company/global-reach.html)</option>
+                    <option value="gallery">Facility Gallery (/company/gallery.html)</option>
+                    <option value="resources">Technical Resources (/resources/index.html)</option>
+                    <option value="contact">Contact &amp; Request Quote (/contact/contact.html)</option>
+                  </select>
+                </div>
+                <button type="button" id="seo-autofill-canonical-btn" class="px-3 py-1.5 rounded-lg bg-[#00742F]/10 text-[#00742F] font-mono text-[11px] font-bold uppercase hover:bg-[#00742F]/20 transition-all flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">link</span>
+                  <span>Auto-Fill Canonical</span>
+                </button>
+              </div>
+
+              <!-- Page Metadata Form Fields -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                
+                <div class="md:col-span-2">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label for="seo-title" class="font-mono uppercase text-on-surface-variant">SEO Title Tag *</label>
+                    <span id="seo-title-count" class="font-mono text-[11px] text-[#00742F] font-bold">0 / 60 Chars (Optimal: 50–60)</span>
+                  </div>
+                  <input type="text" id="seo-title" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div class="md:col-span-2">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label for="seo-description" class="font-mono uppercase text-on-surface-variant">Meta Description *</label>
+                    <span id="seo-desc-count" class="font-mono text-[11px] text-[#00742F] font-bold">0 / 160 Chars (Optimal: 150–160)</span>
+                  </div>
+                  <textarea id="seo-description" rows="3" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                  <label for="seo-focus-keyword" class="block font-mono uppercase text-on-surface-variant mb-1">Focus Keyword *</label>
+                  <input type="text" id="seo-focus-keyword" placeholder="e.g. coconut coir manufacturer" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-medium focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-secondary-keywords" class="block font-mono uppercase text-on-surface-variant mb-1">Secondary Keywords (Comma-Separated)</label>
+                  <input type="text" id="seo-secondary-keywords" placeholder="cocopeat exporter, coir substrate supplier, bulk coir" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-medium focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-canonical" class="block font-mono uppercase text-on-surface-variant mb-1">Canonical URL *</label>
+                  <input type="url" id="seo-canonical" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-robots" class="block font-mono uppercase text-on-surface-variant mb-1">Robots Directive *</label>
+                  <select id="seo-robots" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
+                    <option value="index, follow">index, follow (Standard)</option>
+                    <option value="noindex, follow">noindex, follow</option>
+                    <option value="noindex, nofollow">noindex, nofollow</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <!-- Live Google SERP Snippet Preview Box -->
+              <div class="mt-4 pt-4 border-t border-[#E2E6E0] flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono uppercase text-xs font-bold text-primary flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-[#00742F]">preview</span>
+                    GOOGLE SEARCH SERP SNIPPET PREVIEW
+                  </span>
+                  <div class="flex items-center gap-1 text-[11px] font-mono">
+                    <button type="button" id="serp-preview-desktop" class="px-2.5 py-1 rounded-md bg-[#00742F] text-white">Desktop</button>
+                    <button type="button" id="serp-preview-mobile" class="px-2.5 py-1 rounded-md bg-white border border-[#E2E6E0] text-on-surface-variant">Mobile</button>
+                  </div>
+                </div>
+
+                <div id="serp-preview-box" class="p-5 rounded-2xl bg-[#F8FAF6] border border-[#E2E6E0] max-w-2xl flex flex-col gap-1.5 shadow-2xs font-sans">
+                  <div class="flex items-center gap-2 text-xs text-[#202124]">
+                    <div class="w-4 h-4 rounded-full bg-[#00742F]/20 flex items-center justify-center text-[10px] text-[#00742F] font-bold">C</div>
+                    <span class="font-semibold text-xs text-[#202124]">cococraftexports.com</span>
+                    <span class="text-xs text-[#5F6368]" id="serp-preview-url">https://cococraftexports.com</span>
+                  </div>
+                  <h4 id="serp-preview-title" class="text-lg sm:text-xl font-normal text-[#1A0DAB] hover:underline cursor-pointer leading-snug">
+                    Coconut Coir Manufacturer &amp; Exporter | COCO CRAFT EXPORTS
+                  </h4>
+                  <p id="serp-preview-desc" class="text-xs sm:text-sm text-[#4D5156] leading-relaxed line-clamp-2">
+                    Leading international coconut coir manufacturer and cocopeat exporter. Bulk 5kg blocks, hydroponic grow bags, husk chips, and growing media substrates for commercial horticulture worldwide.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- =========================================================
+               TAB 3: PRODUCT SEO (Unique B2B Meta Per Product)
+               ========================================================= -->
+          <div id="seo-tab-content-products" class="seo-tab-content hidden flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-4">
+                <div class="flex items-center gap-3">
+                  <label for="seo-product-selector" class="font-mono text-xs uppercase font-bold text-primary">SELECT PRODUCT ITEM:</label>
+                  <select id="seo-product-selector" class="px-3.5 py-2 rounded-xl bg-surface border border-surface-variant text-xs font-bold text-[#00742F] focus:border-secondary focus:outline-none cursor-pointer">
+                    <option value="5kg-cocopeat-blocks">5KG Cocopeat Compressed Blocks</option>
+                    <option value="coir-grow-bags">Hydroponic Coir Grow Bags / Slabs</option>
+                    <option value="husk-chips">Washed Coir Husk Chips</option>
+                    <option value="briquettes">650g Compressed Coir Briquettes</option>
+                    <option value="coir-fiber">Raw Mattress &amp; Bristle Coir Fibre</option>
+                    <option value="open-top-grow-bags">Coco Coir Open Top Grow Bags</option>
+                    <option value="coir-pots-discs">Biodegradable Coir Seedling Pots &amp; Pellets</option>
+                  </select>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#00742F]/10 text-[#00742F] font-mono text-[10px] font-bold">
+                    <span class="material-symbols-outlined text-xs">check_circle</span>
+                    UNIQUE METADATA ENFORCED
+                  </span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="md:col-span-2">
+                  <label for="seo-prod-title" class="block font-mono uppercase text-on-surface-variant mb-1">Product SEO Title *</label>
+                  <input type="text" id="seo-prod-title" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="seo-prod-description" class="block font-mono uppercase text-on-surface-variant mb-1">Product Meta Description *</label>
+                  <textarea id="seo-prod-description" rows="3" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                  <label for="seo-prod-keyword" class="block font-mono uppercase text-on-surface-variant mb-1">Focus Product Keyword</label>
+                  <input type="text" id="seo-prod-keyword" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-prod-canonical" class="block font-mono uppercase text-on-surface-variant mb-1">Product Canonical Anchor Link</label>
+                  <input type="url" id="seo-prod-canonical" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="seo-prod-schema-preview" class="block font-mono uppercase text-on-surface-variant mb-1">Schema.org Product JSON Preview</label>
+                  <pre id="seo-prod-schema-preview" class="p-3.5 rounded-xl bg-[#1C211D] text-[#93F9A1] font-mono text-[11px] overflow-x-auto admin-custom-scroll"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =========================================================
+               TAB 4: OPEN GRAPH & SOCIAL CARDS
+               ========================================================= -->
+          <div id="seo-tab-content-og" class="seo-tab-content hidden flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="border-b border-[#E2E6E0] pb-3">
+                <h3 class="font-bold text-base text-primary font-headings">Open Graph &amp; Twitter/X Social Cards</h3>
+                <p class="text-on-surface-variant text-xs mt-0.5">Custom social share graphics, title tags, and interactive feed presentation cards.</p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label for="seo-og-title" class="block font-mono uppercase text-on-surface-variant mb-1">Open Graph Title</label>
+                  <input type="text" id="seo-og-title" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-og-type" class="block font-mono uppercase text-on-surface-variant mb-1">OG Type</label>
+                  <select id="seo-og-type" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
+                    <option value="website">website</option>
+                    <option value="article">article</option>
+                    <option value="product">product</option>
+                  </select>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="seo-og-description" class="block font-mono uppercase text-on-surface-variant mb-1">Open Graph Description</label>
+                  <textarea id="seo-og-description" rows="2" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="seo-og-image" class="block font-mono uppercase text-on-surface-variant mb-1">Open Graph Image (1200x630 Recommended) *</label>
+                  <div class="flex gap-2">
+                    <input type="text" id="seo-og-image" class="flex-1 p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                    <button type="button" id="pick-seo-og-image-btn" class="px-4 py-3 rounded-xl bg-surface-container border border-surface-variant hover:bg-surface-variant text-primary font-mono text-xs uppercase font-bold flex items-center gap-1.5">
+                      <span class="material-symbols-outlined text-sm">photo_library</span>
+                      <span>Pick Media</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="seo-twitter-title" class="block font-mono uppercase text-on-surface-variant mb-1">Twitter / X Title</label>
+                  <input type="text" id="seo-twitter-title" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="seo-twitter-card" class="block font-mono uppercase text-on-surface-variant mb-1">Twitter Card Type</label>
+                  <select id="seo-twitter-card" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
+                    <option value="summary_large_image">summary_large_image (Full Width Card)</option>
+                    <option value="summary">summary (Compact Thumbnail)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Social Feed Card Live Preview -->
+              <div class="mt-4 pt-4 border-t border-[#E2E6E0] flex flex-col gap-3">
+                <span class="font-mono uppercase text-xs font-bold text-primary flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm text-[#00742F]">share</span>
+                  LINKEDIN &amp; FACEBOOK FEED SHARE CARD PREVIEW
+                </span>
+
+                <div class="max-w-xl rounded-2xl border border-[#E2E6E0] bg-white overflow-hidden shadow-sm flex flex-col">
+                  <div class="w-full h-52 bg-[#EBEFE8] overflow-hidden relative">
+                    <img id="og-preview-img" src="/assets/products/5kg-block.jpg" alt="Social Preview" class="w-full h-full object-cover" />
+                    <span class="absolute bottom-2 left-2 px-2.5 py-1 rounded bg-black/60 backdrop-blur-sm text-white font-mono text-[10px] font-bold">1200 x 630</span>
+                  </div>
+                  <div class="p-4 flex flex-col gap-1 bg-[#F8FAF6]">
+                    <span class="font-mono uppercase text-[10px] text-on-surface-variant">COCOCRAFTEXPORTS.COM</span>
+                    <h5 id="og-preview-title" class="font-bold text-sm text-primary font-headings line-clamp-1">
+                      Coconut Coir Manufacturer &amp; Exporter | COCO CRAFT EXPORTS
+                    </h5>
+                    <p id="og-preview-desc" class="text-xs text-on-surface-variant line-clamp-2">
+                      Leading international coconut coir manufacturer and cocopeat exporter. Bulk 5kg blocks, hydroponic grow bags, husk chips, and growing media substrates for commercial horticulture worldwide.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- =========================================================
+               TAB 5: SITEMAP MANAGER
+               ========================================================= -->
+          <div id="seo-tab-content-sitemap" class="seo-tab-content hidden flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-3">
+                <div>
+                  <h3 class="font-bold text-base text-primary font-headings">XML Sitemap Infrastructure (sitemap.xml)</h3>
+                  <p class="text-on-surface-variant text-xs mt-0.5">Compliant with Sitemaps.org 0.9 protocol for Google, Bing, and international search crawlers.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="copy-sitemap-xml-btn" class="px-3.5 py-2 rounded-xl bg-surface border border-surface-variant text-primary font-mono text-xs uppercase font-bold hover:border-secondary transition-all flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">content_copy</span>
+                    <span>Copy XML</span>
+                  </button>
+                  <a href="/sitemap.xml" target="_blank" class="px-3.5 py-2 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">open_in_new</span>
+                    <span>View Live XML</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sitemap URLs Table -->
+              <div class="overflow-x-auto rounded-xl border border-[#E2E6E0]">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-[#F0F5EE] border-b border-[#E2E6E0] font-mono text-on-surface-variant uppercase text-[11px]">
+                    <tr>
+                      <th class="p-3.5">Public Canonical URL</th>
+                      <th class="p-3.5">Priority</th>
+                      <th class="p-3.5">Change Frequency</th>
+                      <th class="p-3.5">Last Modified</th>
+                      <th class="p-3.5">Indexing Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sitemap-urls-tbody" class="divide-y divide-[#E2E6E0] font-mono text-xs">
+                    <!-- Populated dynamically via admin.js -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div>
+                <label for="sitemap-xml-viewer" class="block font-mono uppercase text-on-surface-variant mb-1">Raw XML Sitemap Output</label>
+                <textarea id="sitemap-xml-viewer" rows="8" readonly class="w-full p-4 rounded-xl bg-[#1C211D] text-[#93F9A1] font-mono text-xs focus:outline-none"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- =========================================================
+               TAB 6: ROBOTS.TXT EDITOR
+               ========================================================= -->
+          <div id="seo-tab-content-robots" class="seo-tab-content hidden flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-3">
+                <div>
+                  <h3 class="font-bold text-base text-primary font-headings">Robots Directive Management (robots.txt)</h3>
+                  <p class="text-on-surface-variant text-xs mt-0.5">Control search engine bot access, crawl rates, and private administrative disallow rules.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="copy-robots-txt-btn" class="px-3.5 py-2 rounded-xl bg-surface border border-surface-variant text-primary font-mono text-xs uppercase font-bold hover:border-secondary transition-all flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">content_copy</span>
+                    <span>Copy Text</span>
+                  </button>
+                  <a href="/robots.txt" target="_blank" class="px-3.5 py-2 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">open_in_new</span>
+                    <span>View Live robots.txt</span>
+                  </a>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label for="seo-robots-editor" class="font-mono uppercase text-on-surface-variant font-bold">Robots.txt Content</label>
+                  <span class="font-mono text-[11px] text-[#00742F]">Syntax Status: Valid</span>
+                </div>
+                <textarea id="seo-robots-editor" rows="10" class="w-full p-4 rounded-xl bg-[#1C211D] text-[#93F9A1] font-mono text-xs focus:outline-none"></textarea>
+              </div>
+
+              <!-- Safety Notice -->
+              <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2.5">
+                <span class="material-symbols-outlined text-base shrink-0 mt-0.5">shield</span>
+                <span><strong>Safety Rule:</strong> Never disallow public catalogue routes (<code>/products/</code>, <code>/applications/</code>, <code>/</code>) in robots.txt. The admin terminal route (<code>/admin/</code>) is protected by default.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- =========================================================
+               TAB 7: 301 REDIRECTS MANAGER
+               ========================================================= -->
+          <div id="seo-tab-content-redirects" class="seo-tab-content hidden flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-3">
+                <div>
+                  <h3 class="font-bold text-base text-primary font-headings">301 Permanent Redirects Architecture</h3>
+                  <p class="text-on-surface-variant text-xs mt-0.5">Maintain link equity, prevent 404 dead-ends, and manage clean URL aliases.</p>
+                </div>
+                <button type="button" id="add-redirect-rule-btn" class="px-4 py-2 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">add_circle</span>
+                  <span>Add Redirect</span>
+                </button>
+              </div>
+
+              <!-- Add Redirect Inline Form -->
+              <div id="new-redirect-form" class="p-4 rounded-xl bg-surface border border-surface-variant grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label for="redirect-source" class="block font-mono uppercase text-on-surface-variant mb-1">Source Path (From) *</label>
+                  <input type="text" id="redirect-source" placeholder="/quote" class="w-full p-2.5 rounded-lg bg-white border border-surface-variant text-xs font-mono focus:border-secondary focus:outline-none" />
+                </div>
+                <div>
+                  <label for="redirect-target" class="block font-mono uppercase text-on-surface-variant mb-1">Destination Target (To) *</label>
+                  <input type="text" id="redirect-target" placeholder="/contact/contact.html" class="w-full p-2.5 rounded-lg bg-white border border-surface-variant text-xs font-mono focus:border-secondary focus:outline-none" />
+                </div>
+                <div class="flex items-end gap-2">
+                  <div class="flex-1">
+                    <label for="redirect-status" class="block font-mono uppercase text-on-surface-variant mb-1">Status</label>
+                    <select id="redirect-status" class="w-full p-2.5 rounded-lg bg-white border border-surface-variant text-xs font-mono focus:border-secondary focus:outline-none">
+                      <option value="301">301 (Permanent)</option>
+                      <option value="302">302 (Temporary)</option>
+                    </select>
+                  </div>
+                  <button type="button" id="save-new-redirect-btn" class="px-4 py-2.5 rounded-lg bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all">Save</button>
+                </div>
+              </div>
+
+              <!-- Redirects Table -->
+              <div class="overflow-x-auto rounded-xl border border-[#E2E6E0]">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-[#F0F5EE] border-b border-[#E2E6E0] font-mono text-on-surface-variant uppercase text-[11px]">
+                    <tr>
+                      <th class="p-3.5">Source Path</th>
+                      <th class="p-3.5">Destination URL</th>
+                      <th class="p-3.5">HTTP Code</th>
+                      <th class="p-3.5 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="redirects-tbody" class="divide-y divide-[#E2E6E0] font-mono text-xs">
+                    <!-- Populated dynamically via admin.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- =========================================================
+               TAB 8: SCHEMA SETTINGS (JSON-LD Organization & WebSite)
+               ========================================================= -->
+          <div id="seo-tab-content-schema" class="seo-tab-content hidden flex flex-col gap-6">
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-3">
+                <div>
+                  <h3 class="font-bold text-base text-primary font-headings">Schema.org Structured Data (JSON-LD)</h3>
+                  <p class="text-on-surface-variant text-xs mt-0.5">Authoritative B2B Organization &amp; WebSite schema for Google Knowledge Graph and Rich Snippets.</p>
+                </div>
+                <button type="button" id="copy-schema-json-btn" class="px-3.5 py-2 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">content_copy</span>
+                  <span>Copy JSON-LD</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label for="schema-org-name" class="block font-mono uppercase text-on-surface-variant mb-1">Organization Legal Name</label>
+                  <input type="text" id="schema-org-name" value="COCO CRAFT EXPORTS" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="schema-org-url" class="block font-mono uppercase text-on-surface-variant mb-1">Organization Official URL</label>
+                  <input type="url" id="schema-org-url" value="https://cococraftexports.com/" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="schema-org-description" class="block font-mono uppercase text-on-surface-variant mb-1">B2B Manufacturing Description</label>
+                  <textarea id="schema-org-description" rows="2" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">International B2B coconut coir manufacturer and growing media substrate exporter.</textarea>
+                </div>
+
+                <div>
+                  <label for="schema-contact-email" class="block font-mono uppercase text-on-surface-variant mb-1">Trade Desk Sales Email</label>
+                  <input type="email" id="schema-contact-email" value="enquiry@cococraftexports.com" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="schema-logo-url" class="block font-mono uppercase text-on-surface-variant mb-1">Logo URL (Vector / PNG)</label>
+                  <input type="text" id="schema-logo-url" value="https://cococraftexports.com/assets/logo/coco-craft-logo.svg" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div class="md:col-span-2">
+                  <label for="schema-json-preview" class="block font-mono uppercase text-on-surface-variant mb-1">Generated JSON-LD Output</label>
+                  <pre id="schema-json-preview" class="p-4 rounded-xl bg-[#1C211D] text-[#93F9A1] font-mono text-xs overflow-x-auto admin-custom-scroll"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </section>
 
         <!-- ==========================================

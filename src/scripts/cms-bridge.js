@@ -8,6 +8,7 @@ import {
   getCollectionItems,
   getWebsiteSection,
   getCompanySettings,
+  getSeoMetadata,
   submitPublicEnquiry
 } from './firebase-service.js';
 
@@ -55,6 +56,9 @@ async function initPublicCmsSync() {
         applyDynamicProducts(dynamicProducts);
       }
     }
+
+    // D. Sync Global B2B SEO Configuration from CMS
+    await syncPageSeo();
   } catch (err) {
     // Graceful baseline fallback — site remains 100% operational
     console.debug('CMS Bridge running in fallback baseline mode:', err.message);
@@ -351,3 +355,88 @@ function initConfirmationModalHandlers() {
     };
   }
 }
+
+/**
+ * 4. DYNAMIC SEO SYNCHRONIZATION
+ * Applies real-time SEO overrides from CMS to public page document head
+ */
+async function syncPageSeo() {
+  try {
+    const pageKey = resolveCurrentPageKey();
+    if (!pageKey) return;
+
+    const meta = await getSeoMetadata(pageKey);
+    if (!meta) return;
+
+    if (meta.title) {
+      document.title = meta.title;
+    }
+    if (meta.description) {
+      updateMetaElement('meta[name="description"]', 'name', 'description', meta.description);
+    }
+    if (meta.canonical) {
+      updateCanonicalElement(meta.canonical);
+    }
+    if (meta.keywords) {
+      updateMetaElement('meta[name="keywords"]', 'name', 'keywords', meta.keywords);
+    }
+    if (meta.robots) {
+      updateMetaElement('meta[name="robots"]', 'name', 'robots', meta.robots);
+    }
+
+    // OpenGraph
+    const ogTitle = meta.ogTitle || meta.title;
+    const ogDesc = meta.ogDescription || meta.description;
+    if (ogTitle) updateMetaElement('meta[property="og:title"]', 'property', 'og:title', ogTitle);
+    if (ogDesc) updateMetaElement('meta[property="og:description"]', 'property', 'og:description', ogDesc);
+    if (meta.ogImage) updateMetaElement('meta[property="og:image"]', 'property', 'og:image', meta.ogImage);
+
+    // Twitter
+    const twTitle = meta.twitterTitle || ogTitle;
+    const twDesc = meta.twitterDescription || ogDesc;
+    const twImage = meta.twitterImage || meta.ogImage;
+    if (twTitle) updateMetaElement('meta[name="twitter:title"]', 'name', 'twitter:title', twTitle);
+    if (twDesc) updateMetaElement('meta[name="twitter:description"]', 'name', 'twitter:description', twDesc);
+    if (twImage) updateMetaElement('meta[name="twitter:image"]', 'name', 'twitter:image', twImage);
+  } catch (e) {
+    console.debug('SEO sync fallback active:', e.message);
+  }
+}
+
+function resolveCurrentPageKey() {
+  const p = window.location.pathname.toLowerCase();
+  if (p === '/' || p.endsWith('/index.html') || p === '') return 'home';
+  if (p.includes('about')) return 'about';
+  if (p.includes('products')) return 'products';
+  if (p.includes('applications')) return 'applications';
+  if (p.includes('manufacturing')) return 'manufacturing';
+  if (p.includes('sustainability')) return 'sustainability';
+  if (p.includes('global-reach')) return 'global-reach';
+  if (p.includes('gallery')) return 'gallery';
+  if (p.includes('resources')) return 'resources';
+  if (p.includes('contact')) return 'contact';
+  return null;
+}
+
+function updateMetaElement(selector, keyAttr, keyVal, contentVal) {
+  if (!contentVal) return;
+  let el = document.querySelector(selector);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(keyAttr, keyVal);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', contentVal);
+}
+
+function updateCanonicalElement(url) {
+  if (!url) return;
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', url);
+}
+

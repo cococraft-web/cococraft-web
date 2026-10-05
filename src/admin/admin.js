@@ -1168,65 +1168,844 @@ function openEnquiryModal(enquiry) {
   modal.classList.remove('hidden');
 }
 
-// 15. SEO MANAGEMENT CONTROLLER
-function initSeoController() {
-  const pageSelector = document.getElementById('seo-page-selector');
-  const saveBtn = document.getElementById('save-seo-btn');
+// ==============================================================================
+// 15. GLOBAL B2B SEO MANAGEMENT SYSTEM CONTROLLER
+// ==============================================================================
 
-  const loadSeoForPage = async (pageName) => {
-    const meta = await getSeoMetadata(pageName);
-    if (meta) {
-      document.getElementById('seo-title').value = meta.title || '';
-      document.getElementById('seo-description').value = meta.description || '';
-      document.getElementById('seo-canonical').value = meta.canonical || '';
-      document.getElementById('seo-robots').value = meta.robots || 'index, follow';
-      document.getElementById('seo-og-image').value = meta.ogImage || '';
-    } else {
-      document.getElementById('seo-title').value = `Coco Craft Exports | Sustainable Coir & Coconut Substrates (${pageName.toUpperCase()})`;
-      document.getElementById('seo-description').value = 'Leading Indian manufacturer and exporter of premium coconut coir substrates, 5kg blocks, grow bags, and natural fibre based in Pollachi, Tamil Nadu.';
-      document.getElementById('seo-canonical').value = `https://cococraftexports.com/${pageName === 'home' ? '' : pageName}`;
-      document.getElementById('seo-robots').value = 'index, follow';
-      document.getElementById('seo-og-image').value = '/assets/products/5kg-block.jpg';
+const SEO_PAGE_BASELINES = {
+  home: {
+    name: 'Homepage',
+    path: '/',
+    title: 'Coconut Coir Manufacturer & Exporter | COCO CRAFT EXPORTS',
+    description: 'Leading international coconut coir manufacturer and cocopeat exporter. Bulk 5kg blocks, hydroponic grow bags, husk chips, and growing media substrates for commercial horticulture worldwide.',
+    focusKeyword: 'coconut coir manufacturer',
+    secondaryKeywords: 'cocopeat exporter, coir substrate supplier, bulk coir supplier, coir products wholesale, coconut growing media',
+    canonical: 'https://cococraftexports.com/',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '1.0',
+    changefreq: 'weekly'
+  },
+  about: {
+    name: 'About Us',
+    path: '/about/about.html',
+    title: 'About COCO CRAFT EXPORTS | Global Coconut Substrates Manufacturer',
+    description: 'Discover COCO CRAFT EXPORTS, a dedicated international B2B manufacturer and exporter of sustainable coconut coir growing media, 5kg blocks, and horticultural substrates.',
+    focusKeyword: 'coconut coir manufacturer',
+    secondaryKeywords: 'coir products manufacturer, coconut coir exporter, commercial growing substrate, bulk coir supplier',
+    canonical: 'https://cococraftexports.com/about/about.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.7',
+    changefreq: 'monthly'
+  },
+  products: {
+    name: 'Products Catalogue',
+    path: '/products/products.html',
+    title: 'Coconut Coir Products & Growing Media Catalogue | COCO CRAFT EXPORTS',
+    description: 'Explore commercial coconut coir products: 5kg cocopeat blocks, hydroponic grow bags, washed husk chips, briquettes, and coir fiber for international B2B supply.',
+    focusKeyword: 'coconut coir products',
+    secondaryKeywords: 'cocopeat, coco peat, cocopeat blocks, coir grow bags, coconut husk chips, coir briquettes, coir fiber',
+    canonical: 'https://cococraftexports.com/products/products.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.9',
+    changefreq: 'weekly'
+  },
+  applications: {
+    name: 'Applications',
+    path: '/applications/applications.html',
+    title: 'Commercial Horticultural Applications & Substrates | COCO CRAFT EXPORTS',
+    description: 'Engineered coconut coir substrate solutions for commercial greenhouses, hydroponic berry and vine crops, floriculture, potting soil blending, and industrial applications.',
+    focusKeyword: 'commercial growing substrate',
+    secondaryKeywords: 'coir substrate supplier, horticultural growing media supplier, coconut growing media, coir growing medium, coir grow bags',
+    canonical: 'https://cococraftexports.com/applications/applications.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.8',
+    changefreq: 'monthly'
+  },
+  manufacturing: {
+    name: 'Manufacturing',
+    path: '/company/manufacturing.html',
+    title: 'Precision Coconut Coir Manufacturing & Processing | COCO CRAFT EXPORTS',
+    description: 'Explore our end-to-end coconut coir manufacturing infrastructure: freshwater triple-washing, sun-curing, mechanical screening, and hydraulic compression for global export.',
+    focusKeyword: 'coconut coir manufacturer',
+    secondaryKeywords: 'coir products manufacturer, coconut substrate manufacturer, coir substrate supplier, bulk coir supplier',
+    canonical: 'https://cococraftexports.com/company/manufacturing.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.8',
+    changefreq: 'monthly'
+  },
+  sustainability: {
+    name: 'Sustainability',
+    path: '/company/sustainability.html',
+    title: 'Sustainable Coir & Eco-Friendly Substrates | COCO CRAFT EXPORTS',
+    description: '100% organic, renewable, peat-free coconut growing media. Discover our zero-chemical manufacturing, closed-loop water stewardship, and circular agriculture commitments.',
+    focusKeyword: 'coconut growing media',
+    secondaryKeywords: 'horticultural growing media supplier, coir substrate supplier, commercial growing substrate, cocopeat',
+    canonical: 'https://cococraftexports.com/company/sustainability.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.8',
+    changefreq: 'monthly'
+  },
+  'global-reach': {
+    name: 'Global Reach & Export',
+    path: '/company/global-reach.html',
+    title: 'Coconut Coir Exporter & Global B2B Substrate Supply | COCO CRAFT EXPORTS',
+    description: 'Worldwide B2B coconut coir manufacturer and cocopeat exporter. Containerized shipping from Tuticorin and Chennai ports, international phytosanitary compliance, and dedicated export logistics.',
+    focusKeyword: 'coconut coir exporter',
+    secondaryKeywords: 'cocopeat exporter, coir substrate supplier, bulk coir supplier, coir products wholesale, commercial growing substrate',
+    canonical: 'https://cococraftexports.com/company/global-reach.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.8',
+    changefreq: 'monthly'
+  },
+  gallery: {
+    name: 'Facility Gallery',
+    path: '/company/gallery.html',
+    title: 'Facility & Substrate Production Gallery | COCO CRAFT EXPORTS',
+    description: 'Visual tour of our coconut coir processing facility: concrete drying aprons, hydraulic baling presses, automated screening trommels, and container export dispatch.',
+    focusKeyword: 'coir products manufacturer',
+    secondaryKeywords: 'coconut coir manufacturer, cocopeat exporter, bulk coir supplier, coir substrate supplier',
+    canonical: 'https://cococraftexports.com/company/gallery.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.7',
+    changefreq: 'monthly'
+  },
+  resources: {
+    name: 'Technical Resources',
+    path: '/resources/index.html',
+    title: 'Technical Resources & Growing Media Specifications | COCO CRAFT EXPORTS',
+    description: 'Technical guide for commercial growers: Electrical Conductivity (EC) testing, substrate expansion calculations, container freight specifications, and FAQ on coconut coir substrates.',
+    focusKeyword: 'horticultural growing media supplier',
+    secondaryKeywords: 'coconut growing media, coir substrate supplier, commercial growing substrate, coir growing medium, cocopeat blocks',
+    canonical: 'https://cococraftexports.com/resources/index.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.8',
+    changefreq: 'weekly'
+  },
+  contact: {
+    name: 'Contact & Quote',
+    path: '/contact/contact.html',
+    title: 'Request Quote & International Trade Desk | COCO CRAFT EXPORTS',
+    description: 'Connect with our international B2B trade desk for containerized coconut coir orders, custom EC/pH specifications, proforma quotations, and global shipping logistics.',
+    focusKeyword: 'coconut coir exporter',
+    secondaryKeywords: 'cocopeat exporter, coir substrate supplier, bulk coir supplier, coir products wholesale, commercial growing substrate',
+    canonical: 'https://cococraftexports.com/contact/contact.html',
+    robots: 'index, follow',
+    ogImage: '/assets/products/5kg-block.jpg',
+    priority: '0.9',
+    changefreq: 'weekly'
+  }
+};
+
+const SEO_PRODUCT_BASELINES = {
+  '5kg-cocopeat-blocks': {
+    name: '5KG Cocopeat Compressed Blocks',
+    title: 'Cocopeat Blocks Manufacturer & Exporter | COCO CRAFT EXPORTS',
+    description: 'Premium washed and unwashed 5kg compressed coco peat pith blocks for commercial horticulture and soil blending. 5:1 expansion ratio yielding ~75 liters.',
+    keyword: 'cocopeat blocks',
+    canonical: 'https://cococraftexports.com/products/products.html#blocks',
+    image: '/assets/products/5kg-block.jpg'
+  },
+  'coir-grow-bags': {
+    name: 'Hydroponic Coir Grow Bags / Slabs',
+    title: 'Hydroponic Coir Grow Bags Manufacturer & Exporter | COCO CRAFT EXPORTS',
+    description: 'Commercial greenhouse coir grow slabs with pre-cut plant holes & customized pith-to-chip ratios for vine crops and soft fruit cultivation.',
+    keyword: 'coir grow bags',
+    canonical: 'https://cococraftexports.com/products/products.html#grow-bags',
+    image: '/assets/products/growbag-slab.jpg'
+  },
+  'husk-chips': {
+    name: 'Washed Coir Husk Chips',
+    title: 'Washed Coconut Husk Chips Supplier & Exporter | COCO CRAFT EXPORTS',
+    description: 'High-aeration washed coconut husk cubes for orchid cultivation, anthuriums, and professional potting soil mixes with 35-45% air porosity.',
+    keyword: 'coconut husk chips',
+    canonical: 'https://cococraftexports.com/products/products.html#chips',
+    image: '/assets/products/husk-chips.jpg'
+  },
+  'briquettes': {
+    name: '650g Compressed Coir Briquettes',
+    title: '650g Coir Briquettes Manufacturer & Exporter | COCO CRAFT EXPORTS',
+    description: 'Compact compressed 650g coco peat briquettes yielding 9–10 liters of high-retention potting substrate for commercial and retail distribution.',
+    keyword: 'coir briquettes',
+    canonical: 'https://cococraftexports.com/products/products.html#briquettes',
+    image: '/assets/products/650g-briquette.jpg'
+  },
+  'coir-fiber': {
+    name: 'Raw Mattress & Bristle Coir Fibre',
+    title: 'Industrial Coir Fiber Manufacturer & Exporter | COCO CRAFT EXPORTS',
+    description: 'Hydraulically baled golden brown coconut fiber for mattress cores, erosion control geotextiles, and industrial upholstery.',
+    keyword: 'coir fiber',
+    canonical: 'https://cococraftexports.com/products/products.html#coir-fiber',
+    image: '/assets/products/coir-fibre.jpg'
+  },
+  'open-top-grow-bags': {
+    name: 'Coco Coir Open Top Grow Bags',
+    title: 'Coco Coir Open Top Grow Bags Manufacturer | COCO CRAFT EXPORTS',
+    description: 'Self-standing open-top coir grow bags designed for intensive greenhouse berry crops, peppers, and standalone pot culture.',
+    keyword: 'open top grow bags',
+    canonical: 'https://cococraftexports.com/products/products.html#open-top',
+    image: '/assets/products/growbag-slab.jpg'
+  },
+  'coir-pots-discs': {
+    name: 'Biodegradable Coir Seedling Pots & Pellets',
+    title: 'Biodegradable Coir Seedling Pots & Pellets | COCO CRAFT EXPORTS',
+    description: '100% natural, root-permeable biodegradable coir nursery pots and expandable seed discs for commercial plant propagation.',
+    keyword: 'coir pots and discs',
+    canonical: 'https://cococraftexports.com/products/products.html#pots-discs',
+    image: '/assets/products/650g-briquette.jpg'
+  }
+};
+
+let activeSeoCache = {
+  pages: {},
+  products: {},
+  redirects: [
+    { from: '/about', to: '/about/about.html', status: '301' },
+    { from: '/products', to: '/products/products.html', status: '301' },
+    { from: '/applications', to: '/applications/applications.html', status: '301' },
+    { from: '/manufacturing', to: '/company/manufacturing.html', status: '301' },
+    { from: '/sustainability', to: '/company/sustainability.html', status: '301' },
+    { from: '/global-reach', to: '/company/global-reach.html', status: '301' },
+    { from: '/gallery', to: '/company/gallery.html', status: '301' },
+    { from: '/resources', to: '/resources/index.html', status: '301' },
+    { from: '/contact', to: '/contact/contact.html', status: '301' },
+    { from: '/quote', to: '/contact/contact.html', status: '301' },
+    { from: '/rfq', to: '/contact/contact.html', status: '301' },
+    { from: '/cocopeat-blocks', to: '/products/products.html#blocks', status: '301' },
+    { from: '/grow-bags', to: '/products/products.html#grow-bags', status: '301' }
+  ],
+  global: {
+    brand: 'COCO CRAFT EXPORTS',
+    suffix: '| COCO CRAFT EXPORTS',
+    baseUrl: 'https://cococraftexports.com',
+    defaultDesc: 'Worldwide B2B coconut coir manufacturer and exporter. Supplying premium 5kg cocopeat blocks, hydroponic grow bags, and growing media to commercial growers and distributors globally.',
+    defaultImage: '/assets/products/5kg-block.jpg',
+    defaultRobots: 'index, follow',
+    googleVerification: '',
+    bingVerification: ''
+  }
+};
+
+function initSeoController() {
+  // A. Inner Tab Navigation
+  const tabBtns = document.querySelectorAll('.seo-tab-btn');
+  const tabContents = document.querySelectorAll('.seo-tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.seoTab;
+      tabBtns.forEach(b => {
+        b.classList.remove('active', 'bg-[#00742F]', 'text-white');
+        b.classList.add('bg-white', 'text-on-surface-variant');
+      });
+      btn.classList.add('active', 'bg-[#00742F]', 'text-white');
+      btn.classList.remove('bg-white', 'text-on-surface-variant');
+
+      tabContents.forEach(tc => tc.classList.add('hidden'));
+      const activeContent = document.getElementById(`seo-tab-content-${target}`);
+      if (activeContent) activeContent.classList.remove('hidden');
+
+      if (target === 'sitemap') renderSitemapTab();
+      if (target === 'robots') renderRobotsTab();
+      if (target === 'redirects') renderRedirectsTab();
+      if (target === 'schema') renderSchemaTab();
+    });
+  });
+
+  // B. Page Selector & Live Inputs
+  const pageSelector = document.getElementById('seo-page-selector');
+  const titleInput = document.getElementById('seo-title');
+  const descInput = document.getElementById('seo-description');
+  const canonicalInput = document.getElementById('seo-canonical');
+  const focusKeyInput = document.getElementById('seo-focus-keyword');
+  const secKeysInput = document.getElementById('seo-secondary-keywords');
+  const robotsSelect = document.getElementById('seo-robots');
+
+  if (pageSelector) {
+    pageSelector.addEventListener('change', () => loadPageSeoIntoForm(pageSelector.value));
+  }
+
+  // Live Character Counters & SERP Updates
+  const updateTitleCounter = () => {
+    if (!titleInput) return;
+    const len = titleInput.value.length;
+    const countEl = document.getElementById('seo-title-count');
+    if (countEl) {
+      countEl.textContent = `${len} / 60 Chars (Optimal: 50–60)`;
+      countEl.className = (len >= 45 && len <= 65) 
+        ? 'font-mono text-[11px] text-[#00742F] font-bold' 
+        : 'font-mono text-[11px] text-[#B39158] font-bold';
+    }
+    const serpTitle = document.getElementById('serp-preview-title');
+    if (serpTitle) serpTitle.textContent = titleInput.value || 'COCO CRAFT EXPORTS';
+  };
+
+  const updateDescCounter = () => {
+    if (!descInput) return;
+    const len = descInput.value.length;
+    const countEl = document.getElementById('seo-desc-count');
+    if (countEl) {
+      countEl.textContent = `${len} / 160 Chars (Optimal: 150–160)`;
+      countEl.className = (len >= 130 && len <= 165) 
+        ? 'font-mono text-[11px] text-[#00742F] font-bold' 
+        : 'font-mono text-[11px] text-[#B39158] font-bold';
+    }
+    const serpDesc = document.getElementById('serp-preview-desc');
+    if (serpDesc) serpDesc.textContent = descInput.value || 'Leading international coconut coir manufacturer...';
+  };
+
+  if (titleInput) titleInput.addEventListener('input', updateTitleCounter);
+  if (descInput) descInput.addEventListener('input', updateDescCounter);
+
+  if (canonicalInput) {
+    canonicalInput.addEventListener('input', () => {
+      const serpUrl = document.getElementById('serp-preview-url');
+      if (serpUrl) serpUrl.textContent = canonicalInput.value || 'https://cococraftexports.com';
+    });
+  }
+
+  // Auto-Fill Canonical
+  const autofillCanonicalBtn = document.getElementById('seo-autofill-canonical-btn');
+  if (autofillCanonicalBtn) {
+    autofillCanonicalBtn.addEventListener('click', () => {
+      const pageKey = pageSelector ? pageSelector.value : 'home';
+      const base = SEO_PAGE_BASELINES[pageKey];
+      if (base && canonicalInput) {
+        canonicalInput.value = base.canonical;
+        const serpUrl = document.getElementById('serp-preview-url');
+        if (serpUrl) serpUrl.textContent = base.canonical;
+        showToast(`Canonical URL set to ${base.canonical}`, 'info');
+      }
+    });
+  }
+
+  // SERP Device Toggle
+  const desktopBtn = document.getElementById('serp-preview-desktop');
+  const mobileBtn = document.getElementById('serp-preview-mobile');
+  const serpBox = document.getElementById('serp-preview-box');
+
+  if (desktopBtn && mobileBtn && serpBox) {
+    desktopBtn.addEventListener('click', () => {
+      desktopBtn.className = 'px-2.5 py-1 rounded-md bg-[#00742F] text-white';
+      mobileBtn.className = 'px-2.5 py-1 rounded-md bg-white border border-[#E2E6E0] text-on-surface-variant';
+      serpBox.className = 'p-5 rounded-2xl bg-[#F8FAF6] border border-[#E2E6E0] max-w-2xl flex flex-col gap-1.5 shadow-2xs font-sans';
+    });
+    mobileBtn.addEventListener('click', () => {
+      mobileBtn.className = 'px-2.5 py-1 rounded-md bg-[#00742F] text-white';
+      desktopBtn.className = 'px-2.5 py-1 rounded-md bg-white border border-[#E2E6E0] text-on-surface-variant';
+      serpBox.className = 'p-5 rounded-2xl bg-[#F8FAF6] border border-[#E2E6E0] max-w-sm flex flex-col gap-1.5 shadow-2xs font-sans';
+    });
+  }
+
+  // C. Product SEO Selector
+  const prodSelector = document.getElementById('seo-product-selector');
+  if (prodSelector) {
+    prodSelector.addEventListener('change', () => loadProductSeoIntoForm(prodSelector.value));
+  }
+
+  // D. OpenGraph & Social Cards
+  const ogImageInput = document.getElementById('seo-og-image');
+  if (ogImageInput) {
+    ogImageInput.addEventListener('input', () => {
+      const previewImg = document.getElementById('og-preview-img');
+      if (previewImg && ogImageInput.value) previewImg.src = ogImageInput.value;
+    });
+  }
+  const pickOgImageBtn = document.getElementById('pick-seo-og-image-btn');
+  if (pickOgImageBtn) {
+    pickOgImageBtn.addEventListener('click', () => {
+      const mediaSectionBtn = document.querySelector('[data-section="media"]');
+      if (mediaSectionBtn) {
+        showToast('Switching to Media Library. Copy an asset URL and paste it here.', 'info');
+        mediaSectionBtn.click();
+      }
+    });
+  }
+
+  // E. Master Save Button
+  const saveAllBtn = document.getElementById('save-seo-btn');
+  if (saveAllBtn) {
+    saveAllBtn.addEventListener('click', async () => {
+      await saveCurrentSeoData();
+    });
+  }
+
+  // F. Run Audit Button
+  const auditBtn = document.getElementById('run-seo-audit-btn');
+  if (auditBtn) {
+    auditBtn.addEventListener('click', () => {
+      runSeoAudit(true);
+    });
+  }
+
+  // G. Redirects Add Form
+  const saveRedirectBtn = document.getElementById('save-new-redirect-btn');
+  if (saveRedirectBtn) {
+    saveRedirectBtn.addEventListener('click', () => {
+      const from = document.getElementById('redirect-source').value.trim();
+      const to = document.getElementById('redirect-target').value.trim();
+      const status = document.getElementById('redirect-status').value;
+
+      if (!from || !to) {
+        showToast('Please provide both Source and Destination paths.', 'error');
+        return;
+      }
+      if (from === to) {
+        showToast('Safety Alert: Cannot redirect path to itself (circular redirect loop).', 'error');
+        return;
+      }
+
+      activeSeoCache.redirects.push({ from, to, status });
+      document.getElementById('redirect-source').value = '';
+      document.getElementById('redirect-target').value = '';
+      renderRedirectsTab();
+      showToast(`Redirect ${from} → ${to} added.`, 'success');
+      runSeoAudit(false);
+    });
+  }
+
+  // H. Copy buttons
+  const copySitemapBtn = document.getElementById('copy-sitemap-xml-btn');
+  if (copySitemapBtn) {
+    copySitemapBtn.addEventListener('click', () => {
+      const xml = document.getElementById('sitemap-xml-viewer').value;
+      navigator.clipboard.writeText(xml).then(() => showToast('Sitemap XML copied to clipboard.', 'success'));
+    });
+  }
+
+  const copyRobotsBtn = document.getElementById('copy-robots-txt-btn');
+  if (copyRobotsBtn) {
+    copyRobotsBtn.addEventListener('click', () => {
+      const txt = document.getElementById('seo-robots-editor').value;
+      navigator.clipboard.writeText(txt).then(() => showToast('robots.txt copied to clipboard.', 'success'));
+    });
+  }
+
+  const copySchemaBtn = document.getElementById('copy-schema-json-btn');
+  if (copySchemaBtn) {
+    copySchemaBtn.addEventListener('click', () => {
+      const json = document.getElementById('schema-json-preview').textContent;
+      navigator.clipboard.writeText(json).then(() => showToast('Schema.org JSON-LD copied.', 'success'));
+    });
+  }
+
+  // Initial load
+  loadPageSeoIntoForm('home');
+  loadProductSeoIntoForm('5kg-cocopeat-blocks');
+  renderRobotsTab();
+  renderSchemaTab();
+  runSeoAudit(false);
+}
+
+function loadPageSeoIntoForm(pageKey) {
+  const base = SEO_PAGE_BASELINES[pageKey] || SEO_PAGE_BASELINES.home;
+  const saved = activeSeoCache.pages[pageKey] || {};
+
+  const titleVal = saved.title || base.title;
+  const descVal = saved.description || base.description;
+  const canonicalVal = saved.canonical || base.canonical;
+  const focusVal = saved.focusKeyword || base.focusKeyword;
+  const secVal = saved.secondaryKeywords || base.secondaryKeywords;
+  const robotsVal = saved.robots || base.robots;
+  const ogImgVal = saved.ogImage || base.ogImage;
+
+  if (document.getElementById('seo-title')) document.getElementById('seo-title').value = titleVal;
+  if (document.getElementById('seo-description')) document.getElementById('seo-description').value = descVal;
+  if (document.getElementById('seo-canonical')) document.getElementById('seo-canonical').value = canonicalVal;
+  if (document.getElementById('seo-focus-keyword')) document.getElementById('seo-focus-keyword').value = focusVal;
+  if (document.getElementById('seo-secondary-keywords')) document.getElementById('seo-secondary-keywords').value = secVal;
+  if (document.getElementById('seo-robots')) document.getElementById('seo-robots').value = robotsVal;
+  if (document.getElementById('seo-og-image')) document.getElementById('seo-og-image').value = ogImgVal;
+  if (document.getElementById('seo-og-title')) document.getElementById('seo-og-title').value = saved.ogTitle || titleVal;
+  if (document.getElementById('seo-og-description')) document.getElementById('seo-og-description').value = saved.ogDescription || descVal;
+
+  // Trigger counters and previews
+  const titleCount = document.getElementById('seo-title-count');
+  if (titleCount) titleCount.textContent = `${titleVal.length} / 60 Chars (Optimal: 50–60)`;
+  const descCount = document.getElementById('seo-desc-count');
+  if (descCount) descCount.textContent = `${descVal.length} / 160 Chars (Optimal: 150–160)`;
+
+  const serpTitle = document.getElementById('serp-preview-title');
+  if (serpTitle) serpTitle.textContent = titleVal;
+  const serpDesc = document.getElementById('serp-preview-desc');
+  if (serpDesc) serpDesc.textContent = descVal;
+  const serpUrl = document.getElementById('serp-preview-url');
+  if (serpUrl) serpUrl.textContent = canonicalVal;
+
+  const ogImg = document.getElementById('og-preview-img');
+  if (ogImg) ogImg.src = ogImgVal;
+  const ogTitle = document.getElementById('og-preview-title');
+  if (ogTitle) ogTitle.textContent = titleVal;
+  const ogDesc = document.getElementById('og-preview-desc');
+  if (ogDesc) ogDesc.textContent = descVal;
+}
+
+function loadProductSeoIntoForm(prodKey) {
+  const base = SEO_PRODUCT_BASELINES[prodKey] || SEO_PRODUCT_BASELINES['5kg-cocopeat-blocks'];
+  const saved = activeSeoCache.products[prodKey] || {};
+
+  const titleVal = saved.title || base.title;
+  const descVal = saved.description || base.description;
+  const keywordVal = saved.keyword || base.keyword;
+  const canonicalVal = saved.canonical || base.canonical;
+
+  if (document.getElementById('seo-prod-title')) document.getElementById('seo-prod-title').value = titleVal;
+  if (document.getElementById('seo-prod-description')) document.getElementById('seo-prod-description').value = descVal;
+  if (document.getElementById('seo-prod-keyword')) document.getElementById('seo-prod-keyword').value = keywordVal;
+  if (document.getElementById('seo-prod-canonical')) document.getElementById('seo-prod-canonical').value = canonicalVal;
+
+  const schemaJson = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: base.name,
+    description: descVal,
+    image: `https://cococraftexports.com${base.image}`,
+    brand: {
+      '@type': 'Brand',
+      name: 'COCO CRAFT EXPORTS'
+    },
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      offerCount: '1'
     }
   };
 
-  if (pageSelector) {
-    pageSelector.addEventListener('change', (e) => loadSeoForPage(e.target.value));
+  const schemaPreview = document.getElementById('seo-prod-schema-preview');
+  if (schemaPreview) {
+    schemaPreview.textContent = JSON.stringify(schemaJson, null, 2);
+  }
+}
+
+function renderSitemapTab() {
+  const tbody = document.getElementById('sitemap-urls-tbody');
+  if (!tbody) return;
+
+  const today = new Date().toISOString().split('T')[0];
+  let rowsHtml = '';
+  let xmlEntries = '';
+
+  Object.entries(SEO_PAGE_BASELINES).forEach(([key, p]) => {
+    const saved = activeSeoCache.pages[key] || {};
+    const canonical = saved.canonical || p.canonical;
+    const robots = saved.robots || p.robots;
+    const isIndexed = !robots.includes('noindex');
+
+    rowsHtml += `
+      <tr class="hover:bg-surface-container transition-colors">
+        <td class="p-3.5 font-bold text-primary">${canonical}</td>
+        <td class="p-3.5 font-mono text-[#00742F]">${p.priority}</td>
+        <td class="p-3.5 text-on-surface-variant">${p.changefreq}</td>
+        <td class="p-3.5 text-on-surface-variant">${today}</td>
+        <td class="p-3.5">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full ${isIndexed ? 'bg-[#00742F]/10 text-[#00742F]' : 'bg-red-50 text-red-700'} font-mono text-[10px] font-bold">
+            ${isIndexed ? '✓ INDEX' : '✕ NOINDEX'}
+          </span>
+        </td>
+      </tr>
+    `;
+
+    if (isIndexed) {
+      xmlEntries += `  <url>\n    <loc>${canonical}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${p.changefreq}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>\n`;
+    }
+  });
+
+  tbody.innerHTML = rowsHtml;
+
+  const fullXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${xmlEntries}</urlset>`;
+  const viewer = document.getElementById('sitemap-xml-viewer');
+  if (viewer) viewer.value = fullXml;
+}
+
+function renderRobotsTab() {
+  const editor = document.getElementById('seo-robots-editor');
+  if (!editor) return;
+  if (!editor.value) {
+    editor.value = `# ==============================================================================
+# COCO CRAFT EXPORTS — INTERNATIONAL ROBOTS DIRECTIVE
+# High-Performance B2B Search Crawler Guidance
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+Disallow: /*?*fbclid=
+Disallow: /*?*utm_
+
+# Crawl delay optimization
+Crawl-delay: 1
+
+# Host Declaration & Canonical XML Sitemap
+Host: https://cococraftexports.com
+Sitemap: https://cococraftexports.com/sitemap.xml`;
+  }
+}
+
+function renderRedirectsTab() {
+  const tbody = document.getElementById('redirects-tbody');
+  if (!tbody) return;
+
+  tbody.innerHTML = activeSeoCache.redirects.map((r, i) => `
+    <tr class="hover:bg-surface-container transition-colors">
+      <td class="p-3.5 font-bold text-primary">${r.from}</td>
+      <td class="p-3.5 text-[#00742F]">${r.to}</td>
+      <td class="p-3.5 font-mono"><span class="px-2 py-0.5 rounded bg-surface border border-surface-variant font-bold">${r.status}</span></td>
+      <td class="p-3.5 text-right">
+        <button type="button" onclick="window.removeSeoRedirect(${i})" class="p-1 rounded text-red-600 hover:bg-red-50 transition-colors" title="Delete Redirect">
+          <span class="material-symbols-outlined text-base">delete</span>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+window.removeSeoRedirect = (index) => {
+  activeSeoCache.redirects.splice(index, 1);
+  renderRedirectsTab();
+  showToast('Redirect removed.', 'info');
+  runSeoAudit(false);
+};
+
+function renderSchemaTab() {
+  const schemaObj = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': 'https://cococraftexports.com/#organization',
+    name: 'COCO CRAFT EXPORTS',
+    url: 'https://cococraftexports.com/',
+    logo: 'https://cococraftexports.com/assets/logo/coco-craft-logo.svg',
+    description: 'International B2B coconut coir manufacturer and growing media substrate exporter.',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: 'enquiry@cococraftexports.com',
+      availableLanguage: ['English']
+    }
+  };
+
+  const preview = document.getElementById('schema-json-preview');
+  if (preview) {
+    preview.textContent = JSON.stringify(schemaObj, null, 2);
+  }
+}
+
+/**
+ * Live SEO Audit Engine: Validates lengths, duplicates, canonicals, and indexing
+ */
+function runSeoAudit(interactive = false) {
+  let completeCount = 0;
+  let warningCount = 0;
+  let errorCount = 0;
+
+  const titlesSeen = new Map();
+  const descriptionsSeen = new Map();
+  const pageResults = [];
+
+  // Check all public pages
+  Object.entries(SEO_PAGE_BASELINES).forEach(([key, base]) => {
+    const saved = activeSeoCache.pages[key] || {};
+    const title = (saved.title || base.title).trim();
+    const desc = (saved.description || base.description).trim();
+    const canonical = (saved.canonical || base.canonical).trim();
+    const focusKey = (saved.focusKeyword || base.focusKeyword).trim();
+    const robots = saved.robots || base.robots;
+
+    let status = 'complete';
+    let issues = [];
+
+    // Duplicate detection
+    if (titlesSeen.has(title)) {
+      status = 'error';
+      issues.push(`Duplicate title shared with ${titlesSeen.get(title)}`);
+    } else {
+      titlesSeen.set(title, base.name);
+    }
+
+    if (descriptionsSeen.has(desc)) {
+      status = 'error';
+      issues.push(`Duplicate description shared with ${descriptionsSeen.get(desc)}`);
+    } else {
+      descriptionsSeen.set(desc, base.name);
+    }
+
+    // Accidental noindex on important pages
+    if (robots.includes('noindex')) {
+      status = 'error';
+      issues.push('Accidental noindex on public page');
+    }
+
+    // Canonical check
+    if (!canonical.startsWith('https://')) {
+      status = 'error';
+      issues.push('Canonical must be absolute https:// URL');
+    }
+
+    // Warnings on missing/suboptimal length
+    if (title.length < 35 || title.length > 70) {
+      if (status !== 'error') status = 'warning';
+      issues.push(`Title length (${title.length}) outside optimal range (50-60)`);
+    }
+    if (desc.length < 100 || desc.length > 170) {
+      if (status !== 'error') status = 'warning';
+      issues.push(`Description length (${desc.length}) outside optimal range (150-160)`);
+    }
+    if (!focusKey) {
+      if (status !== 'error') status = 'warning';
+      issues.push('Missing focus keyword');
+    }
+
+    if (status === 'complete') completeCount++;
+    else if (status === 'warning') warningCount++;
+    else errorCount++;
+
+    pageResults.push({ key, name: base.name, status, issues });
+  });
+
+  // Update counters
+  const compEl = document.getElementById('audit-complete-count');
+  const warnEl = document.getElementById('audit-warning-count');
+  const errEl = document.getElementById('audit-error-count');
+  const badgeEl = document.getElementById('seo-health-badge');
+
+  if (compEl) compEl.textContent = completeCount;
+  if (warnEl) warnEl.textContent = warningCount;
+  if (errEl) errEl.textContent = errorCount;
+
+  if (badgeEl) {
+    if (errorCount > 0) {
+      badgeEl.className = 'px-2 py-0.5 rounded-full bg-red-600 text-white font-mono text-[10px] font-bold';
+      badgeEl.textContent = `${errorCount} CRITICAL ERRORS`;
+    } else if (warningCount > 0) {
+      badgeEl.className = 'px-2 py-0.5 rounded-full bg-[#B39158] text-white font-mono text-[10px] font-bold';
+      badgeEl.textContent = `${warningCount} WARNINGS`;
+    } else {
+      badgeEl.className = 'px-2 py-0.5 rounded-full bg-[#00742F] text-white font-mono text-[10px] font-bold';
+      badgeEl.textContent = '100% HEALTHY';
+    }
   }
 
-  if (saveBtn) {
-    saveBtn.addEventListener('click', async () => {
-      const page = pageSelector.value;
-      const payload = {
-        title: document.getElementById('seo-title').value.trim(),
-        description: document.getElementById('seo-description').value.trim(),
-        canonical: document.getElementById('seo-canonical').value.trim(),
-        robots: document.getElementById('seo-robots').value,
-        ogImage: document.getElementById('seo-og-image').value.trim()
-      };
+  // Render Status Checklist Grid
+  const checklistGrid = document.getElementById('seo-status-checklist');
+  if (checklistGrid) {
+    checklistGrid.innerHTML = pageResults.map(r => {
+      let icon = 'check_circle';
+      let badgeClass = 'bg-[#00742F]/10 text-[#00742F] border-[#00742F]/20';
+      let label = '✓ Complete';
 
-      const res = await saveSeoMetadata(page, payload);
-      if (res.success) {
-        showToast(`SEO settings for ${page} updated successfully.`, 'success');
-      } else {
-        showToast('Failed to save SEO: ' + res.error, 'error');
+      if (r.status === 'warning') {
+        icon = 'warning';
+        badgeClass = 'bg-amber-50 text-amber-800 border-amber-200';
+        label = '⚠ Missing';
+      } else if (r.status === 'error') {
+        icon = 'error';
+        badgeClass = 'bg-red-50 text-red-700 border-red-200';
+        label = '✕ Error';
       }
-    });
+
+      return `
+        <div class="p-3 rounded-xl border ${badgeClass} flex flex-col justify-between gap-1 shadow-2xs">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs text-primary truncate">${r.name}</span>
+            <span class="material-symbols-outlined text-sm">${icon}</span>
+          </div>
+          <span class="font-mono text-[10px] font-bold uppercase">${label}</span>
+          ${r.issues.length ? `<span class="text-[9px] text-on-surface-variant truncate" title="${r.issues.join('; ')}">${r.issues[0]}</span>` : '<span class="text-[9px] text-[#00742F]">All signals optimized</span>'}
+        </div>
+      `;
+    }).join('');
+  }
+
+  if (interactive) {
+    if (errorCount === 0) {
+      showToast('SEO Audit Complete: Zero critical safety violations found!', 'success');
+    } else {
+      showToast(`SEO Audit Alert: ${errorCount} errors detected. Please check duplicate tags or canonicals.`, 'error');
+    }
+  }
+}
+
+async function saveCurrentSeoData() {
+  const pageSelector = document.getElementById('seo-page-selector');
+  const pageKey = pageSelector ? pageSelector.value : 'home';
+
+  const pagePayload = {
+    title: document.getElementById('seo-title')?.value.trim() || '',
+    description: document.getElementById('seo-description')?.value.trim() || '',
+    canonical: document.getElementById('seo-canonical')?.value.trim() || '',
+    focusKeyword: document.getElementById('seo-focus-keyword')?.value.trim() || '',
+    secondaryKeywords: document.getElementById('seo-secondary-keywords')?.value.trim() || '',
+    robots: document.getElementById('seo-robots')?.value || 'index, follow',
+    ogTitle: document.getElementById('seo-og-title')?.value.trim() || '',
+    ogDescription: document.getElementById('seo-og-description')?.value.trim() || '',
+    ogImage: document.getElementById('seo-og-image')?.value.trim() || ''
+  };
+
+  // Update in memory cache
+  activeSeoCache.pages[pageKey] = pagePayload;
+
+  // Also save current product if active
+  const prodSelector = document.getElementById('seo-product-selector');
+  if (prodSelector) {
+    const prodKey = prodSelector.value;
+    activeSeoCache.products[prodKey] = {
+      title: document.getElementById('seo-prod-title')?.value.trim() || '',
+      description: document.getElementById('seo-prod-description')?.value.trim() || '',
+      keyword: document.getElementById('seo-prod-keyword')?.value.trim() || '',
+      canonical: document.getElementById('seo-prod-canonical')?.value.trim() || ''
+    };
+  }
+
+  // Save to Firestore via saveSeoMetadata
+  const res = await saveSeoMetadata(pageKey, pagePayload);
+
+  // Also cache to localStorage for offline fallback
+  try {
+    localStorage.setItem('cococraft_seo_cache', JSON.stringify(activeSeoCache));
+  } catch (e) {
+    // Ignore storage quota
+  }
+
+  runSeoAudit(false);
+
+  if (res.success) {
+    showToast(`Global B2B SEO configuration for ${pageKey} saved successfully.`, 'success');
+  } else {
+    showToast(`Saved to local session (Firestore: ${res.error || 'Offline baseline active'})`, 'info');
   }
 }
 
 export async function loadSeoData() {
   if (!state.currentUser) return;
-  const pageSelector = document.getElementById('seo-page-selector');
-  const page = pageSelector ? pageSelector.value : 'home';
-  const meta = await getSeoMetadata(page);
-  if (meta) {
-    if (document.getElementById('seo-title')) document.getElementById('seo-title').value = meta.title || '';
-    if (document.getElementById('seo-description')) document.getElementById('seo-description').value = meta.description || '';
-    if (document.getElementById('seo-canonical')) document.getElementById('seo-canonical').value = meta.canonical || '';
-    if (document.getElementById('seo-robots')) document.getElementById('seo-robots').value = meta.robots || 'index, follow';
-    if (document.getElementById('seo-og-image')) document.getElementById('seo-og-image').value = meta.ogImage || '';
+  try {
+    const cached = localStorage.getItem('cococraft_seo_cache');
+    if (cached) {
+      activeSeoCache = { ...activeSeoCache, ...JSON.parse(cached) };
+    }
+  } catch (e) {}
+
+  // Fetch Firestore overrides for pages
+  for (const pageKey of Object.keys(SEO_PAGE_BASELINES)) {
+    try {
+      const meta = await getSeoMetadata(pageKey);
+      if (meta && meta.title) {
+        activeSeoCache.pages[pageKey] = meta;
+      }
+    } catch (e) {}
   }
+
+  loadPageSeoIntoForm('home');
+  loadProductSeoIntoForm('5kg-cocopeat-blocks');
+  runSeoAudit(false);
 }
 
 // 16. SETTINGS & BASELINE SYNC CONTROLLER
