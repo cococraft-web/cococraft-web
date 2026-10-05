@@ -54,7 +54,12 @@
         <a class="nav-link-item font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/company/gallery.html">Gallery</a>
         <a class="nav-link-item font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-2" href="/contact/contact.html">Contact</a>
       </nav>
-      <div class="flex items-center gap-space-md">
+      <div class="flex items-center gap-space-sm sm:gap-space-md">
+        <button type="button" class="global-search-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-variant bg-surface hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all shadow-2xs font-technical-code text-xs cursor-pointer" aria-label="Search Products (Cmd+K)">
+          <span class="material-symbols-outlined text-base text-secondary">search</span>
+          <span class="hidden sm:inline">Search</span>
+          <kbd class="hidden md:inline-flex items-center text-[10px] px-1 py-0.5 rounded bg-surface-container border border-surface-variant text-outline font-mono">⌘K</kbd>
+        </button>
         <a class="hidden sm:inline-flex items-center justify-center gap-space-xs px-space-md py-space-xs rounded-lg bg-primary text-on-primary hover:bg-primary-container border border-primary transition-all shadow-sm" href="/contact/contact.html">
           <span class="font-technical-code text-technical-code uppercase tracking-wider">REQUEST A QUOTE</span>
           <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
@@ -66,6 +71,10 @@
     </div>
     <!-- Mobile dropdown menu -->
     <div id="mobile-menu" class="hidden xl:hidden bg-surface border-b border-surface-variant px-gutter py-4 flex-col gap-3">
+      <button type="button" class="global-search-btn w-full flex items-center justify-start gap-2.5 px-3.5 py-2.5 rounded-xl bg-surface-container border border-surface-variant text-on-surface-variant font-technical-code text-xs cursor-pointer">
+        <span class="material-symbols-outlined text-lg text-secondary">search</span>
+        <span>Search products &amp; specs... (⌘K)</span>
+      </button>
       <a class="font-label-md text-on-surface hover:text-primary py-2" href="/about/about.html">About</a>
       <a class="font-label-md text-on-surface hover:text-primary py-2" href="/products/products.html">Products</a>
       <a class="font-label-md text-primary font-bold py-2" href="/applications/applications.html">Applications</a>

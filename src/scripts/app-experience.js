@@ -28,6 +28,7 @@ function bootMasterExperience() {
   safeInit('MobileNavDrawer', initMobileNavDrawer);
   safeInit('SmoothAnchorScrolling', initSmoothAnchorScrolling);
   safeInit('ProductFilterAndSearch', initProductFilterAndSearch);
+  safeInit('GlobalProductSearchModal', initGlobalProductSearchModal);
   safeInit('RFQForms', initRFQForms);
   safeInit('WalkthroughVideoModal', initWalkthroughVideoModal);
 }
@@ -474,7 +475,9 @@ function initProductFilterAndSearch() {
       const cardSpecs = (card.getAttribute('data-specs') || '').toLowerCase();
       const cardText = card.textContent.toLowerCase();
 
-      const categoryMatch = activeCategory === 'all' || cardCategory.toLowerCase().includes(activeCategory.toLowerCase());
+      const normCardCat = cardCategory.toLowerCase().replace(/[\s-_]+/g, '');
+      const normActiveCat = activeCategory.toLowerCase().replace(/[\s-_]+/g, '');
+      const categoryMatch = activeCategory === 'all' || normCardCat.includes(normActiveCat) || normActiveCat.includes(normCardCat);
       const searchMatch = !searchQuery || cardTitle.includes(searchQuery) || cardSpecs.includes(searchQuery) || cardText.includes(searchQuery);
 
       if (categoryMatch && searchMatch) {
@@ -503,6 +506,35 @@ function initProductFilterAndSearch() {
       }
     }
   }
+
+  // Pre-fill search or category from URL query parameters (e.g. ?q=blocks or ?category=cocopeat-blocks)
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.get('q');
+    const initialCat = urlParams.get('category');
+    if (initialQuery && searchInput) {
+      searchInput.value = initialQuery;
+      searchQuery = initialQuery.toLowerCase();
+      if (clearBtn) clearBtn.classList.remove('hidden');
+    }
+    if (initialCat) {
+      activeCategory = initialCat;
+      const normInit = initialCat.toLowerCase().replace(/[\s-_]+/g, '');
+      filterBtns.forEach((b) => {
+        const cat = b.getAttribute('data-category') || '';
+        const normC = cat.toLowerCase().replace(/[\s-_]+/g, '');
+        if (normC === normInit) {
+          b.classList.add('active', 'bg-primary', 'text-on-primary', 'font-bold');
+          b.classList.remove('bg-surface', 'text-on-surface-variant', 'font-medium');
+          b.setAttribute('aria-selected', 'true');
+        } else {
+          b.classList.remove('active', 'bg-primary', 'text-on-primary', 'font-bold');
+          b.classList.add('bg-surface', 'text-on-surface-variant', 'font-medium');
+          b.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+  } catch (err) {}
 
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -568,6 +600,9 @@ function initProductFilterAndSearch() {
       applyFilters();
     });
   }
+
+  // Initial trigger
+  applyFilters();
 }
 
 /* ==========================================================================
@@ -694,4 +729,299 @@ function initWalkthroughVideoModal() {
   });
 }
 
+/* ==========================================================================
+   14. GLOBAL PRODUCT SEARCH MODAL (CMD+K & HEADER BUTTON)
+   ========================================================================== */
+function initGlobalProductSearchModal() {
+  const GLOBAL_PRODUCTS = [
+    {
+      id: 'blocks',
+      title: '5KG Cocopeat Compressed Blocks',
+      category: 'Cocopeat Blocks',
+      url: '/products/products.html#blocks',
+      image: '/assets/products/5kg-block.jpg',
+      specs: 'Low EC (< 0.5 mS/cm) · pH 5.5–6.8 · ~75L Yield · Palletized 24-26 MT',
+      keywords: '5kg block cocopeat pith compressed substrate horticultural washed unwashed buffered low ec 75l pallet'
+    },
+    {
+      id: 'grow-bags',
+      title: 'Hydroponic Coir Grow Bags / Slabs',
+      category: 'Coir Grow Bags',
+      url: '/products/products.html#grow-bags',
+      image: '/assets/products/growbag-slab.jpg',
+      specs: '100 x 15 x 12 cm · 70/30 Pith/Chips Blend · UV 3+ Years · Custom Drainage Holes',
+      keywords: 'grow bag slab hydroponic greenhouse tomato cucumber berries vine crop 70/30 uv resistant drainage'
+    },
+    {
+      id: 'chips',
+      title: 'Washed Coir Husk Chips',
+      category: 'Husk Chips',
+      url: '/products/products.html#chips',
+      image: '/assets/products/husk-chips.jpg',
+      specs: 'Small / Med / Large · Washed Low EC (< 0.5 mS/cm) · 35%–45% Air Porosity · 5kg Block / 25kg Bale',
+      keywords: 'husk chips cubes coconut chunks orchid anthurium mulch aeration high porosity washed 25kg bale'
+    },
+    {
+      id: 'briquettes',
+      title: '650g Compressed Coir Briquettes',
+      category: 'Briquettes',
+      url: '/products/products.html#briquettes',
+      image: '/assets/products/650g-briquette.jpg',
+      specs: '650g Unit Weight · 9–10 Liters Yield · Washed Low EC · Individually Wrapped',
+      keywords: 'briquette 650g brick retail nursery seedling propagation compact small pack wrapped'
+    },
+    {
+      id: 'fibre',
+      title: 'Raw Mattress & Bristle Coir Fibre',
+      category: 'Coir Fiber',
+      url: '/products/products.html#fibre',
+      image: '/assets/products/coir-fibre.jpg',
+      specs: '10cm–25cm Bristle · Moisture < 15% · Impurity < 3% · 120kg–150kg Strapped Bales',
+      keywords: 'coir fibre fiber bristle mattress upholstery automotive seat cushioning decorticated bale 150kg'
+    },
+    {
+      id: 'geotextiles',
+      title: 'Coir Geotextile Netting & Erosion Blankets',
+      category: 'Coir Fiber',
+      url: '/products/products.html#geotextiles',
+      image: '/assets/products/coir-geotextiles.jpg',
+      specs: '400g / 700g / 900g Mesh · 2m Width x 50m Roll · 3–5 Years Lifespan · High Tensile Strength',
+      keywords: 'geotextile netting erosion blanket slope riverbank stabilization biodegradable mesh matting 2m 50m'
+    }
+  ];
+
+  let modal = document.getElementById('global-search-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'global-search-modal';
+    modal.className = 'fixed inset-0 z-[100] hidden items-start justify-center pt-12 sm:pt-20 px-4 global-search-backdrop';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Global Product Search');
+    modal.innerHTML = `
+      <div class="search-modal-container relative w-full max-w-2xl bg-surface rounded-2xl border border-surface-variant shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+        <!-- Search Input Bar -->
+        <div class="p-3.5 sm:p-4 border-b border-surface-variant flex items-center gap-3 bg-surface-container-low">
+          <span class="material-symbols-outlined text-xl text-secondary pointer-events-none">search</span>
+          <input 
+            id="modal-search-input" 
+            type="search" 
+            placeholder="Search products, substrates, specs, EC, pH, bales..." 
+            autocomplete="off" 
+            class="w-full bg-transparent border-0 text-sm sm:text-base text-primary placeholder:text-outline focus:outline-none font-body-md"
+          />
+          <button id="modal-search-close" type="button" class="p-1 rounded-lg text-outline hover:text-primary transition-colors cursor-pointer" aria-label="Close search dialog">
+            <span class="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+
+        <!-- Quick Category Chips -->
+        <div class="px-4 py-2 bg-surface-container-lowest border-b border-surface-variant/40 flex items-center gap-1.5 overflow-x-auto text-[11px] font-technical-code">
+          <span class="text-outline uppercase text-[10px] mr-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs text-secondary">tune</span>
+            Filter:
+          </span>
+          <button type="button" class="modal-quick-chip active px-2.5 py-1 rounded-lg bg-primary text-on-primary font-bold transition-all cursor-pointer" data-cat="all">All (6)</button>
+          <button type="button" class="modal-quick-chip px-2.5 py-1 rounded-lg bg-surface border border-surface-variant text-on-surface-variant hover:border-secondary hover:text-secondary transition-colors cursor-pointer" data-cat="Cocopeat Blocks">Blocks</button>
+          <button type="button" class="modal-quick-chip px-2.5 py-1 rounded-lg bg-surface border border-surface-variant text-on-surface-variant hover:border-secondary hover:text-secondary transition-colors cursor-pointer" data-cat="Coir Grow Bags">Grow Bags</button>
+          <button type="button" class="modal-quick-chip px-2.5 py-1 rounded-lg bg-surface border border-surface-variant text-on-surface-variant hover:border-secondary hover:text-secondary transition-colors cursor-pointer" data-cat="Husk Chips">Husk Chips</button>
+          <button type="button" class="modal-quick-chip px-2.5 py-1 rounded-lg bg-surface border border-surface-variant text-on-surface-variant hover:border-secondary hover:text-secondary transition-colors cursor-pointer" data-cat="Briquettes">Briquettes</button>
+          <button type="button" class="modal-quick-chip px-2.5 py-1 rounded-lg bg-surface border border-surface-variant text-on-surface-variant hover:border-secondary hover:text-secondary transition-colors cursor-pointer" data-cat="Coir Fiber">Fiber</button>
+        </div>
+
+        <!-- Search Results Count Banner -->
+        <div class="px-4 py-1.5 bg-surface-container/40 border-b border-surface-variant/30 flex items-center justify-between text-[11px] font-technical-code text-on-surface-variant">
+          <span id="modal-results-count">Showing 6 Products</span>
+          <span class="text-secondary font-bold hidden sm:inline flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">verified</span>
+            ISO & Export Certified
+          </span>
+        </div>
+
+        <!-- Scrollable Search Results List -->
+        <div id="modal-search-results" class="p-3 overflow-y-auto flex flex-col gap-2 flex-1 max-h-96"></div>
+
+        <!-- Footer Shortcuts -->
+        <div class="p-3 bg-surface-container-low border-t border-surface-variant flex items-center justify-between text-[11px] font-technical-code text-on-surface-variant">
+          <div class="flex items-center gap-2">
+            <span><kbd class="px-1.5 py-0.5 rounded bg-surface border border-surface-variant font-mono">ESC</kbd> to close</span>
+          </div>
+          <a href="/products/products.html" class="text-secondary font-bold hover:underline flex items-center gap-1">
+            Full Catalogue Page →
+          </a>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
+  const searchInput = modal.querySelector('#modal-search-input');
+  const resultsContainer = modal.querySelector('#modal-search-results');
+  const resultsCountEl = modal.querySelector('#modal-results-count');
+  const closeBtn = modal.querySelector('#modal-search-close');
+  const quickChips = modal.querySelectorAll('.modal-quick-chip');
+
+  let activeModalCat = 'all';
+  let modalQuery = '';
+
+  function renderModalResults() {
+    const q = modalQuery.trim().toLowerCase();
+    const filtered = GLOBAL_PRODUCTS.filter((item) => {
+      const normCardCat = item.category.toLowerCase().replace(/[\s-_]+/g, '');
+      const normActiveCat = activeModalCat.toLowerCase().replace(/[\s-_]+/g, '');
+      const catMatch = activeModalCat === 'all' || normCardCat.includes(normActiveCat) || normActiveCat.includes(normCardCat);
+      const text = (item.title + ' ' + item.category + ' ' + item.specs + ' ' + item.keywords).toLowerCase();
+      const qMatch = !q || text.includes(q);
+      return catMatch && qMatch;
+    });
+
+    resultsCountEl.textContent = `Showing ${filtered.length} Product${filtered.length === 1 ? '' : 's'}`;
+
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = `
+        <div class="py-10 px-4 text-center flex flex-col items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-3xl text-outline">search_off</span>
+          <p class="font-headline-sm text-sm font-bold text-primary">No products match "${modalQuery}"</p>
+          <p class="font-body-md text-xs text-on-surface-variant max-w-xs">
+            Try searching for "EC", "grow bags", "chips", "75L", "briquettes", or reset category filters.
+          </p>
+          <button id="modal-clear-search-btn" type="button" class="mt-2 px-3 py-1.5 rounded-lg bg-secondary text-white font-technical-code text-xs font-bold hover:bg-secondary/90 transition-all cursor-pointer">
+            Clear Filters &amp; View All
+          </button>
+        </div>
+      `;
+      const clearBtn = resultsContainer.querySelector('#modal-clear-search-btn');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          modalQuery = '';
+          searchInput.value = '';
+          activeModalCat = 'all';
+          updateChipsUI();
+          renderModalResults();
+          searchInput.focus();
+        });
+      }
+      return;
+    }
+
+    resultsContainer.innerHTML = filtered.map((item) => `
+      <a href="${item.url}" class="search-result-item flex items-center gap-3.5 p-3 rounded-xl border border-surface-variant/70 bg-surface hover:bg-surface-container-low transition-all group cursor-pointer" data-id="${item.id}">
+        <img src="${item.image}" alt="${item.title}" class="w-14 h-14 rounded-lg object-cover border border-surface-variant flex-shrink-0 group-hover:scale-105 transition-transform" />
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap mb-1">
+            <h4 class="font-headline-md text-xs sm:text-sm font-bold text-primary group-hover:text-secondary transition-colors truncate">
+              ${item.title}
+            </h4>
+            <span class="px-2 py-0.5 rounded-md bg-secondary/10 text-secondary font-technical-code text-[10px] font-bold uppercase">
+              ${item.category}
+            </span>
+          </div>
+          <p class="font-technical-code text-[11px] text-on-surface-variant truncate">
+            ${item.specs}
+          </p>
+        </div>
+        <span class="material-symbols-outlined text-base text-outline group-hover:text-secondary group-hover:translate-x-1 transition-all flex-shrink-0">
+          arrow_forward
+        </span>
+      </a>
+    `).join('');
+
+    resultsContainer.querySelectorAll('.search-result-item').forEach((item) => {
+      item.addEventListener('click', (e) => {
+        closeModal();
+        const targetId = item.getAttribute('data-id');
+        const hash = '#' + targetId;
+        const targetEl = document.querySelector(hash);
+        if (targetEl) {
+          e.preventDefault();
+          if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+            window.lenis.scrollTo(targetEl, { offset: -90 });
+          } else {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+          history.pushState(null, '', hash);
+        }
+      });
+    });
+  }
+
+  function updateChipsUI() {
+    quickChips.forEach((chip) => {
+      const cat = chip.getAttribute('data-cat');
+      if (cat === activeModalCat) {
+        chip.classList.add('active', 'bg-primary', 'text-on-primary', 'font-bold');
+        chip.classList.remove('bg-surface', 'text-on-surface-variant');
+      } else {
+        chip.classList.remove('active', 'bg-primary', 'text-on-primary', 'font-bold');
+        chip.classList.add('bg-surface', 'text-on-surface-variant');
+      }
+    });
+  }
+
+  function openModal() {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.classList.add('mobile-drawer-open');
+    if (window.lenis && typeof window.lenis.stop === 'function') {
+      window.lenis.stop();
+    }
+    renderModalResults();
+    setTimeout(() => {
+      if (searchInput) searchInput.focus();
+    }, 50);
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.classList.remove('mobile-drawer-open');
+    if (window.lenis && typeof window.lenis.start === 'function') {
+      window.lenis.start();
+    }
+  }
+
+  // Trigger buttons
+  document.querySelectorAll('.global-search-btn, [data-action="open-search"]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  searchInput.addEventListener('input', (e) => {
+    modalQuery = e.target.value;
+    renderModalResults();
+  });
+
+  quickChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      activeModalCat = chip.getAttribute('data-cat') || 'all';
+      updateChipsUI();
+      renderModalResults();
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (modal.classList.contains('hidden')) {
+        openModal();
+      } else {
+        closeModal();
+      }
+    } else if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+}
+
 export { lenisInstance };
+
