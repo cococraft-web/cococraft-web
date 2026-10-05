@@ -398,9 +398,59 @@ async function syncPageSeo() {
     if (twTitle) updateMetaElement('meta[name="twitter:title"]', 'name', 'twitter:title', twTitle);
     if (twDesc) updateMetaElement('meta[name="twitter:description"]', 'name', 'twitter:description', twDesc);
     if (twImage) updateMetaElement('meta[name="twitter:image"]', 'name', 'twitter:image', twImage);
+
+    // Sync LocalBusiness Schema ONLY when address is explicitly verified and enabled
+    try {
+      const localData = await getSeoMetadata('local');
+      if (
+        localData && 
+        localData.schemaEnabled && 
+        localData.isAddressVerified && 
+        localData.address && 
+        localData.city && 
+        localData.postalCode
+      ) {
+        injectLocalBusinessSchema(localData);
+      }
+    } catch (e) {
+      console.debug('LocalBusiness schema sync fallback:', e.message);
+    }
   } catch (e) {
     console.debug('SEO sync fallback active:', e.message);
   }
+}
+
+function injectLocalBusinessSchema(localData) {
+  let scriptEl = document.querySelector('script#schema-local-business');
+  if (!scriptEl) {
+    scriptEl = document.createElement('script');
+    scriptEl.type = 'application/ld+json';
+    scriptEl.id = 'schema-local-business';
+    document.head.appendChild(scriptEl);
+  }
+
+  const schemaJson = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': 'https://cococraftexports.com/#localbusiness',
+    'name': localData.businessName || 'COCO CRAFT EXPORTS',
+    'url': 'https://cococraftexports.com',
+    'telephone': localData.phone || '+91 94883 55299',
+    'email': localData.email || 'enquiry@cococraftexports.com',
+    'priceRange': '$$$$',
+    'address': {
+      '@type': 'PostalAddress',
+      'streetAddress': localData.address,
+      'addressLocality': localData.city,
+      'addressRegion': localData.state || 'Tamil Nadu',
+      'postalCode': localData.postalCode,
+      'addressCountry': localData.countryCode || 'IN'
+    }
+  };
+
+  if (localData.mapsUrl) schemaJson.hasMap = localData.mapsUrl;
+
+  scriptEl.textContent = JSON.stringify(schemaJson, null, 2);
 }
 
 function resolveCurrentPageKey() {

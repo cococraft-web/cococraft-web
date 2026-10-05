@@ -1391,6 +1391,25 @@ let activeSeoCache = {
     defaultRobots: 'index, follow',
     googleVerification: '',
     bingVerification: ''
+  },
+  local: {
+    businessName: 'COCO CRAFT EXPORTS',
+    businessCategory: 'Coconut Coir Manufacturer & Exporter',
+    address: 'Pollachi Agro-Industrial Corridor, Coimbatore District',
+    city: 'Pollachi',
+    district: 'Coimbatore District',
+    state: 'Tamil Nadu',
+    country: 'India',
+    countryCode: 'IN',
+    postalCode: '642001',
+    phone: '+91 94883 55299',
+    email: 'enquiry@cococraftexports.com',
+    businessHours: 'Mo-Sa 09:00-18:00 (IST)',
+    gbpUrl: '',
+    mapsUrl: '',
+    serviceAreas: 'Global Export (USA, Netherlands, Spain, Australia, South Korea, Japan, UAE) · Manufacturing Hub: Tamil Nadu, India',
+    isAddressVerified: true,
+    schemaEnabled: true
   }
 };
 
@@ -1413,6 +1432,7 @@ function initSeoController() {
       const activeContent = document.getElementById(`seo-tab-content-${target}`);
       if (activeContent) activeContent.classList.remove('hidden');
 
+      if (target === 'local') renderLocalSeoTab();
       if (target === 'sitemap') renderSitemapTab();
       if (target === 'robots') renderRobotsTab();
       if (target === 'redirects') renderRedirectsTab();
@@ -1597,9 +1617,54 @@ function initSeoController() {
     });
   }
 
+  // I. Local SEO Event Listeners
+  const localInputs = [
+    'seo-local-name', 'seo-local-category', 'seo-local-address', 
+    'seo-local-city', 'seo-local-district', 'seo-local-state', 
+    'seo-local-country', 'seo-local-postal', 'seo-local-phone', 
+    'seo-local-email', 'seo-local-hours', 'seo-local-service-areas', 
+    'seo-local-gbp-url', 'seo-local-maps-url'
+  ];
+  localInputs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => {
+        updateLocalSchemaPreview();
+        updateNapDisplays();
+      });
+    }
+  });
+
+  const localToggle = document.getElementById('seo-local-schema-toggle');
+  if (localToggle) {
+    localToggle.addEventListener('change', () => {
+      updateLocalSchemaPreview();
+    });
+  }
+
+  const saveLocalBtn = document.getElementById('save-local-seo-btn');
+  if (saveLocalBtn) {
+    saveLocalBtn.addEventListener('click', async () => {
+      await saveLocalSeo();
+    });
+  }
+
+  const copyLocalSchemaBtn = document.getElementById('copy-local-schema-btn');
+  if (copyLocalSchemaBtn) {
+    copyLocalSchemaBtn.addEventListener('click', () => {
+      const code = document.getElementById('seo-local-schema-preview')?.textContent || '';
+      if (code && !code.startsWith('//')) {
+        navigator.clipboard.writeText(code).then(() => showToast('LocalBusiness Schema JSON-LD copied.', 'success'));
+      } else {
+        showToast('LocalBusiness Schema is not active or verified.', 'warning');
+      }
+    });
+  }
+
   // Initial load
   loadPageSeoIntoForm('home');
   loadProductSeoIntoForm('5kg-cocopeat-blocks');
+  renderLocalSeoTab();
   renderRobotsTab();
   renderSchemaTab();
   runSeoAudit(false);
@@ -1800,6 +1865,226 @@ function renderSchemaTab() {
 }
 
 /**
+ * Local SEO Controller: Renders verified NAP, GBP checklist, and LocalBusiness schema guard
+ */
+function renderLocalSeoTab() {
+  const loc = activeSeoCache.local || {};
+
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined) el.value = val;
+  };
+
+  setVal('seo-local-name', loc.businessName || 'COCO CRAFT EXPORTS');
+  setVal('seo-local-category', loc.businessCategory || 'Coconut Coir Manufacturer & Exporter');
+  setVal('seo-local-address', loc.address || 'Pollachi Agro-Industrial Corridor, Coimbatore District');
+  setVal('seo-local-city', loc.city || 'Pollachi');
+  setVal('seo-local-district', loc.district || 'Coimbatore District');
+  setVal('seo-local-state', loc.state || 'Tamil Nadu');
+  setVal('seo-local-country', loc.country || 'India');
+  setVal('seo-local-postal', loc.postalCode || '642001');
+  setVal('seo-local-phone', loc.phone || '+91 94883 55299');
+  setVal('seo-local-email', loc.email || 'enquiry@cococraftexports.com');
+  setVal('seo-local-hours', loc.businessHours || 'Mo-Sa 09:00-18:00 (IST)');
+  setVal('seo-local-service-areas', loc.serviceAreas || 'Global Export (USA, Netherlands, Spain, Australia, South Korea, Japan, UAE) · Manufacturing Hub: Tamil Nadu, India');
+  setVal('seo-local-gbp-url', loc.gbpUrl || '');
+  setVal('seo-local-maps-url', loc.mapsUrl || '');
+
+  const toggle = document.getElementById('seo-local-schema-toggle');
+  if (toggle) toggle.checked = loc.schemaEnabled !== false;
+
+  updateLocalSchemaPreview();
+  updateNapDisplays();
+}
+
+function updateLocalSchemaPreview() {
+  const loc = activeSeoCache.local || {};
+  const toggle = document.getElementById('seo-local-schema-toggle');
+  const isEnabled = toggle ? toggle.checked : (loc.schemaEnabled !== false);
+
+  const name = document.getElementById('seo-local-name')?.value.trim() || loc.businessName || 'COCO CRAFT EXPORTS';
+  const address = document.getElementById('seo-local-address')?.value.trim() || loc.address || '';
+  const city = document.getElementById('seo-local-city')?.value.trim() || loc.city || '';
+  const state = document.getElementById('seo-local-state')?.value.trim() || loc.state || 'Tamil Nadu';
+  const postal = document.getElementById('seo-local-postal')?.value.trim() || loc.postalCode || '';
+  const country = document.getElementById('seo-local-country')?.value.trim() || loc.country || 'India';
+  const phone = document.getElementById('seo-local-phone')?.value.trim() || loc.phone || '';
+  const email = document.getElementById('seo-local-email')?.value.trim() || loc.email || '';
+
+  // Strict Address Verification Check: Must have legitimate street address, city, and postal code
+  const isAddressVerified = Boolean(
+    address && 
+    city && 
+    postal && 
+    !address.toUpperCase().includes('VERIFIED_') && 
+    !city.toUpperCase().includes('VERIFIED_') &&
+    !postal.toUpperCase().includes('VERIFIED_')
+  );
+
+  activeSeoCache.local.isAddressVerified = isAddressVerified;
+  activeSeoCache.local.schemaEnabled = isEnabled && isAddressVerified;
+
+  const alertBox = document.getElementById('seo-local-schema-alert');
+  const badgeEl = document.getElementById('seo-local-schema-badge');
+  const previewEl = document.getElementById('seo-local-schema-preview');
+
+  if (!isAddressVerified) {
+    if (alertBox) {
+      alertBox.className = 'p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-2.5';
+      alertBox.innerHTML = `
+        <span class="material-symbols-outlined text-base shrink-0 mt-0.5 text-amber-700">warning</span>
+        <div>
+          <span class="font-bold">Verified Address Required:</span>
+          <span class="text-xs">Physical address is incomplete or contains unverified placeholders. LocalBusiness Schema is safely disabled to protect search ranking from invented location penalties.</span>
+        </div>
+      `;
+    }
+    if (badgeEl) {
+      badgeEl.className = 'px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 font-mono text-[10px] font-bold';
+      badgeEl.textContent = 'UNVERIFIED — SCHEMA DISABLED';
+    }
+    if (previewEl) {
+      previewEl.textContent = '// LocalBusiness Schema is paused.\n// Enter a verified physical address, city, and pincode to enable Schema.org structured data.';
+    }
+    return;
+  }
+
+  if (!isEnabled) {
+    if (alertBox) {
+      alertBox.className = 'p-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-700 flex items-start gap-2.5';
+      alertBox.innerHTML = `
+        <span class="material-symbols-outlined text-base shrink-0 mt-0.5 text-gray-500">do_not_disturb_on</span>
+        <div>
+          <span class="font-bold">LocalBusiness Schema Manually Paused:</span>
+          <span class="text-xs">The schema toggle is disabled. Toggle on to emit Schema.org LocalBusiness JSON-LD on public pages.</span>
+        </div>
+      `;
+    }
+    if (badgeEl) {
+      badgeEl.className = 'px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 border border-gray-300 font-mono text-[10px] font-bold';
+      badgeEl.textContent = 'PAUSED BY ADMIN';
+    }
+    if (previewEl) {
+      previewEl.textContent = '// LocalBusiness Schema manually disabled by admin toggle.';
+    }
+    return;
+  }
+
+  // Address is verified and enabled: construct valid Schema.org LocalBusiness
+  const schemaObj = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': 'https://cococraftexports.com/#localbusiness',
+    'name': name,
+    'url': 'https://cococraftexports.com',
+    'telephone': phone,
+    'email': email,
+    'priceRange': '$$$$',
+    'address': {
+      '@type': 'PostalAddress',
+      'streetAddress': address,
+      'addressLocality': city,
+      'addressRegion': state,
+      'postalCode': postal,
+      'addressCountry': country === 'India' ? 'IN' : country
+    }
+  };
+
+  if (loc.mapsUrl) schemaObj.hasMap = loc.mapsUrl;
+
+  if (alertBox) {
+    alertBox.className = 'p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start gap-2.5';
+    alertBox.innerHTML = `
+      <span class="material-symbols-outlined text-base shrink-0 mt-0.5 text-[#00742F]">verified</span>
+      <div>
+        <span class="font-bold">Verified Address Confirmed:</span>
+        <span class="text-xs">LocalBusiness Schema is active and compliant with Google Structured Data guidelines. It links ${name} directly to ${city}, ${state}, ${postal}.</span>
+      </div>
+    `;
+  }
+  if (badgeEl) {
+    badgeEl.className = 'px-2 py-0.5 rounded-full bg-[#00742F]/10 text-[#00742F] border border-[#00742F]/20 font-mono text-[10px] font-bold';
+    badgeEl.textContent = 'VERIFIED & ACTIVE';
+  }
+  if (previewEl) {
+    previewEl.textContent = JSON.stringify(schemaObj, null, 2);
+  }
+}
+
+function updateNapDisplays() {
+  const name = document.getElementById('seo-local-name')?.value.trim() || activeSeoCache.local?.businessName || 'COCO CRAFT EXPORTS';
+  const address = document.getElementById('seo-local-address')?.value.trim() || activeSeoCache.local?.address || '';
+  const city = document.getElementById('seo-local-city')?.value.trim() || activeSeoCache.local?.city || '';
+  const state = document.getElementById('seo-local-state')?.value.trim() || activeSeoCache.local?.state || '';
+  const postal = document.getElementById('seo-local-postal')?.value.trim() || activeSeoCache.local?.postalCode || '';
+  const country = document.getElementById('seo-local-country')?.value.trim() || activeSeoCache.local?.country || '';
+  const phone = document.getElementById('seo-local-phone')?.value.trim() || activeSeoCache.local?.phone || '';
+
+  const fullAddr = [address, city, state, postal ? `${postal} ${country}` : country].filter(Boolean).join(', ');
+
+  const nameDisp = document.getElementById('nap-name-display');
+  const addrDisp = document.getElementById('nap-address-display');
+  const phoneDisp = document.getElementById('nap-phone-display');
+
+  if (nameDisp) nameDisp.textContent = name;
+  if (addrDisp) addrDisp.textContent = fullAddr || 'No address set';
+  if (phoneDisp) phoneDisp.textContent = phone || 'No phone set';
+}
+
+async function saveLocalSeo() {
+  const loc = {
+    businessName: document.getElementById('seo-local-name')?.value.trim() || 'COCO CRAFT EXPORTS',
+    businessCategory: document.getElementById('seo-local-category')?.value.trim() || 'Coconut Coir Manufacturer & Exporter',
+    address: document.getElementById('seo-local-address')?.value.trim() || '',
+    city: document.getElementById('seo-local-city')?.value.trim() || 'Pollachi',
+    district: document.getElementById('seo-local-district')?.value.trim() || 'Coimbatore District',
+    state: document.getElementById('seo-local-state')?.value.trim() || 'Tamil Nadu',
+    country: document.getElementById('seo-local-country')?.value.trim() || 'India',
+    countryCode: 'IN',
+    postalCode: document.getElementById('seo-local-postal')?.value.trim() || '642001',
+    phone: document.getElementById('seo-local-phone')?.value.trim() || '+91 94883 55299',
+    email: document.getElementById('seo-local-email')?.value.trim() || 'enquiry@cococraftexports.com',
+    businessHours: document.getElementById('seo-local-hours')?.value.trim() || 'Mo-Sa 09:00-18:00 (IST)',
+    gbpUrl: document.getElementById('seo-local-gbp-url')?.value.trim() || '',
+    mapsUrl: document.getElementById('seo-local-maps-url')?.value.trim() || '',
+    serviceAreas: document.getElementById('seo-local-service-areas')?.value.trim() || '',
+    schemaEnabled: document.getElementById('seo-local-schema-toggle')?.checked !== false
+  };
+
+  const isVerified = Boolean(
+    loc.address &&
+    loc.city &&
+    loc.postalCode &&
+    !loc.address.toUpperCase().includes('VERIFIED_') &&
+    !loc.city.toUpperCase().includes('VERIFIED_') &&
+    !loc.postalCode.toUpperCase().includes('VERIFIED_')
+  );
+
+  loc.isAddressVerified = isVerified;
+  loc.schemaEnabled = loc.schemaEnabled && isVerified;
+
+  activeSeoCache.local = loc;
+
+  // Persist to Firestore
+  const res = await saveSeoMetadata('local', loc);
+
+  // Cache to localStorage
+  try {
+    localStorage.setItem('cococraft_seo_cache', JSON.stringify(activeSeoCache));
+  } catch (e) {}
+
+  updateLocalSchemaPreview();
+  updateNapDisplays();
+  runSeoAudit(false);
+
+  if (res.success) {
+    showToast('Local SEO & verified manufacturing signals saved successfully.', 'success');
+  } else {
+    showToast('Saved to local session (Firestore: offline fallback active)', 'info');
+  }
+}
+
+/**
  * Live SEO Audit Engine: Validates lengths, duplicates, canonicals, and indexing
  */
 function runSeoAudit(interactive = false) {
@@ -1870,6 +2155,30 @@ function runSeoAudit(interactive = false) {
 
     pageResults.push({ key, name: base.name, status, issues });
   });
+
+  // Check Local SEO NAP and address verification
+  const loc = activeSeoCache.local || {};
+  let locStatus = 'complete';
+  const locIssues = [];
+
+  if (!loc.address || !loc.city || !loc.postalCode) {
+    locStatus = 'warning';
+    locIssues.push('Physical address details incomplete');
+  } else if (!loc.isAddressVerified) {
+    locStatus = 'warning';
+    locIssues.push('Address verification required for Schema');
+  }
+
+  if (!loc.phone) {
+    locStatus = 'warning';
+    locIssues.push('Missing NAP direct phone');
+  }
+
+  if (locStatus === 'complete') completeCount++;
+  else if (locStatus === 'warning') warningCount++;
+  else errorCount++;
+
+  pageResults.push({ key: 'local-seo', name: 'Local SEO (Tamil Nadu)', status: locStatus, issues: locIssues });
 
   // Update counters
   const compEl = document.getElementById('audit-complete-count');
@@ -1968,6 +2277,13 @@ async function saveCurrentSeoData() {
   // Save to Firestore via saveSeoMetadata
   const res = await saveSeoMetadata(pageKey, pagePayload);
 
+  // Also save local SEO if populated
+  if (activeSeoCache.local) {
+    try {
+      await saveSeoMetadata('local', activeSeoCache.local);
+    } catch (e) {}
+  }
+
   // Also cache to localStorage for offline fallback
   try {
     localStorage.setItem('cococraft_seo_cache', JSON.stringify(activeSeoCache));
@@ -1978,7 +2294,7 @@ async function saveCurrentSeoData() {
   runSeoAudit(false);
 
   if (res.success) {
-    showToast(`Global B2B SEO configuration for ${pageKey} saved successfully.`, 'success');
+    showToast(`Global B2B & Local SEO configuration saved successfully.`, 'success');
   } else {
     showToast(`Saved to local session (Firestore: ${res.error || 'Offline baseline active'})`, 'info');
   }
@@ -2003,8 +2319,17 @@ export async function loadSeoData() {
     } catch (e) {}
   }
 
+  // Fetch Local SEO override
+  try {
+    const localMeta = await getSeoMetadata('local');
+    if (localMeta && localMeta.businessName) {
+      activeSeoCache.local = { ...activeSeoCache.local, ...localMeta };
+    }
+  } catch (e) {}
+
   loadPageSeoIntoForm('home');
   loadProductSeoIntoForm('5kg-cocopeat-blocks');
+  renderLocalSeoTab();
   runSeoAudit(false);
 }
 

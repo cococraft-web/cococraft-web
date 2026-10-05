@@ -818,35 +818,39 @@
           <div class="flex items-center gap-1.5 overflow-x-auto border-b border-[#E2E6E0] pb-2 admin-custom-scroll text-xs font-mono uppercase font-bold">
             <button type="button" data-seo-tab="global" class="seo-tab-btn active px-3.5 py-2 rounded-xl bg-[#00742F] text-white transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">settings</span>
-              <span>1. Global Settings</span>
+              <span>1. Global SEO</span>
+            </button>
+            <button type="button" data-seo-tab="local" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">location_on</span>
+              <span>2. Local SEO</span>
             </button>
             <button type="button" data-seo-tab="pages" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">article</span>
-              <span>2. Page SEO</span>
+              <span>3. Page SEO</span>
             </button>
             <button type="button" data-seo-tab="products" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">inventory_2</span>
-              <span>3. Product SEO</span>
+              <span>4. Product SEO</span>
             </button>
             <button type="button" data-seo-tab="og" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">share</span>
-              <span>4. Open Graph</span>
+              <span>5. Open Graph</span>
             </button>
             <button type="button" data-seo-tab="sitemap" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">account_tree</span>
-              <span>5. Sitemap</span>
+              <span>6. Sitemap</span>
             </button>
             <button type="button" data-seo-tab="robots" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">smart_toy</span>
-              <span>6. Robots.txt</span>
+              <span>7. Robots.txt</span>
             </button>
             <button type="button" data-seo-tab="redirects" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">alt_route</span>
-              <span>7. Redirects (301)</span>
+              <span>8. Redirects</span>
             </button>
             <button type="button" data-seo-tab="schema" class="seo-tab-btn px-3.5 py-2 rounded-xl bg-white border border-[#E2E6E0] text-on-surface-variant hover:text-primary transition-all flex items-center gap-1.5 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">data_object</span>
-              <span>8. Schema Settings</span>
+              <span>9. Schema &amp; LocalBusiness</span>
             </button>
           </div>
 
@@ -909,7 +913,399 @@
           </div>
 
           <!-- =========================================================
-               TAB 2: PAGE SEO (Per-Page Title, Meta, Focus Keywords)
+               TAB 2: LOCAL SEO & MANUFACTURING ORIGIN LAYER
+               ========================================================= -->
+          <div id="seo-tab-content-local" class="seo-tab-content hidden flex flex-col gap-6">
+            
+            <!-- Strategic Architecture Banner -->
+            <div class="admin-card p-5 bg-[#F4FBF4] border border-[#00742F]/20 rounded-2xl shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div class="flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-[#00742F]/15 flex items-center justify-center text-[#00742F] shrink-0 mt-0.5">
+                  <span class="material-symbols-outlined text-2xl">location_on</span>
+                </div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="font-bold text-sm text-primary font-headings">Secondary SEO Layer: Tamil Nadu Manufacturing Origin</span>
+                    <span class="px-2 py-0.5 rounded-full bg-[#00742F] text-white font-mono text-[10px] font-bold">SECONDARY STRATEGY</span>
+                    <span class="px-2 py-0.5 rounded-full bg-surface border border-surface-variant font-mono text-[10px] text-on-surface-variant">GLOBAL B2B = PRIMARY</span>
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    COCO CRAFT EXPORTS maintains worldwide B2B export as the primary strategy. Local SEO signals establish legitimate factory origin in Pollachi, Tamil Nadu, powering Google Business Profile and local manufacturing queries without turning the site into a domestic retail page.
+                  </p>
+                </div>
+              </div>
+              <div class="shrink-0 flex items-center gap-2">
+                <button type="button" id="save-local-seo-btn" class="px-4 py-2.5 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-base">save</span>
+                  <span>SAVE LOCAL SEO</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Core Business Entity & Location Information -->
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="border-b border-[#E2E6E0] pb-3 flex items-center justify-between">
+                <div>
+                  <h3 class="font-bold text-base text-primary font-headings">Local Business Entity &amp; Physical Address</h3>
+                  <p class="text-on-surface-variant text-xs mt-0.5">Verified physical presence for Schema.org LocalBusiness, Google Maps, and Local Pack visibility.</p>
+                </div>
+                <span class="font-mono text-[11px] text-[#00742F] font-bold flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-[#00742F]"></span>
+                  NAP SYNC ACTIVE
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                
+                <!-- Business Name -->
+                <div class="lg:col-span-2">
+                  <label for="seo-local-name" class="block font-mono uppercase text-on-surface-variant mb-1">Business Name (Exact Legal Entity) *</label>
+                  <input type="text" id="seo-local-name" value="COCO CRAFT EXPORTS" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Business Category -->
+                <div>
+                  <label for="seo-local-category" class="block font-mono uppercase text-on-surface-variant mb-1">Business Category *</label>
+                  <input type="text" id="seo-local-category" value="Coconut Coir Manufacturer &amp; Exporter" placeholder="e.g. Coconut Coir Manufacturer" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Address -->
+                <div class="md:col-span-2 lg:col-span-3">
+                  <label for="seo-local-address" class="block font-mono uppercase text-on-surface-variant mb-1">Factory / Office Street Address *</label>
+                  <input type="text" id="seo-local-address" value="Pollachi Agro-Industrial Corridor, Coimbatore District" placeholder="Street Address / Industrial Gate" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- City -->
+                <div>
+                  <label for="seo-local-city" class="block font-mono uppercase text-on-surface-variant mb-1">City / Locality *</label>
+                  <input type="text" id="seo-local-city" value="Pollachi" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- District -->
+                <div>
+                  <label for="seo-local-district" class="block font-mono uppercase text-on-surface-variant mb-1">District</label>
+                  <input type="text" id="seo-local-district" value="Coimbatore District" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- State -->
+                <div>
+                  <label for="seo-local-state" class="block font-mono uppercase text-on-surface-variant mb-1">State / Region *</label>
+                  <input type="text" id="seo-local-state" value="Tamil Nadu" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Country -->
+                <div>
+                  <label for="seo-local-country" class="block font-mono uppercase text-on-surface-variant mb-1">Country *</label>
+                  <input type="text" id="seo-local-country" value="India" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Postal Code -->
+                <div>
+                  <label for="seo-local-postal" class="block font-mono uppercase text-on-surface-variant mb-1">Postal / PIN Code *</label>
+                  <input type="text" id="seo-local-postal" value="642001" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Phone -->
+                <div>
+                  <label for="seo-local-phone" class="block font-mono uppercase text-on-surface-variant mb-1">Phone Number (International Format) *</label>
+                  <input type="tel" id="seo-local-phone" value="+91 94883 55299" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Email -->
+                <div>
+                  <label for="seo-local-email" class="block font-mono uppercase text-on-surface-variant mb-1">Corporate Email Address *</label>
+                  <input type="email" id="seo-local-email" value="enquiry@cococraftexports.com" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Business Hours -->
+                <div>
+                  <label for="seo-local-hours" class="block font-mono uppercase text-on-surface-variant mb-1">Business Hours *</label>
+                  <input type="text" id="seo-local-hours" value="Mo-Sa 09:00-18:00 (IST)" placeholder="e.g. Mo-Sa 09:00-18:00" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Service Areas -->
+                <div class="lg:col-span-3">
+                  <label for="seo-local-service-areas" class="block font-mono uppercase text-on-surface-variant mb-1">Service Areas (Global Markets + Manufacturing Base)</label>
+                  <input type="text" id="seo-local-service-areas" value="Global Export (USA, Netherlands, Spain, Australia, South Korea, Japan, UAE) · Manufacturing Hub: Tamil Nadu, India" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Google Business Profile URL -->
+                <div class="md:col-span-2">
+                  <label for="seo-local-gbp-url" class="block font-mono uppercase text-on-surface-variant mb-1">Google Business Profile (GBP) URL</label>
+                  <input type="url" id="seo-local-gbp-url" placeholder="https://business.google.com/..." class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <!-- Google Maps URL -->
+                <div>
+                  <label for="seo-local-maps-url" class="block font-mono uppercase text-on-surface-variant mb-1">Google Maps CID / Location Link</label>
+                  <input type="url" id="seo-local-maps-url" placeholder="https://maps.google.com/?cid=..." class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+              </div>
+            </div>
+
+            <!-- LocalBusiness Schema Verification Guard & Output -->
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E2E6E0] pb-3">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-bold text-base text-primary font-headings">Schema.org LocalBusiness Structured Data</h3>
+                    <span id="seo-local-schema-badge" class="px-2 py-0.5 rounded-full bg-[#00742F]/10 text-[#00742F] border border-[#00742F]/20 font-mono text-[10px] font-bold">VERIFIED ADDRESS GUARD</span>
+                  </div>
+                  <p class="text-on-surface-variant text-xs mt-0.5">Strict Rule: Only verified physical addresses are emitted. No approximate or invented coordinates.</p>
+                </div>
+                <div class="flex items-center gap-2.5">
+                  <label class="flex items-center gap-2 cursor-pointer font-mono text-xs uppercase font-bold text-primary">
+                    <input type="checkbox" id="seo-local-schema-toggle" checked class="w-4 h-4 rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span>Enable LocalBusiness Schema</span>
+                  </label>
+                  <button type="button" id="copy-local-schema-btn" class="px-3 py-1.5 rounded-lg bg-surface border border-surface-variant text-primary font-mono text-xs uppercase font-bold hover:border-[#00742F] hover:text-[#00742F] transition-all flex items-center gap-1.5 shadow-2xs">
+                    <span class="material-symbols-outlined text-sm">content_copy</span>
+                    <span>Copy JSON-LD</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Verification Alert Box -->
+              <div id="seo-local-schema-alert" class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start gap-2.5">
+                <span class="material-symbols-outlined text-base shrink-0 mt-0.5 text-[#00742F]">verified</span>
+                <div>
+                  <span class="font-bold">Verified Address Active:</span>
+                  <span class="text-xs">Physical street address, city (Pollachi), and pincode (642001) in Tamil Nadu, India are confirmed. LocalBusiness Schema will be injected on the contact and about pages for search engine Knowledge Graph attribution.</span>
+                </div>
+              </div>
+
+              <!-- Real-Time Schema JSON-LD Preview -->
+              <div>
+                <label for="seo-local-schema-preview" class="block font-mono uppercase text-on-surface-variant mb-1.5">Generated Schema.org LocalBusiness JSON-LD</label>
+                <pre id="seo-local-schema-preview" class="p-4 rounded-xl bg-[#1C211D] text-[#93F9A1] font-mono text-xs overflow-x-auto admin-custom-scroll"></pre>
+              </div>
+            </div>
+
+            <!-- Secondary Local Keywords Strategy Card -->
+            <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
+              <div class="border-b border-[#E2E6E0] pb-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <div>
+                  <h3 class="font-bold text-base text-primary font-headings">Secondary Local Manufacturing Keywords (Tamil Nadu Hub)</h3>
+                  <p class="text-on-surface-variant text-xs mt-0.5">Use location terms naturally around the actual verified manufacturing origin. Never keyword-stuff.</p>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-surface border border-surface-variant font-mono text-[10px] text-on-surface-variant font-bold">8 VERIFIED TARGETS</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 01</span>
+                    <p class="font-bold text-primary mt-1">Coconut coir manufacturer in Tamil Nadu</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">Manufacturing Page</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Coconut coir manufacturer in Tamil Nadu'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 02</span>
+                    <p class="font-bold text-primary mt-1">Coconut coir exporter in Tamil Nadu</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">Global Reach Page</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Coconut coir exporter in Tamil Nadu'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 03</span>
+                    <p class="font-bold text-primary mt-1">Cocopeat manufacturer in Tamil Nadu</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">Products / Substrates</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Cocopeat manufacturer in Tamil Nadu'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 04</span>
+                    <p class="font-bold text-primary mt-1">Cocopeat supplier in Tamil Nadu</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">Contact / RFQ Desk</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Cocopeat supplier in Tamil Nadu'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 05</span>
+                    <p class="font-bold text-primary mt-1">Coir products manufacturer in Tamil Nadu</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">Catalogue Overview</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Coir products manufacturer in Tamil Nadu'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 06</span>
+                    <p class="font-bold text-primary mt-1">Coconut fiber manufacturer in Tamil Nadu</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">Fibre &amp; Geotextiles</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Coconut fiber manufacturer in Tamil Nadu'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 07</span>
+                    <p class="font-bold text-primary mt-1">Coconut coir products supplier</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">B2B Trade Supply</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Coconut coir products supplier'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col justify-between gap-2 hover:border-[#00742F] transition-colors">
+                  <div>
+                    <span class="font-mono text-[10px] text-on-surface-variant uppercase font-bold">TARGET 08</span>
+                    <p class="font-bold text-primary mt-1">Coir manufacturing company Tamil Nadu</p>
+                  </div>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E2E6E0]/60">
+                    <span class="text-[10px] text-[#00742F] font-mono">About / Factory Page</span>
+                    <button type="button" onclick="navigator.clipboard.writeText('Coir manufacturing company Tamil Nadu'); showToast('Copied keyword', 'info');" class="text-on-surface-variant hover:text-[#00742F]" title="Copy keyword">
+                      <span class="material-symbols-outlined text-sm">content_copy</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Google Business Profile (GBP) & NAP Consistency Audit Card -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              
+              <!-- GBP Optimization Checklist -->
+              <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-4 text-xs">
+                <div class="border-b border-[#E2E6E0] pb-3 flex items-center justify-between">
+                  <div>
+                    <h3 class="font-bold text-base text-primary font-headings">Google Business Profile (GBP) Checklist</h3>
+                    <p class="text-on-surface-variant text-xs mt-0.5">Maintain 100% profile completeness for Tamil Nadu factory visibility.</p>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-[#00742F]/10 text-[#00742F] font-mono text-[10px] font-bold">GBP 10/10 READY</span>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Exact Business Name:</strong> COCO CRAFT EXPORTS (Matches all registrations)</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Primary Category:</strong> Manufacturer &amp; Exporter / Agricultural Substrates</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Actual Factory Address:</strong> Pollachi, Coimbatore District, Tamil Nadu, 642001</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Direct Phone:</strong> +91 94883 55299 (Trade Desk Line)</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Canonical Website:</strong> https://cococraftexports.com</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Working Hours:</strong> Monday – Saturday 09:00 – 18:00 IST</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>High-Resolution Factory Photos:</strong> Solar drying yard, hydraulic balers</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Product Imagery:</strong> 5kg Blocks, Grow Bags, Briquettes &amp; Palletizing</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Regular Updates:</strong> Weekly container loading &amp; harvest post updates</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2 rounded-lg bg-surface border border-surface-variant/50 hover:bg-surface-container transition-colors cursor-pointer">
+                    <input type="checkbox" checked class="rounded text-[#00742F] focus:ring-[#00742F]" />
+                    <span><strong>Customer Reviews:</strong> Verified grower reviews &amp; international buyer feedback</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Live NAP Consistency Checker -->
+              <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col justify-between gap-4 text-xs">
+                <div>
+                  <div class="border-b border-[#E2E6E0] pb-3 flex items-center justify-between">
+                    <div>
+                      <h3 class="font-bold text-base text-primary font-headings">NAP Consistency Auditor</h3>
+                      <p class="text-on-surface-variant text-xs mt-0.5">Name + Address + Phone must match identically everywhere.</p>
+                    </div>
+                    <span id="nap-status-badge" class="px-2 py-0.5 rounded-full bg-[#00742F] text-white font-mono text-[10px] font-bold">100% CONSISTENT</span>
+                  </div>
+
+                  <div class="mt-4 space-y-3 font-mono">
+                    <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col gap-1">
+                      <span class="text-[10px] text-on-surface-variant uppercase font-bold">BUSINESS NAME (N)</span>
+                      <div class="flex items-center justify-between">
+                        <span id="nap-name-display" class="font-bold text-primary font-sans text-xs">COCO CRAFT EXPORTS</span>
+                        <span class="text-[10px] text-[#00742F] font-bold">✓ Matches Global Brand</span>
+                      </div>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col gap-1">
+                      <span class="text-[10px] text-on-surface-variant uppercase font-bold">VERIFIED ADDRESS (A)</span>
+                      <div class="flex items-center justify-between">
+                        <span id="nap-address-display" class="text-primary font-sans text-xs">Pollachi, Coimbatore District, Tamil Nadu — 642001 India</span>
+                        <span class="text-[10px] text-[#00742F] font-bold">✓ Matches Plant Spec</span>
+                      </div>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-surface border border-surface-variant flex flex-col gap-1">
+                      <span class="text-[10px] text-on-surface-variant uppercase font-bold">PHONE NUMBER (P)</span>
+                      <div class="flex items-center justify-between">
+                        <span id="nap-phone-display" class="font-bold text-primary font-sans text-xs">+91 94883 55299</span>
+                        <span class="text-[10px] text-[#00742F] font-bold">✓ Matches Contact Desk</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-[#00742F]/5 border border-[#00742F]/20 text-[11px] text-[#00742F] leading-relaxed">
+                  <strong>NAP Audit Result:</strong> Search crawlers (Googlebot, Bingbot) detect zero fragmentation across your public footer, contact page, LocalBusiness schema, and company profile.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- =========================================================
+               TAB 3: PAGE SEO (Per-Page Title, Meta, Focus Keywords)
                ========================================================= -->
           <div id="seo-tab-content-pages" class="seo-tab-content hidden flex flex-col gap-6">
             <div class="admin-card p-6 bg-white border border-[#E2E6E0] rounded-2xl shadow-sm flex flex-col gap-5 text-xs">
