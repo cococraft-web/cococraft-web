@@ -202,30 +202,30 @@
             <form id="contact-rfq-form" class="flex flex-col gap-4 font-body-sm">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Full Name *</label>
-                  <input type="text" required placeholder="e.g. Willem Van Dijk" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                  <label for="contact-name" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Full Name *</label>
+                  <input type="text" id="contact-name" name="name" required placeholder="e.g. Willem Van Dijk" autocomplete="name" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
                 </div>
                 <div>
-                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Corporate Email *</label>
-                  <input type="email" required placeholder="willem@growers-bv.nl" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Company / Greenhouse Name</label>
-                  <input type="text" placeholder="e.g. Agri-Tech Horticulture BV" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
-                </div>
-                <div>
-                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Destination Seaport *</label>
-                  <input type="text" required placeholder="e.g. Rotterdam / Long Beach" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                  <label for="contact-email" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Corporate Email *</label>
+                  <input type="email" id="contact-email" name="email" required placeholder="willem@growers-bv.nl" autocomplete="email" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Required Substrate *</label>
-                  <select class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none font-semibold text-primary">
+                  <label for="contact-company" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Company / Greenhouse Name</label>
+                  <input type="text" id="contact-company" name="company" placeholder="e.g. Agri-Tech Horticulture BV" autocomplete="organization" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+                <div>
+                  <label for="contact-port" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Destination Seaport *</label>
+                  <input type="text" id="contact-port" name="destination_port" required placeholder="e.g. Rotterdam / Long Beach" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-substrate" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Required Substrate *</label>
+                  <select id="contact-substrate" name="substrate" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none font-semibold text-primary">
                     <option value="5kg-washed">5KG Blocks (Washed Low EC &lt; 0.5 mS/cm)</option>
                     <option value="5kg-unwashed">5KG Blocks (Unwashed High EC)</option>
                     <option value="5kg-buffered">5KG Blocks (Calcium-Buffered)</option>
@@ -236,8 +236,8 @@
                   </select>
                 </div>
                 <div>
-                  <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Volume Required *</label>
-                  <select class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none font-semibold text-primary">
+                  <label for="contact-volume" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Volume Required *</label>
+                  <select id="contact-volume" name="volume" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none font-semibold text-primary">
                     <option value="sample">Sample Box / LCL Trial</option>
                     <option value="1x40hc" selected>1 x 40' HC Container (~24–26 MT)</option>
                     <option value="2-5x40hc">2 – 5 x 40' HC Containers</option>
@@ -247,7 +247,7 @@
               </div>
 
               <div>
-                <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Preferred Incoterms *</label>
+                <span class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Preferred Incoterms *</span>
                 <div class="grid grid-cols-3 gap-2">
                   <label class="flex items-center gap-2 p-2.5 rounded-lg border border-surface-variant bg-surface cursor-pointer text-xs font-technical-code">
                     <input type="radio" name="incoterm" value="FOB" checked class="accent-secondary" />
@@ -265,8 +265,8 @@
               </div>
 
               <div>
-                <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Additional Requirements or Sieve Specs</label>
-                <textarea rows="3" placeholder="Specify any custom EC parameters, pH requirements, chip mix percentage, or pallet sizing needs..." class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
+                <label for="contact-notes" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-1.5">Additional Requirements or Sieve Specs</label>
+                <textarea id="contact-notes" name="notes" rows="3" placeholder="Specify any custom EC parameters, pH requirements, chip mix percentage, or pallet sizing needs..." class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
               </div>
 
               <button type="submit" class="magnetic-btn mt-2 w-full py-4 px-6 rounded-xl bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-lg flex items-center justify-center gap-2">
@@ -275,10 +275,16 @@
               </button>
             </form>
 
-            <div id="form-success-banner" class="hidden p-6 rounded-xl bg-secondary/10 border border-secondary text-center flex-col items-center gap-2">
+            <div id="form-success-banner" class="hidden p-6 rounded-xl bg-secondary/10 border border-secondary text-center flex-col items-center gap-3">
               <span class="w-12 h-12 rounded-full bg-secondary text-white flex items-center justify-center font-bold text-xl">✓</span>
               <h3 class="font-headline-sm font-bold text-primary text-lg">Inquiry Successfully Transmitted!</h3>
               <p class="font-body-sm text-xs text-on-surface-variant max-w-md">Our global export desk has logged your request. A formal specification sheet and pro-forma invoice will be delivered to your email within 4 hours.</p>
+              <div class="px-4 py-2 rounded-lg bg-surface border border-surface-variant font-technical-code text-xs text-primary font-bold">
+                REF: <span id="contact-ref-id">CCE-EXP-2026-INQ</span>
+              </div>
+              <button type="button" id="contact-reset-btn" class="text-xs font-technical-code text-secondary hover:underline cursor-pointer">
+                Submit Another Inquiry
+              </button>
             </div>
           </div>
         </div>
@@ -316,7 +322,6 @@
             <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us &amp; Heritage</a></li>
             <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">6-Stage Manufacturing</a></li>
             <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability &amp; ESG</a></li>
-            <li></li>
             <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Facility Gallery</a></li>
           </ul>
         </div>
@@ -342,21 +347,9 @@
     </div>
   </footer>
 
-  <!-- RFQ Form Handling -->
-  <script>
-    const form = document.getElementById('contact-rfq-form');
-    const successBanner = document.getElementById('form-success-banner');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      form.style.display = 'none';
-      successBanner.classList.remove('hidden');
-      successBanner.classList.add('flex');
-    });
-  </script>
-
-  <!-- Master Experience Engine Script (Lenis, Reveals, Ambient Glow) -->
+  <!-- Master Experience Engine & CMS Bridge Scripts -->
   <script type="module" src="/scripts/app-experience.js"></script>
+  <script type="module" src="/scripts/cms-bridge.js"></script>
   <script type="module" src="/scripts/coco-chat.js"></script>
 </body>
 </html>

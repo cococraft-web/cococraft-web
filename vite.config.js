@@ -23,6 +23,7 @@ export default defineConfig({
         sustainability: resolve(import.meta.dirname, 'src/company/sustainability.html'),
         gallery: resolve(import.meta.dirname, 'src/company/gallery.html'),
         contact: resolve(import.meta.dirname, 'src/contact/contact.html'),
+        admin: resolve(import.meta.dirname, 'src/admin/index.html'),
       }
     }
   }

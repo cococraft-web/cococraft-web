@@ -500,20 +500,31 @@
 
           <!-- Ambient Industrial Visual Frame & Spec Overlay -->
           <div class="relative w-full rounded-xl overflow-hidden shadow-2xl bg-surface-container-lowest/5 mt-space-md hero-fade-up hero-delay-media">
-            <div class="relative w-full h-[400px] lg:h-[520px]">
-              <img class="w-full h-full object-cover brightness-90 contrast-105" data-alt="Cinematic shot of industrial coconut processing in Tamil Nadu." src="/assets/gallery/hydraulic-press.jpg"/>
-              <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent"></div>
+            <div class="relative w-full h-[320px] sm:h-[420px] lg:h-[520px]">
+              <video 
+                class="w-full h-full object-cover brightness-90 contrast-105" 
+                autoplay 
+                muted 
+                loop 
+                playsinline 
+                preload="metadata"
+                poster="/assets/gallery/hydraulic-press.jpg" 
+                aria-label="Coco Craft Exports Tamil Nadu Coir Manufacturing Process">
+                <source src="https://res.cloudinary.com/demo/video/upload/q_auto,f_auto,vc_h264/cococraft_manufacturing_cinematic.mp4" type="video/mp4" />
+                <img class="w-full h-full object-cover brightness-90 contrast-105" alt="Cinematic shot of industrial coconut processing in Tamil Nadu." src="/assets/gallery/hydraulic-press.jpg" width="1280" height="520" loading="eager" fetchpriority="high" />
+              </video>
+              <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent pointer-events-none"></div>
               
               <!-- Technical Metric Chip (Overlaid) -->
-              <div class="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row sm:items-center justify-between gap-space-md bg-primary-container/85 backdrop-blur-md p-space-md rounded-lg">
+              <div class="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-space-md bg-primary-container/90 backdrop-blur-md p-3 sm:p-space-md rounded-xl border border-white/10">
                 <div class="flex items-center gap-space-sm">
-                  <span class="material-symbols-outlined text-secondary-fixed">verified</span>
+                  <span class="material-symbols-outlined text-secondary-fixed text-xl shrink-0">verified</span>
                   <div class="flex flex-col">
-                    <span class="font-technical-code text-technical-code uppercase text-surface-variant tracking-wider">Substrate Specification Matrix</span>
-                    <span class="font-title-lg text-title-lg text-surface font-bold">ORIGIN: TAMIL NADU · EXPORT-READY SUBSTRATES · LOW EC / HIGH WATER RETENTION</span>
+                    <span class="font-technical-code text-[10px] sm:text-technical-code uppercase text-surface-variant tracking-wider">Substrate Specification Matrix</span>
+                    <span class="font-title-lg text-xs sm:text-sm lg:text-base text-surface font-bold leading-snug">ORIGIN: TAMIL NADU · EXPORT-READY SUBSTRATES · LOW EC / HIGH WATER RETENTION</span>
                   </div>
                 </div>
-                <div class="flex items-center gap-space-sm self-end sm:self-auto font-technical-code text-technical-code text-secondary-fixed">
+                <div class="flex items-center gap-space-sm self-start sm:self-auto font-technical-code text-xs text-secondary-fixed shrink-0">
                   <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
                   PORT DIRECT SHIPPING ACTIVE
                 </div>
@@ -521,12 +532,12 @@
             </div>
 
             <!-- Micro Metric Ticker -->
-            <div class="w-full bg-primary-container px-space-md py-3 flex flex-wrap items-center justify-between gap-space-sm font-technical-code text-technical-code text-surface-variant">
+            <div class="w-full bg-primary-container px-space-md py-3 flex flex-wrap items-center justify-between gap-space-sm font-technical-code text-xs text-surface-variant">
               <div class="flex items-center gap-2">
                 <span class="text-tertiary-fixed font-bold">01 / 06</span>
                 <span>Continuous Processing Pipeline</span>
               </div>
-              <div class="flex items-center gap-4">
+              <div class="flex flex-wrap items-center gap-2 sm:gap-4">
                 <span>Port: V.O. Chidambaranar (Tuticorin)</span>
                 <span>•</span>
                 <span>Ocean Transit: 40ft High Cube Ready</span>
@@ -602,7 +613,7 @@
       <section class="w-full py-space-3xl px-gutter lg:px-gutter-desktop bg-surface-container-low" id="products-section">
         <div class="max-w-7xl mx-auto flex flex-col gap-space-xl">
           <!-- Section Header -->
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
             <div class="flex flex-col gap-space-xs max-w-2xl">
               <span class="font-technical-code text-technical-code uppercase text-secondary font-bold tracking-widest">
                 ENGINEERED SUBSTRATES
@@ -614,120 +625,424 @@
                 High-performance horticultural growing media and raw industrial coir for international commercial growers.
               </p>
             </div>
-            <!-- Category Pill Tabs -->
-            <div class="flex flex-wrap gap-2">
-              <button class="px-4 py-2 rounded bg-primary text-on-primary font-technical-code text-technical-code uppercase shadow-sm">All Substrates</button>
-              <button class="px-4 py-2 rounded bg-surface-container text-on-surface-variant font-technical-code text-technical-code uppercase hover:bg-surface-container-highest transition-colors">Cocopeat Blocks</button>
-              <button class="px-4 py-2 rounded bg-surface-container text-on-surface-variant font-technical-code text-technical-code uppercase hover:bg-surface-container-highest transition-colors">Coir Grow Bags</button>
-              <button class="px-4 py-2 rounded bg-surface-container text-on-surface-variant font-technical-code text-technical-code uppercase hover:bg-surface-container-highest transition-colors">Husk Chips</button>
+            
+            <!-- Product Search Bar -->
+            <div class="relative w-full sm:w-80">
+              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none">search</span>
+              <input 
+                type="search" 
+                id="product-search-input" 
+                placeholder="Search products by title or specs..." 
+                class="w-full pl-9 pr-8 py-2.5 rounded-xl bg-surface border border-surface-variant text-xs font-technical-code text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary transition-all shadow-sm" 
+                aria-label="Search Products by title or specification" 
+              />
+              <button 
+                id="product-search-clear" 
+                type="button"
+                class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary text-xs font-bold" 
+                aria-label="Clear search query">
+                ✕
+              </button>
             </div>
           </div>
 
-          <!-- Asymmetric Grid -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
-            <!-- Hero Card 1 (Span 8 col) -->
-            <div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row gap-space-lg justify-between">
-              <div class="flex-1 flex flex-col justify-between gap-space-md">
-                <div class="flex flex-col gap-2">
-                  <span class="font-technical-code text-technical-code text-secondary font-bold uppercase">FLAGSHIP EXPORT GRADE</span>
-                  <h3 class="font-headline-md text-headline-md text-primary font-bold">5KG Cocopeat Compressed Blocks</h3>
-                  <p class="font-body-md text-body-md text-on-surface-variant">
+          <!-- Category Pill Tabs -->
+          <div class="flex flex-wrap items-center gap-2 pb-1 overflow-x-auto" role="tablist" aria-label="Product categories">
+            <button type="button" class="product-filter-btn active" data-category="all" role="tab" aria-selected="true">
+              All Products
+            </button>
+            <button type="button" class="product-filter-btn" data-category="Cocopeat Blocks" role="tab" aria-selected="false">
+              Cocopeat Blocks
+            </button>
+            <button type="button" class="product-filter-btn" data-category="Coir Grow Bags" role="tab" aria-selected="false">
+              Coir Grow Bags
+            </button>
+            <button type="button" class="product-filter-btn" data-category="Husk Chips" role="tab" aria-selected="false">
+              Husk Chips
+            </button>
+            <button type="button" class="product-filter-btn" data-category="Briquettes" role="tab" aria-selected="false">
+              Briquettes
+            </button>
+            <button type="button" class="product-filter-btn" data-category="Coir Fiber" role="tab" aria-selected="false">
+              Coir Fiber
+            </button>
+          </div>
+
+          <!-- Products Responsive Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="products-grid">
+            
+            <!-- Card 1: 5KG Blocks -->
+            <article class="product-card-item bg-surface-container-lowest rounded-2xl border border-surface-variant/80 hover:border-secondary/40 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group" data-category="Cocopeat Blocks" data-title="5KG Cocopeat Compressed Blocks 5kg coir pith blocks substrate">
+              <div>
+                <div class="w-full h-52 sm:h-56 overflow-hidden relative bg-surface-container">
+                  <img 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    src="/assets/products/5kg-block.jpg" 
+                    alt="5KG Cocopeat Compressed Blocks" 
+                    width="600" 
+                    height="400" 
+                    loading="lazy" 
+                  />
+                  <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-primary text-on-primary font-technical-code text-[11px] font-bold uppercase tracking-wider shadow">
+                    Cocopeat Blocks
+                  </span>
+                  <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-surface/90 text-secondary font-technical-code text-[10px] font-bold uppercase shadow-sm">
+                    Flagship Grade
+                  </span>
+                </div>
+                <div class="p-5 flex flex-col gap-3">
+                  <h3 class="font-headline-md text-xl sm:text-2xl text-primary font-bold group-hover:text-secondary transition-colors">
+                    5KG Cocopeat Compressed Blocks
+                  </h3>
+                  <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
                     Premium washed and unwashed coco peat pith compressed at a 5:1 ratio. Engineered for uniform water-holding capacity, optimal porosity, and minimal sodium/potassium displacement.
                   </p>
-                </div>
-                <!-- Specs Matrix -->
-                <div class="grid grid-cols-2 gap-3 p-space-sm bg-surface-container rounded-lg font-technical-code text-technical-code">
-                  <div>
-                    <span class="text-outline uppercase block text-[11px]">EC Rating:</span>
-                    <span class="text-primary font-bold">Low EC (&lt; 0.5 mS/cm)</span>
+                  
+                  <!-- Specs Matrix -->
+                  <div class="grid grid-cols-2 gap-2 p-3 bg-surface-container/70 rounded-xl font-technical-code text-[11px] border border-surface-variant/50">
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">EC Rating:</span>
+                      <span class="text-primary font-bold">Low EC (&lt; 0.5 mS/cm)</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Volume Yield:</span>
+                      <span class="text-secondary font-bold">~75 Litres Expanded</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">pH Level:</span>
+                      <span class="text-primary font-bold">5.5 – 6.8</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Packaging:</span>
+                      <span class="text-primary font-bold">Palletized / 24-26 MT</span>
+                    </div>
                   </div>
-                  <div>
-                    <span class="text-outline uppercase block text-[11px]">Volume Yield:</span>
-                    <span class="text-primary font-bold">~75 Litres Expanded</span>
-                  </div>
-                  <div>
-                    <span class="text-outline uppercase block text-[11px]">pH Level:</span>
-                    <span class="text-primary font-bold">5.5 – 6.8</span>
-                  </div>
-                  <div>
-                    <span class="text-outline uppercase block text-[11px]">Packaging:</span>
-                    <span class="text-primary font-bold">Palletized / 24-26 MT</span>
-                  </div>
-                </div>
-                <div class="flex items-center gap-space-md pt-2">
-                  <a class="px-4 py-2.5 rounded bg-primary text-on-primary font-technical-code text-technical-code uppercase hover:bg-primary-container transition-colors" href="#quote-section">
-                    INQUIRE BULK SPECS
-                  </a>
-                  <a class="font-technical-code text-technical-code font-bold text-primary hover:text-secondary" href="#quote-section">
-                    EXPLORE PRODUCT →
-                  </a>
                 </div>
               </div>
-              <div class="w-full md:w-64 h-64 md:h-auto rounded-lg overflow-hidden relative shadow-inner">
-                <img class="w-full h-full object-cover" data-alt="Studio product photograph of a dark brown 5kg compressed coir peat block alongside lush hydrated loose peat." src="/assets/products/5kg-block.jpg"/>
-              </div>
-            </div>
 
-            <!-- Card 2: Grow Bags (Span 4 col) -->
-            <div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
-              <div class="w-full h-48 rounded-lg overflow-hidden shadow-inner">
-                <img class="w-full h-full object-cover" data-alt="Hydroponic coir grow bags laid out inside a high-tech glass greenhouse." src="/assets/products/growbag-slab.jpg"/>
-              </div>
-              <div class="flex flex-col gap-2">
-                <span class="font-technical-code text-technical-code text-secondary font-bold uppercase">Commercial Greenhouse</span>
-                <h3 class="font-title-lg text-title-lg text-primary font-bold">Hydroponic Coir Grow Bags / Slabs</h3>
-                <p class="font-body-sm text-body-sm text-on-surface-variant">
-                  Pre-cut plant holes &amp; drainage slots. 100% natural organic medium customized with tailored coir-to-chip ratios for commercial greenhouse vine crops and berries.
-                </p>
-              </div>
-              <a class="font-technical-code text-technical-code font-bold text-primary hover:text-secondary" href="#quote-section">
-                VIEW SLAB OPTIONS →
-              </a>
-            </div>
-
-            <!-- Card 3: Husk Chips (Span 6 col) -->
-            <div class="lg:col-span-6 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row gap-space-md">
-              <div class="w-full md:w-44 h-44 rounded-lg overflow-hidden shrink-0 shadow-inner">
-                <img class="w-full h-full object-cover" data-alt="Detailed macro shot of uniformly cut coir husk chips showing airy granular texture." src="/assets/products/husk-chips.jpg"/>
-              </div>
-              <div class="flex flex-col justify-between gap-2">
-                <div>
-                  <span class="font-technical-code text-technical-code text-secondary font-bold uppercase">High Porosity Substrate</span>
-                  <h3 class="font-title-lg text-title-lg text-primary font-bold">Washed Coir Husk Chips &amp; 650g Briquettes</h3>
-                  <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                    High aeration ratio (30-40%), ideal porosity for orchid, anthurium, and potted plant cultivation. Sized to Small, Medium, and Large particle grading.
-                  </p>
-                </div>
-                <a class="font-technical-code text-technical-code font-bold text-primary hover:text-secondary" href="#quote-section">
-                  TECHNICAL DATA SHEET →
+              <div class="p-5 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-surface-variant/50 mt-2">
+                <a class="font-technical-code text-xs font-bold text-primary hover:text-secondary inline-flex items-center gap-1 transition-colors" href="/products/products.html#blocks">
+                  VIEW DETAILS →
+                </a>
+                <a class="px-3.5 py-2 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-sm" href="#quote-section">
+                  INQUIRE BULK SPECS
                 </a>
               </div>
-            </div>
+            </article>
 
-            <!-- Card 4: Raw Coir Fibre (Span 6 col) -->
-            <div class="lg:col-span-6 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row gap-space-md">
-              <div class="w-full md:w-44 h-44 rounded-lg overflow-hidden shrink-0 shadow-inner">
-                <img class="w-full h-full object-cover" data-alt="Hydraulic compressed golden brown natural coir fiber bales bound with rust-free straps." src="/assets/products/coir-fibre.jpg"/>
-              </div>
-              <div class="flex flex-col justify-between gap-2">
-                <div>
-                  <span class="font-technical-code text-technical-code text-secondary font-bold uppercase">Industrial Grade</span>
-                  <h3 class="font-title-lg text-title-lg text-primary font-bold">Raw Mattress &amp; Bristle Coir Fibre</h3>
-                  <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                    Mechanical decorticated long-strand fibers for upholstery padding, erosion-control geotextile logs, and horticultural twine manufacturing.
-                  </p>
+            <!-- Card 2: Grow Bags -->
+            <article class="product-card-item bg-surface-container-lowest rounded-2xl border border-surface-variant/80 hover:border-secondary/40 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group" data-category="Coir Grow Bags" data-title="Hydroponic Coir Grow Bags Slabs slabs greenhouse">
+              <div>
+                <div class="w-full h-52 sm:h-56 overflow-hidden relative bg-surface-container">
+                  <img 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    src="/assets/products/growbag-slab.jpg" 
+                    alt="Hydroponic Coir Grow Bags / Slabs" 
+                    width="600" 
+                    height="400" 
+                    loading="lazy" 
+                  />
+                  <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-primary text-on-primary font-technical-code text-[11px] font-bold uppercase tracking-wider shadow">
+                    Coir Grow Bags
+                  </span>
+                  <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-surface/90 text-secondary font-technical-code text-[10px] font-bold uppercase shadow-sm">
+                    Hydroponic Spec
+                  </span>
                 </div>
-                <a class="font-technical-code text-technical-code font-bold text-primary hover:text-secondary" href="#quote-section">
-                  EXPORT CONTAINER DETAILS →
+                <div class="p-5 flex flex-col gap-3">
+                  <h3 class="font-headline-md text-xl sm:text-2xl text-primary font-bold group-hover:text-secondary transition-colors">
+                    Hydroponic Coir Grow Bags / Slabs
+                  </h3>
+                  <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+                    Pre-cut plant holes &amp; drainage slots. 100% natural organic medium customized with tailored coir-to-chip ratios for commercial greenhouse vine crops and berries.
+                  </p>
+                  
+                  <!-- Specs Matrix -->
+                  <div class="grid grid-cols-2 gap-2 p-3 bg-surface-container/70 rounded-xl font-technical-code text-[11px] border border-surface-variant/50">
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Dimensions:</span>
+                      <span class="text-primary font-bold">100 x 15 x 12 cm</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Substrate Blend:</span>
+                      <span class="text-secondary font-bold">70/30 Pith/Chips</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">UV Resistance:</span>
+                      <span class="text-primary font-bold">3+ Years Guaranteed</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Drainage:</span>
+                      <span class="text-primary font-bold">Pre-Drilled Custom</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-surface-variant/50 mt-2">
+                <a class="font-technical-code text-xs font-bold text-primary hover:text-secondary inline-flex items-center gap-1 transition-colors" href="/products/products.html#grow-bags">
+                  VIEW DETAILS →
+                </a>
+                <a class="px-3.5 py-2 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-sm" href="#quote-section">
+                  INQUIRE BULK SPECS
                 </a>
               </div>
+            </article>
+
+            <!-- Card 3: Husk Chips -->
+            <article class="product-card-item bg-surface-container-lowest rounded-2xl border border-surface-variant/80 hover:border-secondary/40 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group" data-category="Husk Chips" data-title="Washed Coir Husk Chips coconut husk chips crushed orchid mulch">
+              <div>
+                <div class="w-full h-52 sm:h-56 overflow-hidden relative bg-surface-container">
+                  <img 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    src="/assets/products/husk-chips.jpg" 
+                    alt="Washed Coir Husk Chips" 
+                    width="600" 
+                    height="400" 
+                    loading="lazy" 
+                  />
+                  <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-primary text-on-primary font-technical-code text-[11px] font-bold uppercase tracking-wider shadow">
+                    Husk Chips
+                  </span>
+                  <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-surface/90 text-secondary font-technical-code text-[10px] font-bold uppercase shadow-sm">
+                    High Aeration
+                  </span>
+                </div>
+                <div class="p-5 flex flex-col gap-3">
+                  <h3 class="font-headline-md text-xl sm:text-2xl text-primary font-bold group-hover:text-secondary transition-colors">
+                    Washed Coir Husk Chips
+                  </h3>
+                  <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+                    Uniformly cut and screened cubes of natural coconut husk. High aeration ratio (30-40%), ideal porosity for orchid, anthurium, and potted plant cultivation.
+                  </p>
+                  
+                  <!-- Specs Matrix -->
+                  <div class="grid grid-cols-2 gap-2 p-3 bg-surface-container/70 rounded-xl font-technical-code text-[11px] border border-surface-variant/50">
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Chip Grading:</span>
+                      <span class="text-primary font-bold">Small / Med / Large</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">EC Level:</span>
+                      <span class="text-secondary font-bold">&lt; 0.5 mS/cm Washed</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Air Porosity:</span>
+                      <span class="text-primary font-bold">35% – 45%</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Packaging:</span>
+                      <span class="text-primary font-bold">5kg Block / 25kg Bale</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-surface-variant/50 mt-2">
+                <a class="font-technical-code text-xs font-bold text-primary hover:text-secondary inline-flex items-center gap-1 transition-colors" href="/products/products.html#chips">
+                  VIEW DETAILS →
+                </a>
+                <a class="px-3.5 py-2 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-sm" href="#quote-section">
+                  INQUIRE BULK SPECS
+                </a>
+              </div>
+            </article>
+
+            <!-- Card 4: Briquettes -->
+            <article class="product-card-item bg-surface-container-lowest rounded-2xl border border-surface-variant/80 hover:border-secondary/40 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group" data-category="Briquettes" data-title="650g Compressed Coir Briquettes compact bricks retail">
+              <div>
+                <div class="w-full h-52 sm:h-56 overflow-hidden relative bg-surface-container">
+                  <img 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    src="/assets/products/650g-briquette.jpg" 
+                    alt="650g Compressed Coir Briquettes" 
+                    width="600" 
+                    height="400" 
+                    loading="lazy" 
+                  />
+                  <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-primary text-on-primary font-technical-code text-[11px] font-bold uppercase tracking-wider shadow">
+                    Briquettes
+                  </span>
+                  <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-surface/90 text-secondary font-technical-code text-[10px] font-bold uppercase shadow-sm">
+                    Retail &amp; Nursery
+                  </span>
+                </div>
+                <div class="p-5 flex flex-col gap-3">
+                  <h3 class="font-headline-md text-xl sm:text-2xl text-primary font-bold group-hover:text-secondary transition-colors">
+                    650g Compressed Coir Briquettes
+                  </h3>
+                  <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+                    Compact, highly portable 650g compressed coco pith bricks designed for retail distribution, home gardening, and seedling propagation. Rehydrates quickly to 9–10 liters.
+                  </p>
+                  
+                  <!-- Specs Matrix -->
+                  <div class="grid grid-cols-2 gap-2 p-3 bg-surface-container/70 rounded-xl font-technical-code text-[11px] border border-surface-variant/50">
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Unit Weight:</span>
+                      <span class="text-primary font-bold">650g (± 50g)</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Yield / Brick:</span>
+                      <span class="text-secondary font-bold">9 – 10 Liters</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">EC Level:</span>
+                      <span class="text-primary font-bold">&lt; 0.5 mS/cm Washed</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Packaging:</span>
+                      <span class="text-primary font-bold">Individually Wrapped</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-surface-variant/50 mt-2">
+                <a class="font-technical-code text-xs font-bold text-primary hover:text-secondary inline-flex items-center gap-1 transition-colors" href="/products/products.html#briquettes">
+                  VIEW DETAILS →
+                </a>
+                <a class="px-3.5 py-2 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-sm" href="#quote-section">
+                  INQUIRE BULK SPECS
+                </a>
+              </div>
+            </article>
+
+            <!-- Card 5: Coir Fibre Bales -->
+            <article class="product-card-item bg-surface-container-lowest rounded-2xl border border-surface-variant/80 hover:border-secondary/40 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group" data-category="Coir Fiber" data-title="Raw Mattress & Bristle Coir Fibre bales decorticated upholstery">
+              <div>
+                <div class="w-full h-52 sm:h-56 overflow-hidden relative bg-surface-container">
+                  <img 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    src="/assets/products/coir-fibre.jpg" 
+                    alt="Raw Mattress &amp; Bristle Coir Fibre" 
+                    width="600" 
+                    height="400" 
+                    loading="lazy" 
+                  />
+                  <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-primary text-on-primary font-technical-code text-[11px] font-bold uppercase tracking-wider shadow">
+                    Coir Fiber
+                  </span>
+                  <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-surface/90 text-secondary font-technical-code text-[10px] font-bold uppercase shadow-sm">
+                    Industrial Bales
+                  </span>
+                </div>
+                <div class="p-5 flex flex-col gap-3">
+                  <h3 class="font-headline-md text-xl sm:text-2xl text-primary font-bold group-hover:text-secondary transition-colors">
+                    Raw Mattress &amp; Bristle Coir Fibre
+                  </h3>
+                  <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+                    Long, resilient golden brown coconut fibers extracted through clean mechanical decortication. Hydraulically baled under 120-ton pressure for mattress cores, auto seating, and twine.
+                  </p>
+                  
+                  <!-- Specs Matrix -->
+                  <div class="grid grid-cols-2 gap-2 p-3 bg-surface-container/70 rounded-xl font-technical-code text-[11px] border border-surface-variant/50">
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Fibre Length:</span>
+                      <span class="text-primary font-bold">10cm – 25cm Bristle</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Moisture Max:</span>
+                      <span class="text-secondary font-bold">&lt; 15% Screened</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Impurity:</span>
+                      <span class="text-primary font-bold">&lt; 3% Screened</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Bale Packaging:</span>
+                      <span class="text-primary font-bold">120kg – 150kg Strapped</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-surface-variant/50 mt-2">
+                <a class="font-technical-code text-xs font-bold text-primary hover:text-secondary inline-flex items-center gap-1 transition-colors" href="/products/products.html#fibre">
+                  VIEW DETAILS →
+                </a>
+                <a class="px-3.5 py-2 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-sm" href="#quote-section">
+                  INQUIRE BULK SPECS
+                </a>
+              </div>
+            </article>
+
+            <!-- Card 6: Coir Geotextiles -->
+            <article class="product-card-item bg-surface-container-lowest rounded-2xl border border-surface-variant/80 hover:border-secondary/40 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden group" data-category="Coir Fiber" data-title="Coir Geotextile Netting & Erosion Blankets mesh matting erosion control">
+              <div>
+                <div class="w-full h-52 sm:h-56 overflow-hidden relative bg-surface-container">
+                  <img 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    src="/assets/products/coir-geotextiles.jpg" 
+                    alt="Coir Geotextile Netting &amp; Erosion Blankets" 
+                    width="600" 
+                    height="400" 
+                    loading="lazy" 
+                  />
+                  <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-primary text-on-primary font-technical-code text-[11px] font-bold uppercase tracking-wider shadow">
+                    Coir Fiber
+                  </span>
+                  <span class="absolute top-3 right-3 px-2 py-0.5 rounded bg-surface/90 text-secondary font-technical-code text-[10px] font-bold uppercase shadow-sm">
+                    Erosion Control
+                  </span>
+                </div>
+                <div class="p-5 flex flex-col gap-3">
+                  <h3 class="font-headline-md text-xl sm:text-2xl text-primary font-bold group-hover:text-secondary transition-colors">
+                    Coir Geotextile Netting &amp; Erosion Blankets
+                  </h3>
+                  <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant leading-relaxed line-clamp-3">
+                    100% natural, biodegradable woven coir mesh matting engineered for steep slope stabilization, highway embankments, and riverbank restoration with 3–5 years lifespan.
+                  </p>
+                  
+                  <!-- Specs Matrix -->
+                  <div class="grid grid-cols-2 gap-2 p-3 bg-surface-container/70 rounded-xl font-technical-code text-[11px] border border-surface-variant/50">
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Mesh Weight:</span>
+                      <span class="text-primary font-bold">400g / 700g / 900g</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Dimensions:</span>
+                      <span class="text-secondary font-bold">2m Width x 50m Roll</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Degradation:</span>
+                      <span class="text-primary font-bold">3 – 5 Years Lifespan</span>
+                    </div>
+                    <div>
+                      <span class="text-outline uppercase block text-[10px]">Tensile:</span>
+                      <span class="text-primary font-bold">High Wet &amp; Dry</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-5 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-surface-variant/50 mt-2">
+                <a class="font-technical-code text-xs font-bold text-primary hover:text-secondary inline-flex items-center gap-1 transition-colors" href="/products/products.html#geotextiles">
+                  VIEW DETAILS →
+                </a>
+                <a class="px-3.5 py-2 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-sm" href="#quote-section">
+                  INQUIRE BULK SPECS
+                </a>
+              </div>
+            </article>
+
+            <!-- Empty Filter State -->
+            <div id="product-empty-state" class="hidden col-span-full py-12 px-6 text-center flex-col items-center justify-center gap-3 bg-surface-container rounded-2xl border border-surface-variant">
+              <span class="material-symbols-outlined text-4xl text-outline">search_off</span>
+              <h4 class="font-headline-sm text-lg font-bold text-primary">No products match your current filter</h4>
+              <p class="font-body-sm text-on-surface-variant text-xs max-w-md">
+                We manufacture bespoke substrate blends and custom compression dimensions. Try resetting your filter or searching for another term.
+              </p>
+              <button id="product-reset-filter-btn" type="button" class="mt-2 px-5 py-2 rounded-lg bg-secondary text-on-secondary font-technical-code text-xs uppercase font-bold hover:bg-secondary/90 transition-all shadow-sm">
+                Reset Filter &amp; Show All Products
+              </button>
             </div>
+
           </div>
 
           <!-- Bottom CTA Banner -->
-          <div class="w-full p-space-md rounded-lg bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-md">
+          <div class="w-full p-space-md rounded-lg bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-md border border-surface-variant/60">
             <span class="font-technical-code text-technical-code text-on-surface-variant">Looking for customized substrate blends (70/30, 60/40 Coir Pith to Chip)?</span>
-            <a class="font-technical-code text-technical-code font-bold text-secondary uppercase hover:underline" href="#quote-section">
+            <a class="font-technical-code text-technical-code font-bold text-secondary uppercase hover:underline" href="/products/products.html">
               VIEW FULL SPECIFICATION CATALOGUE →
             </a>
           </div>
@@ -1956,10 +2271,10 @@
           <!-- Media Player Container -->
           <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-primary">
             <div class="relative w-full h-[400px] lg:h-[560px]">
-              <img class="w-full h-full object-cover opacity-80" data-alt="Cinematic still of an engineer inspecting freshly compressed coco coir blocks." src="/assets/gallery/pallet-shipping.jpg"/>
+              <img class="w-full h-full object-cover opacity-80" alt="Cinematic still of an engineer inspecting freshly compressed coco coir blocks." src="/assets/gallery/pallet-shipping.jpg" width="1280" height="560" loading="lazy" />
               <div class="absolute inset-0 bg-primary/40 flex items-center justify-center">
                 <!-- Large Industrial Play Action -->
-                <button class="w-20 h-20 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-xl hover:scale-105 transition-transform group" aria-label="Play Walkthrough Video">
+                <button id="play-walkthrough-btn" type="button" class="w-20 h-20 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-xl hover:scale-105 transition-transform group" aria-label="Play Walkthrough Video">
                   <span class="material-symbols-outlined text-4xl group-hover:text-surface-bright">play_arrow</span>
                 </button>
               </div>
@@ -2016,7 +2331,7 @@
             <div class="flex flex-col gap-space-md">
               <div class="flex items-center gap-space-xs">
                 <div class="bg-surface p-2.5 rounded-lg inline-block shadow-md">
-                  <img alt="Coco Craft Exports Official Logo" class="h-10 w-auto object-contain" src="/assets/logo/coco-craft-exports-official.png"/>
+                  <img alt="Coco Craft Exports Official Logo" class="h-10 w-auto object-contain" src="/assets/logo/coco-craft-exports-official.png" width="160" height="40"/>
                 </div>
               </div>
               <h2 class="font-headline-lg text-headline-lg text-surface font-extrabold tracking-tight mt-2">
@@ -2062,7 +2377,25 @@
 
           <!-- Right Column: Clean Interactive RFQ Form -->
           <div class="lg:col-span-7 bg-surface-container-lowest text-on-surface rounded-2xl p-space-lg lg:p-space-xl shadow-2xl">
-            <form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); alert('Quotation request submitted to Coco Craft Exports Export Desk. A trade representative will reach out within 24 business hours.');">
+            
+            <!-- Success Confirmation Banner -->
+            <div id="quote-success-banner" class="hidden flex-col items-center justify-center p-8 bg-surface-container rounded-xl border border-secondary/30 text-center gap-4">
+              <div class="w-14 h-14 rounded-full bg-secondary/15 text-secondary flex items-center justify-center text-3xl font-bold">
+                <span class="material-symbols-outlined text-3xl">verified</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="font-technical-code text-xs uppercase text-secondary font-bold tracking-wider">Requisition Dispatched</span>
+                <h3 class="font-headline-sm text-2xl font-bold text-primary">Commercial Quotation Initiated</h3>
+                <p class="font-body-sm text-xs sm:text-sm text-on-surface-variant max-w-md mt-1 leading-relaxed">
+                  Your container inquiry has been logged under Reference ID: <strong class="text-primary font-mono font-bold">CCE-REQ-2026</strong>. Our international trade desk in Tamil Nadu will issue pro-forma documentation within 24 business hours.
+                </p>
+              </div>
+              <button id="quote-reset-btn" type="button" class="mt-2 px-6 py-2.5 rounded-lg bg-primary text-on-primary font-technical-code text-xs uppercase font-bold hover:bg-primary-container transition-all shadow-sm">
+                Submit Another Requisition
+              </button>
+            </div>
+
+            <form id="rfq-quote-form" class="flex flex-col gap-space-md">
               <div class="flex flex-col gap-1 border-b border-surface-variant pb-3">
                 <span class="font-technical-code text-technical-code text-secondary font-bold uppercase">B2B Commercial Requisition</span>
                 <h3 class="font-title-lg text-title-lg text-primary font-bold">Request a Formal Container Quotation</h3>
@@ -2072,41 +2405,47 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
                 <!-- Full Name -->
                 <div class="flex flex-col gap-1.5">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Full Name *</label>
-                  <input class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" placeholder="e.g. Thomas Lindqvist" required="" type="text"/>
+                  <label for="quote-fullname" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Full Name *</label>
+                  <input id="quote-fullname" name="fullname" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner" placeholder="e.g. Thomas Lindqvist" required="" type="text"/>
                 </div>
-                <!-- Company Name & Country -->
+                <!-- Company Name -->
                 <div class="flex flex-col gap-1.5">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Company Name &amp; Country *</label>
-                  <input class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" placeholder="e.g. Nordic Agtech BV, Netherlands" required="" type="text"/>
+                  <label for="quote-company" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Company Name *</label>
+                  <input id="quote-company" name="company" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner" placeholder="e.g. Nordic Agtech BV" required="" type="text"/>
+                </div>
+                <!-- Destination Country -->
+                <div class="flex flex-col gap-1.5">
+                  <label for="quote-country" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Destination Country *</label>
+                  <input id="quote-country" name="country" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner" placeholder="e.g. Netherlands / United States" required="" type="text"/>
                 </div>
                 <!-- Business Email -->
                 <div class="flex flex-col gap-1.5">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Business Email *</label>
-                  <input class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" placeholder="t.lindqvist@agritech.nl" required="" type="email"/>
+                  <label for="quote-email" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Business Email *</label>
+                  <input id="quote-email" name="email" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner" placeholder="t.lindqvist@agritech.nl" required="" type="email"/>
                 </div>
                 <!-- Phone / WhatsApp -->
                 <div class="flex flex-col gap-1.5">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Phone / WhatsApp *</label>
-                  <input class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" placeholder="+31 6 12345678" required="" type="tel"/>
+                  <label for="quote-phone" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Phone / WhatsApp *</label>
+                  <input id="quote-phone" name="phone" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner" placeholder="+31 6 12345678" required="" type="tel"/>
                 </div>
                 <!-- Product Interest -->
                 <div class="flex flex-col gap-1.5">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Product Interest *</label>
-                  <select class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner">
+                  <label for="quote-product" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Product Interest *</label>
+                  <select id="quote-product" name="product" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner">
                     <option value="5kg">Cocopeat 5KG Compressed Blocks</option>
                     <option value="growbags">Hydroponic Coir Grow Bags / Slabs</option>
                     <option value="chips">Washed Coir Husk Chips (S/M/L)</option>
                     <option value="briquettes">650g Compact Briquettes</option>
                     <option value="fibre">Decorticated Coir Fibre Bales</option>
+                    <option value="geotextiles">Coir Geotextiles &amp; Erosion Blankets</option>
                     <option value="custom">Custom Horticultural Blend</option>
                   </select>
                 </div>
-                <!-- Volume Required -->
-                <div class="flex flex-col gap-1.5">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Target Volume *</label>
-                  <select class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner">
-                    <option value="1fcl">1 x 40ft HC Container (~26 MT)</option>
+                <!-- Target Volume -->
+                <div class="flex flex-col gap-1.5 sm:col-span-2">
+                  <label for="quote-volume" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Target Quantity / Volume *</label>
+                  <select id="quote-volume" name="volume" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner">
+                    <option value="1fcl">1 x 40ft HC Container (~24–26 MT)</option>
                     <option value="multi-fcl">2 to 5 x 40ft HC Containers</option>
                     <option value="contract">Annual Volume Contract (&gt; 10 FCL)</option>
                     <option value="sample">Trial Commercial Sample Pallet</option>
@@ -2114,7 +2453,7 @@
                 </div>
                 <!-- Target Incoterms -->
                 <div class="flex flex-col gap-1.5 sm:col-span-2">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Target Shipping Incoterms</label>
+                  <span class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Target Shipping Incoterms</span>
                   <div class="grid grid-cols-3 gap-2">
                     <label class="flex items-center gap-2 p-2.5 rounded bg-surface-container cursor-pointer font-technical-code text-technical-code">
                       <input checked="" class="accent-secondary" name="incoterm" type="radio" value="FOB"/>
@@ -2122,7 +2461,7 @@
                     </label>
                     <label class="flex items-center gap-2 p-2.5 rounded bg-surface-container cursor-pointer font-technical-code text-technical-code">
                       <input class="accent-secondary" name="incoterm" type="radio" value="CIF"/>
-                      <span>CIF (Destination)</span>
+                      <span>CIF (Port)</span>
                     </label>
                     <label class="flex items-center gap-2 p-2.5 rounded bg-surface-container cursor-pointer font-technical-code text-technical-code">
                       <input class="accent-secondary" name="incoterm" type="radio" value="CFR"/>
@@ -2132,8 +2471,8 @@
                 </div>
                 <!-- Project Details / Specifications -->
                 <div class="flex flex-col gap-1.5 sm:col-span-2">
-                  <label class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Custom Specifications or Destination Port</label>
-                  <textarea class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" placeholder="Specify destination port (e.g. Rotterdam, Hamburg, Long Beach), required EC level, sieve size, or packaging preferences..." rows="3"></textarea>
+                  <label for="quote-message" class="font-technical-code text-technical-code font-bold uppercase text-on-surface-variant">Message &amp; Custom Specifications</label>
+                  <textarea id="quote-message" name="message" class="w-full px-4 py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-secondary shadow-inner" placeholder="Specify destination port (e.g. Rotterdam, Hamburg, Long Beach), required EC level, sieve size, or packaging preferences..." rows="3"></textarea>
                 </div>
               </div>
 
@@ -2222,11 +2561,11 @@
       <div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm font-body-sm text-body-sm text-on-surface-variant">
         <p>© Coco Craft Exports Pvt Ltd. All rights reserved.</p>
         <div class="flex items-center gap-space-md font-technical-code text-technical-code">
-          <a class="hover:text-primary transition-colors" data-path="legal" href="#">Privacy Policy</a>
+          <a class="hover:text-primary transition-colors" data-path="legal" href="/contact/contact.html">Privacy Policy</a>
           <span>•</span>
-          <a class="hover:text-primary transition-colors" data-path="legal" href="#">Terms of Trade (Incoterms 2020)</a>
+          <a class="hover:text-primary transition-colors" data-path="legal" href="/contact/contact.html">Terms of Trade (Incoterms 2020)</a>
           <span>•</span>
-          <a class="hover:text-primary transition-colors" data-path="compliance" href="#">Phytosanitary Specs</a>
+          <a class="hover:text-primary transition-colors" data-path="compliance" href="/contact/contact.html">Phytosanitary Specs</a>
         </div>
       </div>
     </div>
@@ -2428,6 +2767,7 @@
     })();
   </script>
   <script type="module" src="/scripts/app-experience.js"></script>
+  <script type="module" src="/scripts/cms-bridge.js"></script>
   <script type="module" src="/scripts/coco-chat.js"></script>
 </body>
 </html>

@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin CMS Terminal | Coco Craft Exports</title>
+  
+  <link rel="icon" type="image/svg+xml" href="/assets/logo/coco-craft-logo.svg" />
+  
+  <!-- Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <!-- Main Stylesheets -->
+  <link rel="stylesheet" href="/styles/main.css"/>
+  <link rel="stylesheet" href="/admin/admin.css"/>
+</head>
+<body class="admin-body min-h-screen bg-[#F4F6F3] text-[#181D19]">
+
+  <!-- ==========================================
+       1. AUTHENTICATION VIEW (Protected State)
+       ========================================== -->
+  <div id="auth-view" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1C211D]/80 backdrop-blur-md">
+    <div class="w-full max-w-md bg-white rounded-2xl border border-surface-variant p-8 sm:p-10 shadow-2xl flex flex-col gap-6">
+      
+      <!-- Brand Header -->
+      <div class="flex flex-col items-center text-center gap-3">
+        <img src="/assets/logo/coco-craft-exports-official.png" alt="Coco Craft Exports Logo" class="h-16 w-auto object-contain" />
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00742F]/10 border border-[#00742F]/20 text-[#00742F] font-mono text-xs font-bold uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-[#00742F] animate-ping"></span>
+            SECURE CMS TERMINAL
+          </span>
+          <h1 class="text-2xl font-bold text-primary font-headings mt-2">Administrative Sign In</h1>
+          <p class="text-xs text-on-surface-variant mt-1">Authenticate with your administrative credentials to manage public website content, products, and enquiries.</p>
+        </div>
+      </div>
+
+      <!-- Error Banner -->
+      <div id="auth-error-banner" class="hidden p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-start gap-2.5">
+        <span class="material-symbols-outlined text-base shrink-0 mt-0.5">error</span>
+        <span id="auth-error-text">Authentication failed.</span>
+      </div>
+
+      <!-- Sign In Form -->
+      <form id="admin-login-form" class="flex flex-col gap-4 text-xs font-medium">
+        <div>
+          <label for="login-email" class="block font-mono uppercase text-on-surface-variant mb-1.5">Admin Email *</label>
+          <input type="email" id="login-email" required placeholder="admin@cococraftexports.com" autocomplete="email" class="w-full p-3.5 rounded-xl bg-surface border border-surface-variant text-sm font-sans focus:border-secondary focus:outline-none" />
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="login-password" class="font-mono uppercase text-on-surface-variant">Password *</label>
+          </div>
+          <input type="password" id="login-password" required placeholder="••••••••••••" autocomplete="current-password" class="w-full p-3.5 rounded-xl bg-surface border border-surface-variant text-sm font-sans focus:border-secondary focus:outline-none" />
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="login-remember" checked class="w-4 h-4 rounded text-secondary accent-[#00742F] cursor-pointer" />
+          <label for="login-remember" class="text-xs text-on-surface-variant cursor-pointer select-none">Remember this session</label>
+        </div>
+
+        <button type="submit" id="login-submit-btn" class="mt-2 w-full py-3.5 px-4 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold tracking-wider hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-md">
+          <span id="login-btn-text">ACCESS DASHBOARD</span>
+          <span class="material-symbols-outlined text-sm">lock_open</span>
+        </button>
+      </form>
+
+      <!-- Security Notice -->
+      <div class="pt-4 border-t border-surface-variant text-[11px] text-center text-on-surface-variant">
+        Protected by Firebase Authentication &amp; Firestore Security Rules.
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       2. MAIN DASHBOARD APPLICATION LAYOUT
+       ========================================== -->
+  <div id="app-view" class="hidden min-h-screen flex flex-col xl:flex-row">
+
+    <!-- Mobile Drawer Overlay -->
+    <div id="sidebar-backdrop" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden xl:hidden"></div>
+
+    <!-- ==========================================
+         SIDEBAR NAVIGATION
+         ========================================== -->
+    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-[#E2E6E0] flex flex-col justify-between -translate-x-full xl:translate-x-0 transition-transform duration-200 ease-in-out">
+      
+      <!-- Top Brand & Header -->
+      <div class="flex flex-col">
+        <div class="h-20 px-6 border-b border-[#E2E6E0] flex items-center justify-between">
+          <a href="/admin/index.html" class="flex items-center gap-3">
+            <img src="/assets/logo/coco-craft-logo.svg" alt="Coco Craft Logo" class="h-9 w-auto object-contain" />
+            <div class="sidebar-text flex flex-col">
+              <span class="font-bold text-sm tracking-tight text-primary font-headings leading-none">COCO CRAFT</span>
+              <span class="font-mono text-[10px] uppercase text-secondary font-bold tracking-widest mt-1">CMS TERMINAL</span>
+            </div>
+          </a>
+          <button id="sidebar-close-btn" class="xl:hidden p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container">
+            <span class="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+
+        <!-- Scrollable Navigation Items -->
+        <nav class="p-4 flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-140px)] admin-custom-scroll text-xs">
+          
+          <span class="sidebar-heading px-3 pt-2 pb-1 font-mono uppercase text-[10px] text-on-surface-variant/70 font-bold tracking-wider">CORE</span>
+          
+          <button data-section="dashboard" class="sidebar-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">dashboard</span>
+            <span class="sidebar-text">Dashboard</span>
+          </button>
+
+          <span class="sidebar-heading px-3 pt-3 pb-1 font-mono uppercase text-[10px] text-on-surface-variant/70 font-bold tracking-wider">CATALOGUE</span>
+
+          <button data-section="products" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">inventory_2</span>
+            <span class="sidebar-text">Products</span>
+          </button>
+
+          <button data-section="categories" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">category</span>
+            <span class="sidebar-text">Categories</span>
+          </button>
+
+          <span class="sidebar-heading px-3 pt-3 pb-1 font-mono uppercase text-[10px] text-on-surface-variant/70 font-bold tracking-wider">MEDIA ASSETS</span>
+
+          <button data-section="media" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">perm_media</span>
+            <span class="sidebar-text">Media Library</span>
+          </button>
+
+          <button data-section="videos" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">videocam</span>
+            <span class="sidebar-text">Videos</span>
+          </button>
+
+          <button data-section="gallery" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">photo_library</span>
+            <span class="sidebar-text">Facility Gallery</span>
+          </button>
+
+          <span class="sidebar-heading px-3 pt-3 pb-1 font-mono uppercase text-[10px] text-on-surface-variant/70 font-bold tracking-wider">PAGE CONTENT</span>
+
+          <button data-section="website" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">web</span>
+            <span class="sidebar-text">Website Content</span>
+          </button>
+
+          <button data-section="applications" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">potted_plant</span>
+            <span class="sidebar-text">Applications</span>
+          </button>
+
+          <button data-section="manufacturing" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">precision_manufacturing</span>
+            <span class="sidebar-text">Manufacturing</span>
+          </button>
+
+          <button data-section="sustainability" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">eco</span>
+            <span class="sidebar-text">Sustainability</span>
+          </button>
+
+          <button data-section="global" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">public</span>
+            <span class="sidebar-text">Global Reach</span>
+          </button>
+
+          <button data-section="quality" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">verified</span>
+            <span class="sidebar-text">Quality &amp; Standards</span>
+          </button>
+
+          <button data-section="certifications" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">workspace_premium</span>
+            <span class="sidebar-text">Certifications</span>
+          </button>
+
+          <span class="sidebar-heading px-3 pt-3 pb-1 font-mono uppercase text-[10px] text-on-surface-variant/70 font-bold tracking-wider">PROCUREMENT</span>
+
+          <button data-section="enquiries" class="sidebar-item w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-lg">forward_to_inbox</span>
+              <span class="sidebar-text">Enquiries / RFQ</span>
+            </div>
+            <span id="sidebar-enquiry-badge" class="hidden px-2 py-0.5 rounded-full bg-[#00742F] text-white font-mono text-[10px] font-bold">0</span>
+          </button>
+
+          <span class="sidebar-heading px-3 pt-3 pb-1 font-mono uppercase text-[10px] text-on-surface-variant/70 font-bold tracking-wider">SYSTEM</span>
+
+          <button data-section="seo" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">search</span>
+            <span class="sidebar-text">SEO Management</span>
+          </button>
+
+          <button data-section="settings" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">settings</span>
+            <span class="sidebar-text">Settings &amp; Sync</span>
+          </button>
+
+          <button data-section="audit" class="sidebar-item w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-on-surface-variant hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-lg">history</span>
+            <span class="sidebar-text">Audit Log</span>
+          </button>
+
+        </nav>
+      </div>
+
+      <!-- Bottom User / Logout Bar -->
+      <div class="p-4 border-t border-[#E2E6E0] flex items-center justify-between bg-surface-container-low/50">
+        <div class="flex items-center gap-2.5 overflow-hidden">
+          <div class="w-8 h-8 rounded-full bg-primary text-secondary-fixed flex items-center justify-center font-bold text-xs shrink-0">
+            A
+          </div>
+          <div class="sidebar-text flex flex-col overflow-hidden">
+            <span id="admin-user-display" class="font-bold text-xs text-primary truncate">Admin User</span>
+            <span class="text-[10px] text-on-surface-variant">Administrator</span>
+          </div>
+        </div>
+        <button id="admin-logout-btn" title="Sign Out" class="p-2 rounded-lg text-on-surface-variant hover:text-red-700 hover:bg-red-50 transition-colors">
+          <span class="material-symbols-outlined text-lg">logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==========================================
+         TOP HEADER & MAIN CONTENT WRAPPER
+         ========================================== -->
+    <div class="flex-1 xl:ml-64 flex flex-col min-w-0">
+
+      <!-- Top Header -->
+      <header class="h-20 bg-white border-b border-[#E2E6E0] px-6 lg:px-10 flex items-center justify-between sticky top-0 z-30">
+        <div class="flex items-center gap-4">
+          <button id="sidebar-toggle-btn" class="xl:hidden p-2 rounded-lg text-primary hover:bg-surface-container">
+            <span class="material-symbols-outlined text-2xl">menu</span>
+          </button>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="text-on-surface-variant">TERMINAL</span>
+            <span class="text-on-surface-variant/40">/</span>
+            <span id="header-breadcrumb" class="font-bold text-primary uppercase">DASHBOARD</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Preview Public Website Button -->
+          <a href="/" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary border border-surface-variant text-xs font-mono font-semibold transition-all">
+            <span>PREVIEW LIVE SITE</span>
+            <span class="material-symbols-outlined text-sm">open_in_new</span>
+          </a>
+
+          <!-- Live Firebase Connection Indicator -->
+          <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#00742F]/10 border border-[#00742F]/20 text-[#00742F] font-mono text-[11px] font-bold">
+            <span class="w-2 h-2 rounded-full bg-[#00742F]"></span>
+            <span>FIRESTORE SYNCED</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Body Container -->
+      <main class="flex-1 p-6 lg:p-10 max-w-7xl w-full mx-auto flex flex-col gap-8">
+
+        <!-- ==========================================
+             SECTION 1: DASHBOARD OVERVIEW
+             ========================================== -->
+        <section id="section-dashboard" class="cms-section flex flex-col gap-8">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-2xl font-bold font-headings text-primary">Operational Overview</h2>
+            <p class="text-xs text-on-surface-variant">Live summary of product catalogue, media assets, and incoming international procurement enquiries.</p>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            
+            <div class="admin-card p-5 flex flex-col gap-2">
+              <span class="font-mono text-[11px] uppercase text-on-surface-variant">Total Products</span>
+              <span id="stat-total-products" class="text-3xl font-extrabold text-primary font-headings">6</span>
+              <span class="text-[10px] text-secondary font-mono">In catalogue</span>
+            </div>
+
+            <div class="admin-card p-5 flex flex-col gap-2">
+              <span class="font-mono text-[11px] uppercase text-on-surface-variant">Active Export</span>
+              <span id="stat-active-products" class="text-3xl font-extrabold text-secondary font-headings">6</span>
+              <span class="text-[10px] text-secondary font-mono">Publicly visible</span>
+            </div>
+
+            <div class="admin-card p-5 flex flex-col gap-2">
+              <span class="font-mono text-[11px] uppercase text-on-surface-variant">Gallery Items</span>
+              <span id="stat-gallery-images" class="text-3xl font-extrabold text-primary font-headings">12</span>
+              <span class="text-[10px] text-on-surface-variant font-mono">Visual archive</span>
+            </div>
+
+            <div class="admin-card p-5 flex flex-col gap-2">
+              <span class="font-mono text-[11px] uppercase text-on-surface-variant">Active Videos</span>
+              <span id="stat-videos" class="text-3xl font-extrabold text-primary font-headings">2</span>
+              <span class="text-[10px] text-on-surface-variant font-mono">Cloudinary streams</span>
+            </div>
+
+            <div class="admin-card p-5 flex flex-col gap-2 border-secondary/40 bg-secondary/5">
+              <span class="font-mono text-[11px] uppercase text-secondary font-bold">Pending RFQs</span>
+              <span id="stat-pending-enquiries" class="text-3xl font-extrabold text-secondary font-headings">0</span>
+              <span class="text-[10px] text-secondary font-mono">Awaiting response</span>
+            </div>
+
+            <div class="admin-card p-5 flex flex-col gap-2">
+              <span class="font-mono text-[11px] uppercase text-on-surface-variant">Total Enquiries</span>
+              <span id="stat-total-enquiries" class="text-3xl font-extrabold text-primary font-headings">0</span>
+              <span class="text-[10px] text-on-surface-variant font-mono">All-time logged</span>
+            </div>
+          </div>
+
+          <!-- Recent Enquiries & Recent Products Columns -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left: Recent Enquiries Table -->
+            <div class="lg:col-span-8 admin-card p-6 flex flex-col gap-4">
+              <div class="flex items-center justify-between pb-3 border-b border-[#E2E6E0]">
+                <div>
+                  <h3 class="font-bold text-base text-primary font-headings">Recent Procurement Enquiries</h3>
+                  <p class="text-xs text-on-surface-variant">Incoming bulk quote requests from global importers</p>
+                </div>
+                <button data-switch-to="enquiries" class="text-xs font-mono text-secondary hover:underline font-bold">View All Enquiries →</button>
+              </div>
+
+              <div class="overflow-x-auto admin-custom-scroll">
+                <table class="w-full text-left text-xs">
+                  <thead>
+                    <tr class="border-b border-[#E2E6E0] text-on-surface-variant font-mono uppercase text-[10px]">
+                      <th class="py-2.5 px-3">Date</th>
+                      <th class="py-2.5 px-3">Buyer / Company</th>
+                      <th class="py-2.5 px-3">Substrate</th>
+                      <th class="py-2.5 px-3">Destination</th>
+                      <th class="py-2.5 px-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboard-recent-enquiries" class="divide-y divide-[#E2E6E0]/60">
+                    <tr>
+                      <td colspan="5" class="py-6 text-center text-on-surface-variant font-mono">No procurement enquiries received yet.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right: Quick Catalogue Status -->
+            <div class="lg:col-span-4 admin-card p-6 flex flex-col gap-4">
+              <div class="flex items-center justify-between pb-3 border-b border-[#E2E6E0]">
+                <h3 class="font-bold text-base text-primary font-headings">Featured Products</h3>
+                <button data-switch-to="products" class="text-xs font-mono text-secondary hover:underline font-bold">Manage →</button>
+              </div>
+
+              <div id="dashboard-featured-products" class="flex flex-col gap-3">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 2: PRODUCTS MANAGER
+             ========================================== -->
+        <section id="section-products" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Export Products Catalogue</h2>
+              <p class="text-xs text-on-surface-variant">Manage export substrate specifications, descriptions, images, and sort orders.</p>
+            </div>
+            <button id="add-product-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD NEW PRODUCT</span>
+            </button>
+          </div>
+
+          <!-- Filter & Search Toolbar -->
+          <div class="admin-card p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="relative w-full sm:w-80">
+              <span class="material-symbols-outlined absolute left-3 top-3 text-lg text-on-surface-variant">search</span>
+              <input type="text" id="products-search-input" placeholder="Search by name, category, or spec..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none" />
+            </div>
+
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+              <select id="products-category-filter" class="w-full sm:w-auto px-3.5 py-2.5 rounded-xl bg-surface border border-surface-variant text-xs font-medium text-primary focus:border-secondary focus:outline-none">
+                <option value="all">All Categories</option>
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Products Table -->
+          <div class="admin-card overflow-hidden">
+            <div class="overflow-x-auto admin-custom-scroll">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-surface-container-low border-b border-[#E2E6E0] font-mono text-[10px] text-on-surface-variant uppercase">
+                  <tr>
+                    <th class="py-3 px-4">Image</th>
+                    <th class="py-3 px-4">Product Name</th>
+                    <th class="py-3 px-4">Category</th>
+                    <th class="py-3 px-4">Sort</th>
+                    <th class="py-3 px-4">Status</th>
+                    <th class="py-3 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="products-table-body" class="divide-y divide-[#E2E6E0]">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 3: CATEGORIES MANAGER
+             ========================================== -->
+        <section id="section-categories" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Product Categories</h2>
+              <p class="text-xs text-on-surface-variant">Organize your catalogue into standardized export categories.</p>
+            </div>
+            <button id="add-category-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD CATEGORY</span>
+            </button>
+          </div>
+
+          <div id="categories-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 4: MEDIA LIBRARY (CLOUDINARY)
+             ========================================== -->
+        <section id="section-media" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Media Library &amp; Cloudinary</h2>
+              <p class="text-xs text-on-surface-variant">Upload and manage high-definition images, videos, and technical specification sheets.</p>
+            </div>
+            <label for="cloudinary-file-input" class="cursor-pointer px-4 py-2.5 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">cloud_upload</span>
+              <span>UPLOAD ASSET</span>
+            </label>
+            <input type="file" id="cloudinary-file-input" class="hidden" accept="image/*,video/*" />
+          </div>
+
+          <!-- Upload Dropzone -->
+          <div id="media-dropzone" class="admin-card p-8 border-2 border-dashed border-[#BDC4BA] hover:border-secondary flex flex-col items-center justify-center text-center gap-3 transition-colors cursor-pointer bg-surface/50">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 text-secondary flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">upload_file</span>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-primary">Drag &amp; drop images or videos here, or click to browse</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">Supports JPG, PNG, WebP (up to 10MB) &amp; MP4, WebM (up to 100MB)</p>
+            </div>
+            <div id="media-upload-progress" class="hidden w-full max-w-xs flex flex-col gap-1.5 mt-2">
+              <div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                <div id="media-progress-bar" class="h-full bg-secondary transition-all" style="width: 0%;"></div>
+              </div>
+              <span id="media-progress-text" class="font-mono text-[10px] text-secondary font-bold">Uploading 0%</span>
+            </div>
+          </div>
+
+          <!-- Media Filter Tabs -->
+          <div class="flex items-center gap-2 border-b border-[#E2E6E0] pb-2 font-mono text-xs">
+            <button data-media-tab="all" class="media-tab-btn active px-4 py-1.5 rounded-lg bg-primary text-white font-bold">All Assets</button>
+            <button data-media-tab="image" class="media-tab-btn px-4 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container">Images</button>
+            <button data-media-tab="video" class="media-tab-btn px-4 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container">Videos</button>
+          </div>
+
+          <!-- Media Grid -->
+          <div id="media-assets-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 5: VIDEOS MANAGER
+             ========================================== -->
+        <section id="section-videos" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Video Management</h2>
+              <p class="text-xs text-on-surface-variant">Configure video streams for Hero, Manufacturing process walkthroughs, and Product showcases.</p>
+            </div>
+            <button id="add-video-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD VIDEO STREAM</span>
+            </button>
+          </div>
+
+          <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 6: FACILITY GALLERY MANAGER
+             ========================================== -->
+        <section id="section-gallery" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Facility Gallery &amp; Visual Archive</h2>
+              <p class="text-xs text-on-surface-variant">Control the operational photos displayed on the public Gallery page.</p>
+            </div>
+            <button id="add-gallery-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add_photo_alternate</span>
+              <span>ADD GALLERY ITEM</span>
+            </button>
+          </div>
+
+          <div id="gallery-items-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 7: WEBSITE CONTENT EDITOR
+             ========================================== -->
+        <section id="section-website" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Website Content Editor</h2>
+              <p class="text-xs text-on-surface-variant">Edit live public copywriting, hero titles, value propositions, and section headlines.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="save-website-content-btn" class="px-5 py-2.5 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-base">save</span>
+                <span>SAVE CHANGES</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section Tabs -->
+          <div class="admin-card p-6 flex flex-col gap-6">
+            <h3 class="font-bold text-base text-primary font-headings border-b border-[#E2E6E0] pb-3">Homepage Core Content</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
+              <div class="sm:col-span-2">
+                <label for="content-hero-eyebrow" class="block font-mono uppercase text-on-surface-variant mb-1.5">Hero Eyebrow Badge</label>
+                <input type="text" id="content-hero-eyebrow" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="content-hero-heading" class="block font-mono uppercase text-on-surface-variant mb-1.5">Hero Main Heading (H1)</label>
+                <input type="text" id="content-hero-heading" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-bold text-primary focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="content-hero-description" class="block font-mono uppercase text-on-surface-variant mb-1.5">Hero Description Paragraph</label>
+                <textarea id="content-hero-description" rows="3" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
+              </div>
+
+              <div>
+                <label for="content-hero-cta1" class="block font-mono uppercase text-on-surface-variant mb-1.5">Primary CTA Button Label</label>
+                <input type="text" id="content-hero-cta1" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div>
+                <label for="content-hero-cta2" class="block font-mono uppercase text-on-surface-variant mb-1.5">Secondary CTA Button Label</label>
+                <input type="text" id="content-hero-cta2" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="content-hero-video" class="block font-mono uppercase text-on-surface-variant mb-1.5">Hero Background Video URL</label>
+                <input type="text" id="content-hero-video" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="content-hero-poster" class="block font-mono uppercase text-on-surface-variant mb-1.5">Hero Video Fallback Poster Image URL</label>
+                <input type="text" id="content-hero-poster" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 8: MANUFACTURING STAGES
+             ========================================== -->
+        <section id="section-manufacturing" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Manufacturing Process Stages</h2>
+              <p class="text-xs text-on-surface-variant">Dynamically configure production sequence steps from raw husk aging to container dispatch.</p>
+            </div>
+            <button id="add-stage-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD PROCESS STAGE</span>
+            </button>
+          </div>
+
+          <div id="manufacturing-stages-list" class="flex flex-col gap-4">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 9: APPLICATIONS & CROPS
+             ========================================== -->
+        <section id="section-applications" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Applications &amp; Crops</h2>
+              <p class="text-xs text-on-surface-variant">Manage agricultural and hydroponic crop applications cards.</p>
+            </div>
+            <button id="add-application-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD APPLICATION</span>
+            </button>
+          </div>
+
+          <div id="applications-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 10: SUSTAINABILITY & ESG
+             ========================================== -->
+        <section id="section-sustainability" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Sustainability Pillars</h2>
+              <p class="text-xs text-on-surface-variant">Manage ESG pillars adhering to zero-assumption policy.</p>
+            </div>
+            <button id="add-pillar-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD PILLAR</span>
+            </button>
+          </div>
+
+          <div id="sustainability-pillars-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 11: GLOBAL REACH
+             ========================================== -->
+        <section id="section-global" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Global Reach &amp; Export Markets</h2>
+              <p class="text-xs text-on-surface-variant">Manage confirmed export destinations and seaports (zero unverified markets).</p>
+            </div>
+            <button id="add-destination-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD DESTINATION</span>
+            </button>
+          </div>
+
+          <div id="global-destinations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 12: QUALITY CONTROL
+             ========================================== -->
+        <section id="section-quality" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Quality Assurance Stages</h2>
+              <p class="text-xs text-on-surface-variant">Configure laboratory testing protocols, EC/pH checks, and moisture tests.</p>
+            </div>
+            <button id="add-quality-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD QUALITY STAGE</span>
+            </button>
+          </div>
+
+          <div id="quality-stages-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 13: CERTIFICATIONS
+             ========================================== -->
+        <section id="section-certifications" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Certifications Manager</h2>
+              <p class="text-xs text-on-surface-variant">Manage verified accreditation documents, ISO records, and phytosanitary licenses.</p>
+            </div>
+            <button id="add-cert-btn" class="px-4 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">add</span>
+              <span>ADD CERTIFICATE</span>
+            </button>
+          </div>
+
+          <div id="certifications-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 14: ENQUIRIES / RFQ INBOX
+             ========================================== -->
+        <section id="section-enquiries" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Procurement Enquiries &amp; RFQs</h2>
+              <p class="text-xs text-on-surface-variant">Manage incoming pro-forma invoice requisitions and container inquiries.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="enquiry-filter-status" class="px-3.5 py-2 rounded-xl bg-white border border-surface-variant text-xs font-mono">
+                <option value="all">All Statuses</option>
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Archived">Archived</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="admin-card overflow-hidden">
+            <div class="overflow-x-auto admin-custom-scroll">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-surface-container-low border-b border-[#E2E6E0] font-mono text-[10px] text-on-surface-variant uppercase">
+                  <tr>
+                    <th class="py-3 px-4">Ref ID</th>
+                    <th class="py-3 px-4">Buyer Name</th>
+                    <th class="py-3 px-4">Corporate Email</th>
+                    <th class="py-3 px-4">Substrate</th>
+                    <th class="py-3 px-4">Destination Port</th>
+                    <th class="py-3 px-4">Status</th>
+                    <th class="py-3 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="enquiries-table-body" class="divide-y divide-[#E2E6E0]">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 15: SEO METADATA MANAGEMENT
+             ========================================== -->
+        <section id="section-seo" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Search Engine Optimization (SEO)</h2>
+              <p class="text-xs text-on-surface-variant">Configure per-page title tags, meta descriptions, and OpenGraph social preview images.</p>
+            </div>
+            <button id="save-seo-btn" class="px-5 py-2.5 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">save</span>
+              <span>SAVE SEO CONFIGURATION</span>
+            </button>
+          </div>
+
+          <div class="admin-card p-6 flex flex-col gap-6">
+            <div class="flex items-center gap-3 border-b border-[#E2E6E0] pb-4">
+              <label for="seo-page-selector" class="font-mono text-xs uppercase text-on-surface-variant">Select Page to Edit:</label>
+              <select id="seo-page-selector" class="px-3.5 py-2 rounded-xl bg-surface border border-surface-variant text-xs font-bold text-primary focus:border-secondary focus:outline-none">
+                <option value="home">Homepage (index.html)</option>
+                <option value="about">About Us (about.html)</option>
+                <option value="products">Products Catalogue (products.html)</option>
+                <option value="applications">Applications (applications.html)</option>
+                <option value="manufacturing">Manufacturing (manufacturing.html)</option>
+                <option value="sustainability">Sustainability (sustainability.html)</option>
+                <option value="gallery">Facility Gallery (gallery.html)</option>
+                <option value="contact">Contact &amp; Desk (contact.html)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
+              <div class="sm:col-span-2">
+                <label for="seo-title" class="block font-mono uppercase text-on-surface-variant mb-1.5">Meta Page Title *</label>
+                <input type="text" id="seo-title" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="seo-description" class="block font-mono uppercase text-on-surface-variant mb-1.5">Meta Description *</label>
+                <textarea id="seo-description" rows="3" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
+              </div>
+
+              <div>
+                <label for="seo-canonical" class="block font-mono uppercase text-on-surface-variant mb-1.5">Canonical URL</label>
+                <input type="text" id="seo-canonical" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div>
+                <label for="seo-robots" class="block font-mono uppercase text-on-surface-variant mb-1.5">Robots Directive</label>
+                <select id="seo-robots" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
+                  <option value="index, follow">index, follow (Standard)</option>
+                  <option value="noindex, follow">noindex, follow</option>
+                  <option value="noindex, nofollow">noindex, nofollow</option>
+                </select>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="seo-og-image" class="block font-mono uppercase text-on-surface-variant mb-1.5">Social Share Image (OG:Image URL)</label>
+                <input type="text" id="seo-og-image" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 16: SETTINGS & BASELINE SYNC
+             ========================================== -->
+        <section id="section-settings" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold font-headings text-primary">Company Profile &amp; Settings</h2>
+              <p class="text-xs text-on-surface-variant">Update corporate entity information, WhatsApp desk numbers, and Cloudinary media configurations.</p>
+            </div>
+            <button id="save-settings-btn" class="px-5 py-2.5 rounded-xl bg-[#00742F] text-white font-mono text-xs uppercase font-bold hover:bg-[#00531F] transition-all flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-base">save</span>
+              <span>SAVE SETTINGS</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Company Info Card -->
+            <div class="admin-card p-6 flex flex-col gap-4 text-xs">
+              <h3 class="font-bold text-base text-primary font-headings border-b border-[#E2E6E0] pb-2">Corporate Profile</h3>
+              
+              <div>
+                <label for="setting-company-name" class="block font-mono uppercase text-on-surface-variant mb-1">Company Legal Name</label>
+                <input type="text" id="setting-company-name" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div>
+                <label for="setting-plant-address" class="block font-mono uppercase text-on-surface-variant mb-1">Plant &amp; Facility Address</label>
+                <input type="text" id="setting-plant-address" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="setting-export-email" class="block font-mono uppercase text-on-surface-variant mb-1">Official Export Email</label>
+                  <input type="email" id="setting-export-email" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+                <div>
+                  <label for="setting-whatsapp" class="block font-mono uppercase text-on-surface-variant mb-1">24/7 WhatsApp Export Terminal</label>
+                  <input type="text" id="setting-whatsapp" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Cloudinary Integration & Baseline Sync -->
+            <div class="admin-card p-6 flex flex-col justify-between gap-6 text-xs">
+              <div class="flex flex-col gap-4">
+                <h3 class="font-bold text-base text-primary font-headings border-b border-[#E2E6E0] pb-2">Cloudinary Media Integration</h3>
+                
+                <div>
+                  <label for="setting-cloud-name" class="block font-mono uppercase text-on-surface-variant mb-1">Cloud Name</label>
+                  <input type="text" id="setting-cloud-name" placeholder="cococraft" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+
+                <div>
+                  <label for="setting-upload-preset" class="block font-mono uppercase text-on-surface-variant mb-1">Unsigned Upload Preset</label>
+                  <input type="text" id="setting-upload-preset" placeholder="cococraft_unsigned" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+                </div>
+              </div>
+
+              <!-- Database Seeder Tool -->
+              <div class="p-4 rounded-xl bg-surface-container-low border border-surface-variant flex flex-col gap-2">
+                <span class="font-mono text-xs font-bold text-primary uppercase">Initial Baseline Data Synchronizer</span>
+                <p class="text-[11px] text-on-surface-variant">Populate your Firestore database with the 6 verified products, categories, and manufacturing stages from the public website.</p>
+                <button type="button" id="seed-baseline-btn" class="mt-1 w-fit px-4 py-2 rounded-lg bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container transition-all flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">cloud_sync</span>
+                  <span>SYNC BASELINE CATALOGUE</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 17: AUDIT LOG
+             ========================================== -->
+        <section id="section-audit" class="cms-section hidden flex flex-col gap-6">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-2xl font-bold font-headings text-primary">Administrative Audit Trail</h2>
+            <p class="text-xs text-on-surface-variant">Chronological record of content updates, logins, product modifications, and status changes.</p>
+          </div>
+
+          <div class="admin-card overflow-hidden">
+            <div class="overflow-x-auto admin-custom-scroll">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-surface-container-low border-b border-[#E2E6E0] font-mono text-[10px] text-on-surface-variant uppercase">
+                  <tr>
+                    <th class="py-3 px-4">Timestamp</th>
+                    <th class="py-3 px-4">Admin</th>
+                    <th class="py-3 px-4">Action</th>
+                    <th class="py-3 px-4">Entity</th>
+                    <th class="py-3 px-4">Details</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-log-table-body" class="divide-y divide-[#E2E6E0] font-mono text-[11px]">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODALS AND DRAWERS
+       ========================================== -->
+
+  <!-- Product Add/Edit Modal -->
+  <div id="product-modal" class="admin-modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-3xl max-h-[90vh] bg-white rounded-2xl border border-surface-variant shadow-2xl flex flex-col overflow-hidden">
+      <div class="h-16 px-6 border-b border-[#E2E6E0] flex items-center justify-between bg-surface-container-low">
+        <h3 id="product-modal-title" class="font-bold text-base text-primary font-headings">Add New Export Product</h3>
+        <button id="close-product-modal" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
+      <form id="product-form" class="p-6 overflow-y-auto admin-custom-scroll flex flex-col gap-5 text-xs">
+        <input type="hidden" id="edit-product-id" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="prod-name" class="block font-mono uppercase text-on-surface-variant mb-1">Product Name *</label>
+            <input type="text" id="prod-name" required placeholder="e.g. 5kg Cocopeat Blocks (Low EC)" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+          </div>
+
+          <div>
+            <label for="prod-slug" class="block font-mono uppercase text-on-surface-variant mb-1">Slug (URL Identifier) *</label>
+            <input type="text" id="prod-slug" required placeholder="5kg-cocopeat-blocks" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+          </div>
+
+          <div>
+            <label for="prod-category" class="block font-mono uppercase text-on-surface-variant mb-1">Category *</label>
+            <select id="prod-category" required class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
+              <!-- Injected dynamically -->
+            </select>
+          </div>
+
+          <div>
+            <label for="prod-status" class="block font-mono uppercase text-on-surface-variant mb-1">Publish Status</label>
+            <select id="prod-status" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none">
+              <option value="Active">Active (Publicly Visible)</option>
+              <option value="Draft">Draft (Hidden)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="prod-short-desc" class="block font-mono uppercase text-on-surface-variant mb-1">Short Description *</label>
+          <input type="text" id="prod-short-desc" required placeholder="Brief 1-sentence product summary" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="prod-full-desc" class="block font-mono uppercase text-on-surface-variant mb-1">Full Technical Description *</label>
+          <textarea id="prod-full-desc" rows="3" required placeholder="Detailed manufacturing and horticultural description..." class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="prod-main-image" class="block font-mono uppercase text-on-surface-variant mb-1">Main Image URL *</label>
+            <input type="text" id="prod-main-image" required placeholder="/assets/products/5kg-block.jpg or Cloudinary URL" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-mono focus:border-secondary focus:outline-none" />
+          </div>
+
+          <div>
+            <label for="prod-sort" class="block font-mono uppercase text-on-surface-variant mb-1">Sort Order</label>
+            <input type="number" id="prod-sort" value="1" min="1" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm focus:border-secondary focus:outline-none" />
+          </div>
+        </div>
+
+        <!-- Optional Technical Specifications Accordion / Block -->
+        <div class="p-4 rounded-xl bg-surface-container-low border border-surface-variant flex flex-col gap-3">
+          <span class="font-mono uppercase font-bold text-xs text-primary flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm">tune</span>
+            Technical Specifications (Optional — Zero Default Assumption)
+          </span>
+          <p class="text-[11px] text-on-surface-variant">Only enter verified laboratory parameters. Unfilled fields will not be displayed on the public site.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div>
+              <label for="spec-weight" class="block font-mono text-[10px] uppercase text-on-surface-variant mb-0.5">Weight / Unit</label>
+              <input type="text" id="spec-weight" placeholder="e.g. 5.0 kg (+/- 200g)" class="w-full p-2.5 rounded-lg bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none" />
+            </div>
+
+            <div>
+              <label for="spec-expansion" class="block font-mono text-[10px] uppercase text-on-surface-variant mb-0.5">Expansion Volume</label>
+              <input type="text" id="spec-expansion" placeholder="e.g. 70 to 75 Liters" class="w-full p-2.5 rounded-lg bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none" />
+            </div>
+
+            <div>
+              <label for="spec-ec" class="block font-mono text-[10px] uppercase text-on-surface-variant mb-0.5">Electrical Conductivity (EC)</label>
+              <input type="text" id="spec-ec" placeholder="e.g. < 0.5 mS/cm" class="w-full p-2.5 rounded-lg bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none" />
+            </div>
+
+            <div>
+              <label for="spec-ph" class="block font-mono text-[10px] uppercase text-on-surface-variant mb-0.5">pH Level</label>
+              <input type="text" id="spec-ph" placeholder="e.g. 5.8 to 6.8" class="w-full p-2.5 rounded-lg bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none" />
+            </div>
+
+            <div>
+              <label for="spec-moisture" class="block font-mono text-[10px] uppercase text-on-surface-variant mb-0.5">Moisture Content</label>
+              <input type="text" id="spec-moisture" placeholder="e.g. < 18% Natural Cure" class="w-full p-2.5 rounded-lg bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none" />
+            </div>
+
+            <div>
+              <label for="spec-packaging" class="block font-mono text-[10px] uppercase text-on-surface-variant mb-0.5">Packaging Standard</label>
+              <input type="text" id="spec-packaging" placeholder="e.g. Palletized (240 blocks/pallet)" class="w-full p-2.5 rounded-lg bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none" />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="prod-featured" class="w-4 h-4 rounded text-secondary accent-[#00742F] cursor-pointer" />
+          <label for="prod-featured" class="text-xs text-primary font-medium cursor-pointer">Mark as Featured Product on Homepage</label>
+        </div>
+
+        <div class="pt-4 border-t border-[#E2E6E0] flex items-center justify-end gap-3">
+          <button type="button" id="cancel-product-btn" class="px-4 py-2.5 rounded-xl border border-surface-variant hover:bg-surface-container font-mono text-xs uppercase font-bold text-on-surface-variant">Cancel</button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Enquiry View / Status Modal -->
+  <div id="enquiry-modal" class="admin-modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-2xl bg-white rounded-2xl border border-surface-variant shadow-2xl flex flex-col overflow-hidden text-xs">
+      <div class="h-16 px-6 border-b border-[#E2E6E0] flex items-center justify-between bg-surface-container-low">
+        <div class="flex items-center gap-3">
+          <span class="font-bold text-base text-primary font-headings">Enquiry Details</span>
+          <span id="enquiry-modal-ref" class="font-mono text-[11px] font-bold text-secondary">CCE-REQ-XXXX</span>
+        </div>
+        <button id="close-enquiry-modal" class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 flex flex-col gap-5 overflow-y-auto max-h-[75vh] admin-custom-scroll">
+        <input type="hidden" id="modal-enquiry-id" />
+
+        <div class="grid grid-cols-2 gap-4 p-4 rounded-xl bg-surface-container-low border border-surface-variant">
+          <div>
+            <span class="text-on-surface-variant text-[10px] font-mono uppercase block">Buyer Name</span>
+            <span id="modal-enquiry-name" class="font-bold text-sm text-primary"></span>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] font-mono uppercase block">Corporate Email</span>
+            <a id="modal-enquiry-email" href="" class="font-bold text-sm text-secondary hover:underline"></a>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] font-mono uppercase block">Company Name</span>
+            <span id="modal-enquiry-company" class="font-bold text-sm text-primary"></span>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] font-mono uppercase block">Destination Seaport</span>
+            <span id="modal-enquiry-port" class="font-bold text-sm text-primary"></span>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] font-mono uppercase block">Substrate Requested</span>
+            <span id="modal-enquiry-substrate" class="font-bold text-sm text-primary"></span>
+          </div>
+          <div>
+            <span class="text-on-surface-variant text-[10px] font-mono uppercase block">Required Volume</span>
+            <span id="modal-enquiry-volume" class="font-bold text-sm text-primary"></span>
+          </div>
+        </div>
+
+        <div>
+          <span class="text-on-surface-variant text-[10px] font-mono uppercase block mb-1">Buyer Specifications &amp; Notes</span>
+          <div id="modal-enquiry-message" class="p-3.5 rounded-xl bg-surface border border-surface-variant text-xs text-on-surface leading-relaxed min-h-[60px]"></div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="flex-1">
+            <label for="modal-enquiry-status" class="block font-mono uppercase text-on-surface-variant mb-1">Update Procurement Status</label>
+            <select id="modal-enquiry-status" class="w-full p-2.5 rounded-xl bg-surface border border-surface-variant text-xs font-bold text-primary focus:border-secondary focus:outline-none">
+              <option value="New">New (Unreviewed)</option>
+              <option value="Contacted">Contacted Buyer</option>
+              <option value="In Progress">In Progress (Pro-Forma Sent)</option>
+              <option value="Completed">Completed / Contract Signed</option>
+              <option value="Archived">Archived</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="modal-enquiry-notes" class="block font-mono uppercase text-on-surface-variant mb-1">Internal Export Desk Notes (Private)</label>
+          <textarea id="modal-enquiry-notes" rows="3" placeholder="Enter private internal pricing notes, container schedule, or payment status..." class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-xs focus:border-secondary focus:outline-none"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-[#E2E6E0] flex items-center justify-end gap-3">
+          <button type="button" id="save-enquiry-status-btn" class="px-5 py-2.5 rounded-xl bg-primary text-white font-mono text-xs uppercase font-bold hover:bg-primary-container">Update Enquiry Status</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Universal Confirmation Dialog -->
+  <div id="confirm-modal" class="admin-modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-sm bg-white rounded-2xl border border-surface-variant p-6 shadow-2xl flex flex-col gap-4 text-xs">
+      <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+        <span class="material-symbols-outlined text-xl">warning</span>
+      </div>
+      <div>
+        <h4 id="confirm-modal-title" class="font-bold text-sm text-primary font-headings">Are you sure?</h4>
+        <p id="confirm-modal-desc" class="text-on-surface-variant mt-1">This action cannot be undone.</p>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="confirm-cancel-btn" class="px-3.5 py-2 rounded-xl border border-surface-variant hover:bg-surface-container font-mono text-xs uppercase font-bold">Cancel</button>
+        <button id="confirm-accept-btn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-mono text-xs uppercase font-bold">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="admin-toast-container"></div>
+
+  <!-- Master Admin Controller -->
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>

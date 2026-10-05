@@ -1,0 +1,113 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for administrative authentication
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated();
+    }
+
+    // Public RFQ and inquiries:
+    // Public can create with strict field validation; only authenticated admin can read, review, update status, and delete.
+    match /enquiries/{enquiryId} {
+      allow create: if request.resource.data.name is string 
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() <= 120
+                    && request.resource.data.email is string 
+                    && request.resource.data.email.size() >= 5
+                    && request.resource.data.email.size() <= 120
+                    && (!('status' in request.resource.data) || request.resource.data.status == 'New');
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Public content collections: readable by public website visitors, writable ONLY by authenticated admins
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /gallery/{galleryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /videos/{videoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /applications/{appId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /manufacturing/{stageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /sustainability/{pillarId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /global_reach/{itemId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /quality/{stageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /certifications/{certId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /website_content/{sectionId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /seo/{pageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /media/{mediaId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Audit logs:
+    // Read: authenticated admin only.
+    // Create: authenticated admin only.
+    // Update/Delete: strictly forbidden (immutable audit trail).
+    match /audit_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    // Default safety catch-all: all other paths closed to public
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

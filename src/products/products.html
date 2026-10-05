@@ -165,8 +165,8 @@
           
           <div class="lg:col-span-6 flex flex-col gap-5">
             <div>
-              <label class="block text-xs font-technical-code uppercase text-on-surface-variant mb-2">Select Substrate Product:</label>
-              <select id="calc-product" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold text-primary focus:border-secondary focus:outline-none">
+              <label for="calc-product" class="block text-xs font-technical-code uppercase text-on-surface-variant mb-2">Select Substrate Product:</label>
+              <select id="calc-product" name="product" class="w-full p-3 rounded-xl bg-surface border border-surface-variant text-sm font-semibold text-primary focus:border-secondary focus:outline-none">
                 <option value="5kg">5KG Compressed Blocks (75 Liters / block)</option>
                 <option value="growbag">Commercial Grow Bags (100x15x12 cm Slabs)</option>
                 <option value="briquette">650g Briquettes (9 Liters / briquette)</option>
@@ -176,10 +176,10 @@
 
             <div>
               <div class="flex items-center justify-between mb-2">
-                <label class="text-xs font-technical-code uppercase text-on-surface-variant">Number of Pallets / Units:</label>
+                <label for="calc-qty" class="text-xs font-technical-code uppercase text-on-surface-variant">Number of Pallets / Units:</label>
                 <span class="font-mono font-bold text-secondary text-sm" id="calc-qty-val">10 Pallets (2,400 Blocks)</span>
               </div>
-              <input type="range" id="calc-qty" min="1" max="22" value="10" step="1" class="w-full h-2.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-secondary" />
+              <input type="range" id="calc-qty" name="quantity" min="1" max="22" value="10" step="1" class="w-full h-2.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-secondary" aria-label="Number of pallets or units" />
               <div class="flex justify-between text-[11px] font-technical-code text-on-surface-variant mt-1">
                 <span>1 Pallet (LCL)</span>
                 <span>11 Pallets (20' FCL)</span>
@@ -613,7 +613,6 @@
             <li><a class="hover:text-primary transition-colors" href="/about/about.html">About Us &amp; Heritage</a></li>
             <li><a class="hover:text-primary transition-colors" href="/company/manufacturing.html">6-Stage Manufacturing</a></li>
             <li><a class="hover:text-primary transition-colors" href="/company/sustainability.html">Sustainability &amp; ESG</a></li>
-            <li></li>
             <li><a class="hover:text-primary transition-colors" href="/company/gallery.html">Facility Gallery</a></li>
           </ul>
         </div>

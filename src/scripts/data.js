@@ -20,69 +20,103 @@ export const siteConfig = {
   }
 };
 
-// Generic CMS-Ready Product Structure
+// Structured CMS-Ready Product Data conforming to specification
 export const products = [
   {
-    id: "prod-01",
-    slug: "product-category-01",
-    category: "PRODUCT CATEGORY 01",
-    name: "[CLIENT PRODUCT NAME 01]",
-    shortDesc: "Engineered coconut-based substrate manufactured for commercial agriculture and export markets.",
-    fullDesc: "[CLIENT PRODUCT DESCRIPTION: Detailed description to be populated once official product sheets are confirmed.]",
-    image: "https://images.unsplash.com/photo-1592417817098-8f3d69102a49?auto=format&fit=crop&w=1200&q=80",
-    specs: [
-      { label: "Material Composition", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Grade / Size", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Moisture Content", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Compression Ratio", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Standard Format", value: "[CLIENT DATA REQUIRED]" }
+    id: "prod-cocopeat-5kg",
+    slug: "5kg-cocopeat-blocks",
+    title: "5KG Cocopeat Compressed Blocks",
+    category: "Cocopeat Blocks",
+    description: "Premium washed and unwashed coco peat pith compressed at a 5:1 ratio. Engineered for uniform water-holding capacity, optimal porosity, and minimal sodium/potassium displacement.",
+    image: "/assets/products/5kg-block.jpg",
+    specifications: [
+      { label: "EC Rating", value: "Low EC (< 0.5 mS/cm)" },
+      { label: "Volume Yield", value: "~75 Litres Expanded" },
+      { label: "pH Level", value: "5.5 – 6.8" },
+      { label: "Packaging", value: "Palletized / 24-26 MT" }
     ],
-    packaging: [
-      { type: "Standard Export Packaging", details: "[CLIENT PACKAGING OPTION TO BE CONFIRMED]" },
-      { type: "Container Loading", details: "[CONTAINER CAPACITY TO BE CONFIRMED]" }
-    ],
-    applications: ["Commercial Agriculture", "Growing Media", "Substrate Blend"],
-    featured: true
+    detailUrl: "/products/products.html#blocks",
+    documentUrl: null
   },
   {
-    id: "prod-02",
-    slug: "product-category-02",
-    category: "PRODUCT CATEGORY 02",
-    name: "[CLIENT PRODUCT NAME 02]",
-    shortDesc: "High-grade natural coconut fibre processed for industrial, erosion control, and commercial uses.",
-    fullDesc: "[CLIENT PRODUCT DESCRIPTION: Detailed specifications to be provided by client.]",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80",
-    specs: [
-      { label: "Fibre Grade", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Impurity Ratio", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Bale Weight", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Moisture Level", value: "[CLIENT DATA REQUIRED]" }
+    id: "prod-grow-bags",
+    slug: "coir-grow-bags",
+    title: "Hydroponic Coir Grow Bags / Slabs",
+    category: "Coir Grow Bags",
+    description: "Pre-cut plant holes & drainage slots. 100% natural organic medium customized with tailored coir-to-chip ratios for commercial greenhouse vine crops and berries.",
+    image: "/assets/products/growbag-slab.jpg",
+    specifications: [
+      { label: "Standard Dimensions", value: "100 x 15 x 12 cm" },
+      { label: "Substrate Blend", value: "70/30 Pith/Chips" },
+      { label: "UV Resistance", value: "3+ Years Guaranteed" },
+      { label: "Drainage", value: "Pre-Drilled Custom Slits" }
     ],
-    packaging: [
-      { type: "Hydraulic Compressed Bales", details: "[CLIENT PACKAGING OPTION TO BE CONFIRMED]" },
-      { type: "Export Palletization", details: "[CONTAINER CAPACITY TO BE CONFIRMED]" }
-    ],
-    applications: ["Industrial Application", "Soil Conditioning", "Erosion Control"],
-    featured: true
+    detailUrl: "/products/products.html#grow-bags",
+    documentUrl: null
   },
   {
-    id: "prod-03",
-    slug: "product-category-03",
-    category: "PRODUCT CATEGORY 03",
-    name: "[CLIENT PRODUCT NAME 03]",
-    shortDesc: "Precision processed coconut husk material prepared for specialized horticultural substrates.",
-    fullDesc: "[CLIENT PRODUCT DESCRIPTION: Awaiting client data.]",
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=1200&q=80",
-    specs: [
-      { label: "Chip / Particle Size", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Sieve Mesh Range", value: "[CLIENT DATA REQUIRED]" },
-      { label: "Packing Specification", value: "[CLIENT DATA REQUIRED]" }
+    id: "prod-husk-chips",
+    slug: "husk-chips",
+    title: "Washed Coir Husk Chips",
+    category: "Husk Chips",
+    description: "Uniformly cut and screened cubes of natural coconut husk. High aeration ratio (30-40%), ideal porosity for orchid, anthurium, and potted plant cultivation.",
+    image: "/assets/products/husk-chips.jpg",
+    specifications: [
+      { label: "Chip Grading", value: "Small (6-12mm), Med (10-18mm)" },
+      { label: "EC Level", value: "< 0.5 mS/cm Washed" },
+      { label: "Air Porosity", value: "35% – 45%" },
+      { label: "Packaging", value: "5kg Block / 25kg Bale" }
     ],
-    packaging: [
-      { type: "Bulk Bales / Custom Bags", details: "[CLIENT PACKAGING OPTION TO BE CONFIRMED]" }
+    detailUrl: "/products/products.html#chips",
+    documentUrl: null
+  },
+  {
+    id: "prod-briquettes-650g",
+    slug: "briquettes",
+    title: "650g Compressed Coir Briquettes",
+    category: "Briquettes",
+    description: "Compact, highly portable 650g compressed coco pith bricks designed for retail distribution, home gardening, and seedling propagation. Rehydrates quickly to 9–10 liters.",
+    image: "/assets/products/650g-briquette.jpg",
+    specifications: [
+      { label: "Unit Weight", value: "650g (± 50g)" },
+      { label: "Yield Per Brick", value: "9 – 10 Liters" },
+      { label: "EC Level", value: "< 0.5 mS/cm Washed" },
+      { label: "Packaging", value: "Individually Wrapped" }
     ],
-    applications: ["Orchids & Floriculture", "Hydroponic Mixes", "Mulch & Bedding"],
-    featured: false
+    detailUrl: "/products/products.html#briquettes",
+    documentUrl: null
+  },
+  {
+    id: "prod-coir-fibre",
+    slug: "coir-fiber",
+    title: "Raw Mattress & Bristle Coir Fibre",
+    category: "Coir Fiber",
+    description: "Long, resilient golden brown coconut fibers extracted through clean mechanical decortication. Hydraulically baled under 120-ton pressure for mattress cores, auto seating, and twine.",
+    image: "/assets/products/coir-fibre.jpg",
+    specifications: [
+      { label: "Fibre Length", value: "10cm – 25cm Bristle" },
+      { label: "Moisture Content", value: "< 15% Max" },
+      { label: "Dust / Impurity", value: "< 3% Screened" },
+      { label: "Bale Packaging", value: "120kg – 150kg Strapped" }
+    ],
+    detailUrl: "/products/products.html#fibre",
+    documentUrl: null
+  },
+  {
+    id: "prod-coir-geotextiles",
+    slug: "coir-geotextiles",
+    title: "Coir Geotextile Netting & Erosion Blankets",
+    category: "Coir Fiber",
+    description: "100% natural, biodegradable woven coir mesh matting engineered for steep slope stabilization, highway embankments, and riverbank restoration with 3–5 years lifespan.",
+    image: "/assets/products/coir-geotextiles.jpg",
+    specifications: [
+      { label: "Mesh Weight", value: "400g / 700g / 900g/m²" },
+      { label: "Roll Dimensions", value: "2m Width x 50m Roll" },
+      { label: "Degradation Period", value: "3 – 5 Years Lifespan" },
+      { label: "Tensile Strength", value: "High Wet & Dry" }
+    ],
+    detailUrl: "/products/products.html#geotextiles",
+    documentUrl: null
   }
 ];
 

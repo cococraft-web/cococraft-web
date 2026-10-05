@@ -19,6 +19,9 @@ function bootMasterExperience() {
   initGlobalHeaderScroll();
   initMobileNavDrawer();
   initSmoothAnchorScrolling();
+  initProductFilterAndSearch();
+  initRFQForms();
+  initWalkthroughVideoModal();
 }
 
 if (document.readyState === 'loading') {
@@ -416,23 +419,280 @@ function initMobileNavDrawer() {
 }
 
 /* ==========================================================================
-   10. SMOOTH ANCHOR SCROLLING (Lenis Compatible)
+   11. CLIENT-SIDE PRODUCT FILTERS & REAL-TIME SEARCH
    ========================================================================== */
-function initSmoothAnchorScrolling() {
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href');
-      if (!targetId || targetId === '#') return;
-      const targetEl = document.querySelector(targetId);
-      if (targetEl) {
-        e.preventDefault();
-        if (lenisInstance) {
-          lenisInstance.scrollTo(targetEl, { offset: -90 });
-        } else {
-          targetEl.scrollIntoView({ behavior: 'smooth' });
-        }
+function initProductFilterAndSearch() {
+  const filterBtns = document.querySelectorAll('.product-filter-btn');
+  const searchInput = document.getElementById('product-search-input');
+  const clearBtn = document.getElementById('product-search-clear');
+  const cards = document.querySelectorAll('.product-card-item');
+  const emptyState = document.getElementById('product-empty-state');
+  const resetBtn = document.getElementById('product-reset-filter-btn');
+
+  if (!filterBtns.length && !cards.length) return;
+
+  let activeCategory = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const cardCategory = card.getAttribute('data-category') || '';
+      const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
+      const cardText = card.textContent.toLowerCase();
+
+      const categoryMatch = activeCategory === 'all' || cardCategory.toLowerCase() === activeCategory.toLowerCase();
+      const searchMatch = !searchQuery || cardTitle.includes(searchQuery) || cardText.includes(searchQuery);
+
+      if (categoryMatch && searchMatch) {
+        card.classList.remove('is-hidden');
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+        visibleCount++;
+      } else {
+        card.classList.add('is-hidden');
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(6px)';
       }
     });
+
+    if (emptyState) {
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+      } else {
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
+      }
+    }
+  }
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      activeCategory = btn.getAttribute('data-category') || 'all';
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      if (clearBtn) {
+        if (searchQuery.length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+      }
+      applyFilters();
+    });
+  }
+
+  if (clearBtn && searchInput) {
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      clearBtn.classList.add('hidden');
+      applyFilters();
+      searchInput.focus();
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      activeCategory = 'all';
+      searchQuery = '';
+      if (searchInput) {
+        searchInput.value = '';
+      }
+      if (clearBtn) {
+        clearBtn.classList.add('hidden');
+      }
+      filterBtns.forEach((b) => {
+        const cat = b.getAttribute('data-category');
+        if (cat === 'all') {
+          b.classList.add('active');
+          b.setAttribute('aria-selected', 'true');
+        } else {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        }
+      });
+      applyFilters();
+    });
+  }
+}
+
+/* ==========================================================================
+   12. RFQ / B2B QUOTE FORM ORCHESTRATION & VALIDATION
+   ========================================================================== */
+function initRFQForms() {
+  const forms = [
+    {
+      form: document.getElementById('rfq-quote-form'),
+      successBanner: document.getElementById('quote-success-banner'),
+      resetBtn: document.getElementById('quote-reset-btn')
+    },
+    {
+      form: document.getElementById('contact-rfq-form'),
+      successBanner: document.getElementById('form-success-banner'),
+      resetBtn: document.getElementById('contact-reset-btn')
+    }
+  ];
+
+  forms.forEach(({ form, successBanner, resetBtn }) => {
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Check form validity
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : '';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          PROCESSING REQUISITION...
+        `;
+      }
+
+      // Simulate realistic network dispatch to Tamil Nadu export desk
+      setTimeout(() => {
+        form.style.display = 'none';
+        const randomCode = `CCE-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        const refElem = (successBanner && successBanner.querySelector('#quote-ref-id, #contact-ref-id')) || document.getElementById('contact-ref-id') || document.getElementById('quote-ref-id');
+        if (refElem) {
+          refElem.textContent = randomCode;
+        }
+        if (successBanner) {
+          successBanner.classList.remove('hidden');
+          successBanner.classList.add('flex');
+          // Scroll into view gently
+          successBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      }, 550);
+    });
+
+    if (resetBtn && successBanner) {
+      resetBtn.addEventListener('click', () => {
+        form.reset();
+        form.style.display = '';
+        successBanner.classList.add('hidden');
+        successBanner.classList.remove('flex');
+      });
+    }
+  });
+}
+
+/* ==========================================================================
+   13. CINEMATIC WALKTHROUGH VIDEO MODAL
+   ========================================================================== */
+function initWalkthroughVideoModal() {
+  const playBtn = document.getElementById('play-walkthrough-btn');
+  if (!playBtn) return;
+
+  // Create modal container if not exists
+  let modal = document.getElementById('walkthrough-video-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'walkthrough-video-modal';
+    modal.className = 'fixed inset-0 z-50 hidden items-center justify-center media-modal-backdrop p-4 sm:p-6';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Facility Walkthrough Video');
+    modal.innerHTML = `
+      <div class="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+        <button id="close-video-modal-btn" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center transition-all focus:outline-none focus:ring-2 focus:ring-secondary" aria-label="Close video player">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+        <div class="relative w-full aspect-video bg-neutral-900 flex items-center justify-center">
+          <video 
+            id="modal-walkthrough-video" 
+            class="w-full h-full object-cover" 
+            controls 
+            autoplay 
+            playsinline 
+            poster="/assets/gallery/pallet-shipping.jpg"
+            preload="metadata">
+            <source src="https://res.cloudinary.com/demo/video/upload/q_auto,f_auto,vc_h264/cococraft_manufacturing_cinematic.mp4" type="video/mp4" />
+            <p class="text-white text-xs p-4">Your browser does not support HTML5 video.</p>
+          </video>
+        </div>
+        <div class="p-4 bg-primary text-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-technical-code text-xs">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+            <span class="font-bold">POLLACHI PROCESSING FACILITY · TAMIL NADU</span>
+          </div>
+          <span class="text-surface-variant">40ft High Cube Container Preparation</span>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
+  const closeBtn = document.getElementById('close-video-modal-btn');
+  const videoEl = document.getElementById('modal-walkthrough-video');
+
+  const openModal = () => {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.classList.add('mobile-drawer-open');
+    if (window.lenis && typeof window.lenis.stop === 'function') {
+      window.lenis.stop();
+    }
+    if (videoEl) {
+      videoEl.play().catch(() => {});
+    }
+    if (closeBtn) closeBtn.focus();
+  };
+
+  const closeModal = () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.classList.remove('mobile-drawer-open');
+    if (window.lenis && typeof window.lenis.start === 'function') {
+      window.lenis.start();
+    }
+    if (videoEl) {
+      videoEl.pause();
+    }
+    playBtn.focus();
+  };
+
+  playBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
   });
 }
 
