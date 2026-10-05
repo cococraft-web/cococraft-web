@@ -53,8 +53,8 @@ const KB = {
     EU: {
       status: 'YES',
       certs: ['Phytosanitary Certificate (NPPO India)', 'ISPM-15 Wood Packaging', 'REACH compliance declaration', 'Certificate of Origin (CoO)', 'EUR.1 Movement Certificate'],
-      transit: 'Tuticorin → Rotterdam: 22–26 days (MSC/Maersk)',
-      notes: 'EORI number required for EU importer. RHP certification preferred for substrate trade.',
+      transit: 'Tuticorin → Hamburg / Bremerhaven (Germany, Confirmed Corridor): 24–28 days (MSC/Maersk/Hapag-Lloyd)',
+      notes: 'Germany is COCO CRAFT EXPORTS\' confirmed European export destination. EORI number required for EU importer; phytosanitary and ISPM-15 certificates provided with each B/L.',
       hs_code: '5305.00 (coir) | 1404.90 (coconut products)',
     },
     US: {

@@ -999,10 +999,8 @@ function renderGlobalReachGrid() {
   if (!grid) return;
 
   const destinations = [
-    { country: 'The Netherlands', port: 'Port of Rotterdam', desc: 'Direct supply to European glasshouse horticulture distributors.' },
-    { country: 'United States', port: 'Port of Long Beach / New York', desc: 'Hydroponic substrate distribution across commercial berry and cannabis growers.' },
-    { country: 'United Kingdom', port: 'Port of Felixstowe', desc: 'Commercial growing media and retail potting coir briquettes.' },
-    { country: 'Japan & South Korea', port: 'Tokyo / Busan Port', desc: 'Triple-washed low EC cocopeat blocks for precision strawberry horticulture.' }
+    { country: 'Germany 🇩🇪', port: 'Port of Hamburg / Port of Bremerhaven', desc: 'Confirmed European export market. Direct containerized supply of low EC cocopeat blocks, grow bags, and husk chips.', badge: 'CONFIRMED MARKET', badgeClass: 'bg-[#00742F] text-white' },
+    { country: 'Worldwide B2B Trade', port: 'Tuticorin & Chennai Ports (Global)', desc: 'Direct ocean freight connectivity to verified commercial growers, importers, and agricultural distributors worldwide.', badge: 'GLOBAL EXPORT', badgeClass: 'badge-active' }
   ];
 
   grid.innerHTML = destinations.map(d => `
@@ -1012,7 +1010,7 @@ function renderGlobalReachGrid() {
         <h4 class="font-bold text-base text-primary font-headings mt-0.5">${escapeHtml(d.country)}</h4>
         <p class="text-xs text-on-surface-variant mt-1">${escapeHtml(d.desc)}</p>
       </div>
-      <span class="badge-status badge-active w-fit">ACTIVE TRADE ROUTE</span>
+      <span class="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold w-fit ${d.badgeClass}">${d.badge}</span>
     </div>
   `).join('');
 }
@@ -1257,7 +1255,7 @@ const SEO_PAGE_BASELINES = {
     title: 'Coconut Coir Exporter & Global B2B Substrate Supply | COCO CRAFT EXPORTS',
     description: 'Worldwide B2B coconut coir manufacturer and cocopeat exporter. Containerized shipping from Tuticorin and Chennai ports, international phytosanitary compliance, and dedicated export logistics.',
     focusKeyword: 'coconut coir exporter',
-    secondaryKeywords: 'cocopeat exporter, coir substrate supplier, bulk coir supplier, coir products wholesale, commercial growing substrate',
+    secondaryKeywords: 'cocopeat exporter, coir substrate supplier, bulk coir supplier, coir products wholesale, coconut coir exporter to Germany, cocopeat supplier Germany',
     canonical: 'https://cococraftexports.com/company/global-reach.html',
     robots: 'index, follow',
     ogImage: '/assets/products/5kg-block.jpg',
@@ -1407,9 +1405,19 @@ let activeSeoCache = {
     businessHours: 'Mo-Sa 09:00-18:00 (IST)',
     gbpUrl: '',
     mapsUrl: '',
-    serviceAreas: 'Global Export (USA, Netherlands, Spain, Australia, South Korea, Japan, UAE) · Manufacturing Hub: Tamil Nadu, India',
+    serviceAreas: 'Worldwide B2B Export · Confirmed European Market: Germany 🇩🇪 · Manufacturing Hub: Tamil Nadu, India',
     isAddressVerified: true,
     schemaEnabled: true
+  },
+  markets: {
+    germany: {
+      confirmed: true,
+      title: 'Coconut Coir & Cocopeat Exporter to Germany | COCO CRAFT EXPORTS',
+      description: 'Leading coconut coir manufacturer exporting premium 5kg cocopeat blocks, hydroponic grow bags and husk chips to Germany. Low EC, certified phytosanitary standards.',
+      focusKeyword: 'coconut coir exporter to Germany',
+      secondaryKeywords: 'cocopeat exporter Germany, cocopeat supplier Germany, coir products supplier Germany, coconut coir manufacturer India Germany, coir growing media Germany, cocopeat blocks Germany, coconut husk chips Germany, coir grow bags Germany',
+      ports: 'Port of Hamburg (DEHAM), Port of Bremerhaven (DEBRV)'
+    }
   }
 };
 
@@ -1433,6 +1441,7 @@ function initSeoController() {
       if (activeContent) activeContent.classList.remove('hidden');
 
       if (target === 'local') renderLocalSeoTab();
+      if (target === 'markets') renderGermanySeoTab();
       if (target === 'sitemap') renderSitemapTab();
       if (target === 'robots') renderRobotsTab();
       if (target === 'redirects') renderRedirectsTab();
@@ -1661,10 +1670,42 @@ function initSeoController() {
     });
   }
 
+  // J. Germany Confirmed Market Event Listeners
+  const germanyTitleInput = document.getElementById('seo-germany-title');
+  const germanyDescInput = document.getElementById('seo-germany-desc');
+
+  if (germanyTitleInput) {
+    germanyTitleInput.addEventListener('input', () => {
+      const len = germanyTitleInput.value.length;
+      const countEl = document.getElementById('seo-germany-title-count');
+      if (countEl) countEl.textContent = `${len} / 60 Chars`;
+      const serpTitle = document.getElementById('germany-serp-title');
+      if (serpTitle) serpTitle.textContent = germanyTitleInput.value || 'Coconut Coir & Cocopeat Exporter to Germany';
+    });
+  }
+
+  if (germanyDescInput) {
+    germanyDescInput.addEventListener('input', () => {
+      const len = germanyDescInput.value.length;
+      const countEl = document.getElementById('seo-germany-desc-count');
+      if (countEl) countEl.textContent = `${len} / 160 Chars`;
+      const serpDesc = document.getElementById('germany-serp-desc');
+      if (serpDesc) serpDesc.textContent = germanyDescInput.value || '';
+    });
+  }
+
+  const saveGermanyBtn = document.getElementById('save-germany-seo-btn');
+  if (saveGermanyBtn) {
+    saveGermanyBtn.addEventListener('click', async () => {
+      await saveGermanySeo();
+    });
+  }
+
   // Initial load
   loadPageSeoIntoForm('home');
   loadProductSeoIntoForm('5kg-cocopeat-blocks');
   renderLocalSeoTab();
+  renderGermanySeoTab();
   renderRobotsTab();
   renderSchemaTab();
   runSeoAudit(false);
@@ -1886,7 +1927,7 @@ function renderLocalSeoTab() {
   setVal('seo-local-phone', loc.phone || '+91 94883 55299');
   setVal('seo-local-email', loc.email || 'enquiry@cococraftexports.com');
   setVal('seo-local-hours', loc.businessHours || 'Mo-Sa 09:00-18:00 (IST)');
-  setVal('seo-local-service-areas', loc.serviceAreas || 'Global Export (USA, Netherlands, Spain, Australia, South Korea, Japan, UAE) · Manufacturing Hub: Tamil Nadu, India');
+  setVal('seo-local-service-areas', loc.serviceAreas || 'Worldwide B2B Export · Confirmed European Market: Germany 🇩🇪 · Manufacturing Hub: Tamil Nadu, India');
   setVal('seo-local-gbp-url', loc.gbpUrl || '');
   setVal('seo-local-maps-url', loc.mapsUrl || '');
 
@@ -2085,6 +2126,68 @@ async function saveLocalSeo() {
 }
 
 /**
+ * Germany Confirmed Export Market SEO Controller
+ */
+function renderGermanySeoTab() {
+  const ger = (activeSeoCache.markets && activeSeoCache.markets.germany) || {};
+
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined) el.value = val;
+  };
+
+  const title = ger.title || 'Coconut Coir & Cocopeat Exporter to Germany | COCO CRAFT EXPORTS';
+  const desc = ger.description || 'Leading coconut coir manufacturer exporting premium 5kg cocopeat blocks, hydroponic grow bags and husk chips to Germany. Low EC, certified phytosanitary standards.';
+  const focus = ger.focusKeyword || 'coconut coir exporter to Germany';
+  const ports = ger.ports || 'Port of Hamburg (DEHAM), Port of Bremerhaven (DEBRV)';
+  const sec = ger.secondaryKeywords || 'cocopeat exporter Germany, cocopeat supplier Germany, coir products supplier Germany, coconut coir manufacturer India Germany, coir growing media Germany, cocopeat blocks Germany, coconut husk chips Germany, coir grow bags Germany';
+
+  setVal('seo-germany-title', title);
+  setVal('seo-germany-desc', desc);
+  setVal('seo-germany-focus-keyword', focus);
+  setVal('seo-germany-ports', ports);
+  setVal('seo-germany-secondary-keywords', sec);
+
+  const titleCount = document.getElementById('seo-germany-title-count');
+  if (titleCount) titleCount.textContent = `${title.length} / 60 Chars`;
+  const descCount = document.getElementById('seo-germany-desc-count');
+  if (descCount) descCount.textContent = `${desc.length} / 160 Chars`;
+
+  const serpTitle = document.getElementById('germany-serp-title');
+  if (serpTitle) serpTitle.textContent = title;
+  const serpDesc = document.getElementById('germany-serp-desc');
+  if (serpDesc) serpDesc.textContent = desc;
+}
+
+async function saveGermanySeo() {
+  const ger = {
+    confirmed: true,
+    title: document.getElementById('seo-germany-title')?.value.trim() || 'Coconut Coir & Cocopeat Exporter to Germany | COCO CRAFT EXPORTS',
+    description: document.getElementById('seo-germany-desc')?.value.trim() || '',
+    focusKeyword: document.getElementById('seo-germany-focus-keyword')?.value.trim() || 'coconut coir exporter to Germany',
+    ports: document.getElementById('seo-germany-ports')?.value.trim() || 'Port of Hamburg (DEHAM), Port of Bremerhaven (DEBRV)',
+    secondaryKeywords: document.getElementById('seo-germany-secondary-keywords')?.value.trim() || ''
+  };
+
+  if (!activeSeoCache.markets) activeSeoCache.markets = {};
+  activeSeoCache.markets.germany = ger;
+
+  const res = await saveSeoMetadata('markets_germany', ger);
+
+  try {
+    localStorage.setItem('cococraft_seo_cache', JSON.stringify(activeSeoCache));
+  } catch (e) {}
+
+  runSeoAudit(false);
+
+  if (res.success) {
+    showToast('Germany Confirmed Export Market SEO saved successfully.', 'success');
+  } else {
+    showToast('Saved to local session (Firestore: offline fallback active)', 'info');
+  }
+}
+
+/**
  * Live SEO Audit Engine: Validates lengths, duplicates, canonicals, and indexing
  */
 function runSeoAudit(interactive = false) {
@@ -2179,6 +2282,30 @@ function runSeoAudit(interactive = false) {
   else errorCount++;
 
   pageResults.push({ key: 'local-seo', name: 'Local SEO (Tamil Nadu)', status: locStatus, issues: locIssues });
+
+  // Check Germany Confirmed International Market
+  const ger = activeSeoCache.markets?.germany || {};
+  let gerStatus = 'complete';
+  const gerIssues = [];
+
+  if (!ger.title || ger.title.length < 25) {
+    gerStatus = 'warning';
+    gerIssues.push('Germany SEO Title is too short');
+  }
+  if (!ger.description || ger.description.length < 50) {
+    gerStatus = 'warning';
+    gerIssues.push('Germany Meta Description is too short');
+  }
+  if (!ger.focusKeyword) {
+    gerStatus = 'warning';
+    gerIssues.push('Missing primary focus keyword');
+  }
+
+  if (gerStatus === 'complete') completeCount++;
+  else if (gerStatus === 'warning') warningCount++;
+  else errorCount++;
+
+  pageResults.push({ key: 'market-germany', name: 'Germany 🇩🇪 (Confirmed Market)', status: gerStatus, issues: gerIssues });
 
   // Update counters
   const compEl = document.getElementById('audit-complete-count');
@@ -2284,6 +2411,13 @@ async function saveCurrentSeoData() {
     } catch (e) {}
   }
 
+  // Also save Germany confirmed market if populated
+  if (activeSeoCache.markets?.germany) {
+    try {
+      await saveSeoMetadata('markets_germany', activeSeoCache.markets.germany);
+    } catch (e) {}
+  }
+
   // Also cache to localStorage for offline fallback
   try {
     localStorage.setItem('cococraft_seo_cache', JSON.stringify(activeSeoCache));
@@ -2294,7 +2428,7 @@ async function saveCurrentSeoData() {
   runSeoAudit(false);
 
   if (res.success) {
-    showToast(`Global B2B & Local SEO configuration saved successfully.`, 'success');
+    showToast(`Global B2B, Local SEO & Germany Market configuration saved successfully.`, 'success');
   } else {
     showToast(`Saved to local session (Firestore: ${res.error || 'Offline baseline active'})`, 'info');
   }
@@ -2327,9 +2461,19 @@ export async function loadSeoData() {
     }
   } catch (e) {}
 
+  // Fetch Germany Confirmed Market override
+  try {
+    const gerMeta = await getSeoMetadata('markets_germany');
+    if (gerMeta && gerMeta.title) {
+      if (!activeSeoCache.markets) activeSeoCache.markets = {};
+      activeSeoCache.markets.germany = { ...activeSeoCache.markets.germany, ...gerMeta };
+    }
+  } catch (e) {}
+
   loadPageSeoIntoForm('home');
   loadProductSeoIntoForm('5kg-cocopeat-blocks');
   renderLocalSeoTab();
+  renderGermanySeoTab();
   runSeoAudit(false);
 }
 
