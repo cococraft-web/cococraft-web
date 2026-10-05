@@ -21,7 +21,9 @@ import {
   getCloudinarySettings,
   saveCloudinarySettings,
   getAuditLogs,
-  seedBaselineCatalogueIfEmpty
+  seedBaselineCatalogueIfEmpty,
+  uploadToFirebaseStorage,
+  deleteFromFirebaseStorage
 } from '/scripts/firebase-service.js';
 
 import { uploadToCloudinary } from '/scripts/cloudinary-service.js';
@@ -677,13 +679,25 @@ function initMediaController() {
     progressBar.style.width = '0%';
     progressText.textContent = 'Uploading 0%...';
 
-    try {
-      const asset = await uploadToCloudinary(file, (percent) => {
-        progressBar.style.width = percent + '%';
-        progressText.textContent = `Uploading ${percent}%...`;
-      });
+    const providerSelect = document.getElementById('media-storage-provider');
+    const provider = providerSelect ? providerSelect.value : 'cloudinary';
 
-      showToast(`Asset "${file.name}" uploaded to Cloudinary successfully.`, 'success');
+    try {
+      let asset;
+      if (provider === 'firebase') {
+        asset = await uploadToFirebaseStorage(file, 'Coco/Images', (percent) => {
+          progressBar.style.width = percent + '%';
+          progressText.textContent = `Uploading to Firebase Storage ${percent}%...`;
+        });
+        showToast(`Asset "${file.name}" uploaded to Firebase Storage successfully.`, 'success');
+      } else {
+        asset = await uploadToCloudinary(file, (percent) => {
+          progressBar.style.width = percent + '%';
+          progressText.textContent = `Uploading to Cloudinary ${percent}%...`;
+        });
+        showToast(`Asset "${file.name}" uploaded to Cloudinary successfully.`, 'success');
+      }
+
       state.media.unshift(asset);
       renderMediaGrid();
     } catch (err) {

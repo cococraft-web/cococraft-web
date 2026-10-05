@@ -28,6 +28,13 @@ import {
   limit,
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 
 // Dynamic Firebase Configuration via Secure Environment Variables
 export const firebaseConfig = {
@@ -44,6 +51,7 @@ export const firebaseConfig = {
 export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 // Optional Analytics (Gracefully handled if blocked by browser privacy)
 try {
@@ -336,6 +344,91 @@ export async function getCloudinarySettings() {
 
 export async function saveCloudinarySettings(data) {
   return await saveDocument('settings', 'cloudinary_config', data);
+}
+
+/* ==========================================================================
+   FIREBASE CLOUD STORAGE MEDIA API
+   ========================================================================== */
+
+/**
+ * Upload asset to Firebase Cloud Storage and store metadata in Firestore
+ */
+export async function uploadToFirebaseStorage(file, folder = 'Coco/Images', onProgress = null) {
+  if (!file) throw new Error('No file selected.');
+
+  const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+  const storagePath = `${folder}/${Date.now()}_${cleanName}`;
+  const fileRef = storageRef(storage, storagePath);
+
+  const metadata = {
+    contentType: file.type || 'application/octet-stream',
+    customMetadata: {
+      originalName: file.name,
+      uploadedAt: new Date().toISOString()
+    }
+  };
+
+  const uploadTask = uploadBytesResumable(fileRef, file, metadata);
+
+  return new Promise((resolve, reject) => {
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        if (onProgress && snapshot.totalBytes > 0) {
+          const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          onProgress(percent);
+        }
+      },
+      (error) => {
+        console.error('Firebase Storage Upload Error:', error);
+        let msg = error.message;
+        if (error.code === 'storage/unauthorized') {
+          msg = 'Permission denied: Please ensure admin is signed in and storage rules allow write.';
+        } else if (error.code === 'storage/bucket-not-found' || error.code === 'storage/project-not-found') {
+          msg = 'Firebase Storage bucket not found or not activated in Firebase Console. Please click "Get Started" in Firebase Storage.';
+        }
+        reject(new Error(msg));
+      },
+      async () => {
+        try {
+          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          const isVideo = file.type && file.type.startsWith('video/');
+          const assetData = {
+            storageProvider: 'firebase',
+            storagePath,
+            secureUrl: downloadUrl,
+            resourceType: isVideo ? 'video' : 'image',
+            format: file.name.split('.').pop() || '',
+            fileSize: file.size,
+            originalFilename: file.name,
+            createdAtIso: new Date().toISOString()
+          };
+
+          const savedDoc = await saveDocument('media', null, assetData, true);
+          assetData.id = savedDoc.id;
+          resolve(assetData);
+        } catch (saveErr) {
+          reject(new Error('Failed to register uploaded asset: ' + saveErr.message));
+        }
+      }
+    );
+  });
+}
+
+/**
+ * Delete asset from Firebase Cloud Storage and Firestore
+ */
+export async function deleteFromFirebaseStorage(storagePath, docId = null) {
+  try {
+    const fileRef = storageRef(storage, storagePath);
+    await deleteObject(fileRef);
+  } catch (err) {
+    console.warn('Firebase Storage file delete warning:', err);
+  }
+  if (docId) {
+    await deleteDocument('media', docId);
+  }
+  return { success: true };
 }
 
 /* ==========================================================================
